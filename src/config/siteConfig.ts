@@ -26,13 +26,13 @@ const pages = resolvePageToggles({
 	// 书签导航页面开关
 	booknav: true,
 	// 哔哩哔哩追番页面开关
-	bilibili: false,
+	bilibili: true,
 	// 番组计划页面开关
-	bangumi: false,
+	bangumi: true,
 	// VNDB页面开关
-	vndb: false,
+	vndb: true,
 	// MyAnimeList页面开关
-	mal: false,
+	mal: true,
 
 	// ── 关于 (About) ──────────────────────────────────
 
@@ -45,10 +45,10 @@ export const siteConfig: SiteConfig = {
 	title: "Firefly",
 
 	// 站点副标题
-	subtitle: "Demo site",
+	subtitle: "萤火虫",
 
 	// 站点 URL
-	site_url: "https://firefly.cuteleaf.cn",
+	site_url: "https://firefly.moe5200.com",
 
 	// 站点描述
 	description:
