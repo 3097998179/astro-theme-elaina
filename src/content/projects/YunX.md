@@ -174,4 +174,4 @@ lang: "zh_CN"
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/chart?repos=CYQawa/YunX&type=date&legend=top-left)](https://www.star-history.com/?repos=YunX%2FYunX%2CCYQawa%2FYunX&type=date&legend=top-left)
+[![Star History Chart](https://api.star-history.com/chart?repos=CYQawa/YunX&type=date&legend=top-left)](https://www.star-history.com/?repos=CYQawa%2FYunX&type=date&legend=top-left)
