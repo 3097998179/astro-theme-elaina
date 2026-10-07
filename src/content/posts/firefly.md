@@ -3,11 +3,10 @@ title: 你好，世界！
 published: 2026-10-01
 pinned: true
 description: 这是我的第一篇博客文章。
-tags: [Markdown, Firefly, 博客, 主题, 模板]
+tags: [Markdown, Firefly, 博客, 主题, ]
 category:随笔
 image: ./images/firefly2.avif
 slug: firefly
-series: "Firefly 功能示例"
 seriesOrder: 4
 ---
 
