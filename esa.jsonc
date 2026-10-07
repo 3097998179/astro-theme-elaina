@@ -1,0 +1,8 @@
+{
+  "name": "astro-theme",
+  "installCommand": "pnpm install",
+  "buildCommand": "pnpm run build",
+  "assets": {
+    "directory": "./dist"
+  }
+}
