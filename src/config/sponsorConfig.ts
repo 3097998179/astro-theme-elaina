@@ -39,7 +39,7 @@ export const sponsorConfig: SponsorConfig = {
 			description: "使用 微信 扫码打赏",
 			enabled: true,
 		},
-
+	],
 	// 打赏者列表（可选）
 	sponsors: [
 		// 示例：已实名打赏者
