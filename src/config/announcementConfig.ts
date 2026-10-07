@@ -5,7 +5,7 @@ export const announcementConfig: AnnouncementConfig = {
 	title: "",
 
 	// 公告内容
-	content: "欢迎来到我的博客！更新随缘但不定期，尽量保持每月至少3篇。。",
+	content: "欢迎来到我的博客！更新随缘但不定期，尽量保持每月至少3篇。",
 
 	// 是否允许用户关闭公告
 	closable: true,
