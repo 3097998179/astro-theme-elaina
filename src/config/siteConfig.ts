@@ -30,7 +30,7 @@ const pages = resolvePageToggles({
 	// 番组计划页面开关
 	bangumi: false,
 	// VNDB页面开关
-	vndb: false,
+	vndb: true,
 	// MyAnimeList页面开关
 	mal: false,
 
@@ -292,7 +292,7 @@ export const siteConfig: SiteConfig = {
 	// ── VNDB配置 ──────────────────────────────────
 	vndb: {
 		// VNDB 用户 ID
-		userId: "u358128",
+		userId: "u364514",
 		// 数据模式：static=构建时获取，dynamic=客户端实时获取
 		// static 模式在构建时获取数据并静态渲染，部署后数据不更新
 		// dynamic 模式在浏览器中实时请求 API，始终显示最新数据
