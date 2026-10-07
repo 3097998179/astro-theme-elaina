@@ -1,44 +1,28 @@
 ---
-title: Firefly 一款清新美观的 Astro 博客主题模板
-published: 1970-01-02
+title: 你好，世界！
+published: 2026-10-01
 pinned: true
-description: Firefly 是一款基于 Astro 框架和 Fuwari 模板开发的清新美观且现代化个人博客主题模板，专为技术爱好者和内容创作者设计。该主题融合了现代 Web 技术栈，提供了丰富的功能模块和高度可定制的界面，让您能够轻松打造出专业且美观的个人博客网站。
+description: 这是我的第一篇博客文章。
 tags: [Markdown, Firefly, 博客, 主题, 模板]
-category: 文章示例
+category:随笔
 image: ./images/firefly2.avif
 slug: firefly
 series: "Firefly 功能示例"
 seriesOrder: 4
 ---
 
-## 🌟 项目概述
+这是我的第一篇博客文章。
 
-**Firefly** 是一款基于 Astro 框架和 Fuwari 模板开发的清新美观且现代化个人博客主题模板，专为技术爱好者和内容创作者设计。该主题融合了现代 Web 技术栈，提供了丰富的功能模块和高度可定制的界面，让您能够轻松打造出专业且美观的个人博客网站。
+欢迎来到我的小天地！从今天开始，我会在这里记录我的学习、工作和生活。
 
+## 为什么写博客
 
-**🖥️在线预览： [Firefly - Demo site](https://firefly.cuteleaf.cn/)**
+写作是一种很好的思考方式。把学到的知识写下来，不仅能帮助自己加深理解，也许还能帮到其他遇到同样问题的人。这是我创建这个博客的初衷。
 
-**📝Firefly使用文档： [https://docs-firefly.cuteleaf.cn](https://docs-firefly.cuteleaf.cn/)**
+## 接下来会写什么
 
-**⭐Firefly开源地址：[https://github.com/CuteLeaf/Firefly](https://github.com/CuteLeaf/Firefly)** 
+- 技术学习笔记与踩坑记录
+- 项目开发心得
+- 偶尔的随想和生活记录
 
-**⭐Fuwari开源地址：[https://github.com/saicaca/fuwari](https://github.com/saicaca/fuwari)**
-
-::github{repo="CuteLeaf/Firefly"}
-
-::github{repo="saicaca/fuwari"}
-
-![Firefly](./images/1.avif)
-
-
-## 🚀 技术架构
-
-- **静态站点生成**: 基于 Astro ，提供极快的加载速度和优秀的 SEO 优化
-- **TypeScript 支持**: 完整的类型安全，提升开发体验和代码质量
-- **响应式设计**: 使用 Tailwind CSS 构建，完美适配桌面端和移动端
-- **组件化开发**: 支持 Astro、Svelte 组件，灵活可扩展
-
-
-## 📖 配置说明
-
-> 📚 **详细配置文档**: 查看 [Firefly 使用文档](https://docs-firefly.cuteleaf.cn/) 获取完整的配置指南
+感谢你的来访，我们下一篇见！
