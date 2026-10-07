@@ -251,7 +251,7 @@ export const siteConfig: SiteConfig = {
 			// 总开关：false 则不显示按钮
 			enable: true,
 			// 进入文章页是否默认开启沉浸阅读
-			defaultOn: false,
+			defaultOn: true,
 			// 沉浸阅读中是否显示目录栏
 			tocEnabled: true,
 			// 目录栏位置："left" | "right"
