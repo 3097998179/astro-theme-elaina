@@ -28,7 +28,7 @@ const pages = resolvePageToggles({
 	// 哔哩哔哩追番页面开关
 	bilibili: true,
 	// 番组计划页面开关
-	bangumi: true,
+	bangumi: false,
 	// VNDB页面开关
 	vndb: true,
 	// MyAnimeList页面开关
@@ -48,7 +48,7 @@ export const siteConfig: SiteConfig = {
 	subtitle: "萤火虫",
 
 	// 站点 URL
-	site_url: "https://firefly.moe5200.com",
+	site_url: "https://astro-theme.3097998179.workers.dev",
 
 	// 站点描述
 	description:
