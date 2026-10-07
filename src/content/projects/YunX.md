@@ -35,6 +35,16 @@ lang: "zh_CN"
 
 > 本仓库为仅安卓端 App，PC 端可见 [YunX-Desktop](https://github.com/tidain/YunX-Desktop)。
 
+<!--
+  截图章节：图片补齐后删除本注释即可启用。
+  需要放到 src/content/projects/images/ 下的文件：
+    Link.jpg     解析直链
+    Parsing.jpg  分享解析
+    Download.jpg 下载管理
+    Login.jpg    网盘登录
+    Setting.jpg  设置
+    about.jpg    关于
+
 ## 截图
 
 |            |            |            |
@@ -43,6 +53,7 @@ lang: "zh_CN"
 |    解析直链    |    分享解析    |    下载管理    |
 | ![网盘登录](images/Login.jpg) | ![设置](images/Setting.jpg) | ![关于](images/about.jpg) |
 |    网盘登录    |     设置     |     关于     |
+-->
 
 ## 功能特性
 
