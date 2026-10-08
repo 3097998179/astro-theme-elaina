@@ -48,7 +48,7 @@ export const siteConfig: SiteConfig = {
 	subtitle: "伊蕾娜的魔女之旅",
 
 	// 站点 URL
-	site_url: "https://",
+	site_url: "https://elaina.pw",
 
 	// 站点描述
 	description:
