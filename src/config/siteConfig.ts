@@ -42,33 +42,33 @@ const pages = resolvePageToggles({
 
 export const siteConfig: SiteConfig = {
 	// 站点标题
-	title: "Firefly",
+	title: "Elaina",
 
 	// 站点副标题
-	subtitle: "萤火虫",
+	subtitle: "伊蕾娜的魔女之旅",
 
 	// 站点 URL
-	site_url: "https://astro-theme.3097998179.workers.dev",
+	site_url: "https://",
 
 	// 站点描述
 	description:
-		"一方安放思考与热爱的自留地。写技术，也写生活；记成长，也记微光。",
+		"我的旅途自无名的星夜起笔，循着灰之魔女伊蕾娜的足迹，落款于明天。",
 
 	// 站点关键词
 	keywords: [
-		"Firefly",
-		"Fuwari",
+		"Elaina",
+		"灰之魔女",
 		"Astro",
 		"ACGN",
 		"博客",
-		"技术博客",
-		"静态博客",
+		"魔女之旅",
+		"伊蕾娜",
 	],
 
 	// 主题色
 	themeColor: {
 		// 主题色的默认色相，范围从 0 到 360。例如：红色：0，青色：200，蓝绿色：250，粉色：345
-		hue: 165,
+		hue: 345,
 		// 默认模式："light" 亮色，"dark" 暗色，"system" 跟随系统
 		defaultMode: "system",
 	},
@@ -81,9 +81,9 @@ export const siteConfig: SiteConfig = {
 	// 网站Card样式配置
 	card: {
 		// 是否开启卡片边框和阴影，开启后让网站更有立体感
-		border: false,
+		border: true,
 		// 是否让卡片风格跟随主题色相
-		followTheme: false,
+		followTheme: true,
 	},
 
 	// Favicon 配置
@@ -114,7 +114,7 @@ export const siteConfig: SiteConfig = {
 			type: "image",
 			value: "assets/images/logo/firefly-light.png",
 			valueDark: "assets/images/logo/firefly-dark.png",
-			alt: "🍀",
+			alt: "灰之诗旅|伊蕾娜的魔女之旅。",
 		},
 		// 导航栏标题
 		title: "Firefly Blog",
