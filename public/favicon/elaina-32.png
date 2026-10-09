@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ico图标制作转换 在线ICON图标转换工具 可转软件用ICON和网站用favicon  - ico转换-damotou.com 大魔头</title>
+    <meta name="description" content="免费在线ICO图标转换工具，支持JPG、PNG、GIF、BMP转换为ICO格式，生成多尺寸网站favicon和软件图标，专业图标制作、PNG转ICO、Favicon生成、网站图标制作、图标转换工具">
+    <meta name="keywords" content="ICO转换,图标制作,favicon生成,PNG转ICO,在线图标工具,网站图标,Favicon制作,ICO图标,图标生成器,PNG转图标,图片转ICO,图标设计,网站Favicon,软件图标,在线转换工具">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .header h1 {
+            color: #2d3748;
+            font-size: 1.8em;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .header p {
+            color: #718096;
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 10px;
+        }
+
+        .logo-container img {
+            max-height: 80px;
+            max-width: 300px;
+            height: auto;
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-container img:hover {
+            transform: scale(1.05);
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        @media (min-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .upload-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            order: 1;
+        }
+
+        .recent-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            order: 2;
+            margin-top: 20px;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            color: #2d3748;
+            font-size: 1.3em;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .section-title i {
+            color: #667eea;
+        }
+
+        /* ============ 新增：分享功能样式 ============ */
+        .share-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            order: 3;
+            margin-top: 20px;
+        }
+
+        .share-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .share-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 80px;
+            height: 80px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: white;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .share-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .share-button i {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .share-button span {
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .share-weibo {
+            background: linear-gradient(135deg, #e6162d, #ff7b8e);
+        }
+
+        .share-wechat {
+            background: linear-gradient(135deg, #07c160, #3cd37e);
+        }
+
+        .share-qq {
+            background: linear-gradient(135deg, #12b7f5, #4ac9ff);
+        }
+
+        .share-qzone {
+            background: linear-gradient(135deg, #ffc107, #ffd54f);
+        }
+
+        .share-douban {
+            background: linear-gradient(135deg, #2e963d, #5ed070);
+        }
+
+        .share-twitter {
+            background: linear-gradient(135deg, #1da1f2, #4ab8ff);
+        }
+
+        .share-facebook {
+            background: linear-gradient(135deg, #1877f2, #4a9bff);
+        }
+
+        .share-link {
+            background: linear-gradient(135deg, #6c757d, #a0aec0);
+        }
+
+        .share-tooltip {
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #333;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            white-space: nowrap;
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .share-tooltip:after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-bottom: 5px solid #333;
+        }
+
+        .share-button:hover .share-tooltip {
+            opacity: 1;
+            visibility: visible;
+            bottom: -30px;
+        }
+
+        /* 微信二维码弹窗样式 */
+        .wechat-qrcode-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .wechat-qrcode-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 300px;
+            position: relative;
+        }
+
+        .wechat-qrcode-content h3 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .qrcode-img {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 20px;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            color: #999;
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+
+        .close-modal:hover {
+            color: #333;
+        }
+
+        /* ============ 分享功能样式结束 ============ */
+
+        .file-upload-area {
+            border: 3px dashed #cbd5e0;
+            border-radius: 10px;
+            padding: 40px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .file-upload-area:hover {
+            border-color: #667eea;
+            background: #f7fafc;
+        }
+
+        .file-upload-area i {
+            font-size: 3em;
+            color: #cbd5e0;
+            margin-bottom: 15px;
+        }
+
+        .file-upload-area h3 {
+            color: #4a5568;
+            margin-bottom: 10px;
+        }
+
+        .file-upload-area p {
+            color: #a0aec0;
+            margin-bottom: 20px;
+            font-size: 0.9em;
+        }
+
+        #fileInput {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .file-name {
+            margin-top: 10px;
+            color: #718096;
+            font-size: 0.9em;
+        }
+
+        .preview-container {
+            margin: 20px 0;
+            display: none;
+        }
+
+        .preview-box {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        #previewImg {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 5px;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .file-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .info-item {
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 0.9em;
+        }
+
+        .form-options {
+            margin: 20px 0;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            color: #4a5568;
+            font-size: 0.9em;
+        }
+
+        .checkbox-label input {
+            margin-right: 10px;
+        }
+
+        .btn-convert {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-convert:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-convert:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .recent-icons {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .recent-icon {
+            display: block;
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 10px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .recent-icon:hover {
+            transform: translateY(-3px);
+            border-color: #667eea;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .recent-icon img {
+            width: 16px;
+            height: 16px;
+            object-fit: contain;
+            border-radius: 5px;
+        }
+
+        .empty-message {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 20px;
+            color: #a0aec0;
+            font-style: italic;
+        }
+
+        .message {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+        }
+
+        .message.error {
+            background: linear-gradient(135deg, #fc8181 0%, #f56565 100%);
+            color: white;
+        }
+
+        .message.success {
+            background: linear-gradient(135deg, #68d391 0%, #48bb78 100%);
+            color: white;
+        }
+
+        /* 进度条样式 */
+        .progress-container {
+            display: none;
+            margin: 20px 0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9em;
+            color: #718096;
+        }
+
+        /* 下载选项样式 */
+        .download-section {
+            background: #f0fff4;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            border: 2px solid #68d391;
+            display: none;        }
+
+        .download-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .download-card {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .download-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .icon-preview {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 10px;
+            border-radius: 10px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #e2e8f0;
+            overflow: hidden;
+        }
+
+        .icon-preview img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
+
+        .download-card h4 {
+            color: #2d3748;
+            margin-bottom: 5px;
+            font-size: 1em;
+        }
+
+        .download-card p {
+            color: #718096;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+        }
+
+        .btn-download {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 0.9em;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-download:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 10px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-upload-again {
+            width: 100%;
+            background: #38b2ac;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 1em;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-upload-again:hover {
+            background: #319795;
+            transform: translateY(-2px);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .feature {
+            text-align: center;
+            padding: 15px;
+            background: #f8fafc;
+            border-radius: 8px;
+        }
+
+        .feature i {
+            font-size: 1.5em;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .feature h4 {
+            color: #2d3748;
+            margin-bottom: 5px;
+            font-size: 0.9em;
+        }
+
+        .feature p {
+            color: #718096;
+            font-size: 0.8em;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+            color: #718096;
+            font-size: 0.9em;
+        }
+
+        /* SEO关键字链接样式 */
+        .seo-links {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .seo-links h3 {
+            color: #2d3748;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .seo-keywords {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .seo-keyword {
+            background: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            color: #4a5568;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+        }
+
+        .seo-keyword:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+            border-color: #667eea;
+            box-shadow: 0 5px 10px rgba(102, 126, 234, 0.2);
+        }
+
+        .seo-description {
+            margin-top: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            font-size: 0.9em;
+            line-height: 1.6;
+            color: #4a5568;
+            text-align: left;
+        }
+
+        .seo-description a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .seo-description a:hover {
+            text-decoration: underline;
+        }
+
+        .tool-description {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f0f4ff;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .tool-description p {
+            color: #4a5568;
+            line-height: 1.7;
+            margin-bottom: 10px;
+        }
+
+        .keyword-highlight {
+            background: linear-gradient(120deg, #a5b4fc 0%, #818cf8 100%);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 500;
+        }
+        /* 子站链接样式 - 添加到现有的<style>标签中 */
+.subsite-link {
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 600;
+  margin-left: 8px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  border: 1px solid rgba(102, 126, 234, 0.3);
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.9em;
+}
+
+.subsite-link:hover {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+  border-color: transparent;
+}
+
+.subsite-link i {
+  font-size: 0.85em;
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+  <div class="header">
+      
+  <a href="https://www.damotou.com/contact.php" target="_blank" style="position: absolute; top: 15px; right: 15px; font-size: 0.9em; color: #667eea; text-decoration: none; font-weight: 600;">
+    需要定制服务?
+  </a>
+  
+  <a href="https://www.damotou.com">
+    <h1><img src="/logo.gif" alt="大魔头logo" onerror="this.style.display='none'"><br>大魔头 - 在线ICO图标转换工具</h1>
+  </a>
+  <p>支持软件用ICON和网站favicon转换，唯一可转分层ICO的网站。其他服务:      <a href="https://pic.damotou.com" target="_blank" class="subsite-link">
+      <i class="fas fa-external-link-alt"></i> 免费在线图片格式转换器
+    </a>
+      <a href="https://pic.damotou.com/pdftojpg" target="_blank" class="subsite-link">
+      <i class="fas fa-external-link-alt"></i> PDF转JPG
+    </a>
+    </p>
+</div>
+
+        
+        <div class="main-content">
+            <!-- 上传区域 -->
+            <div class="upload-section">
+                <div class="section-title">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <span>上传图片转换ICO</span>
+                </div>
+
+                <form id="uploadForm" method="post" enctype="multipart/form-data" onsubmit="return submitForm()">
+                    <input type="hidden" name="MAX_FILE_SIZE" value="10485760">
+                    <input type="hidden" name="PHPSESSID" value="9dj7l9qoelg1aupv0ltvq5an02">
+                    <input type="hidden" name="action" value="upload">
+                    
+                    <div class="file-upload-area" id="dropArea">
+                        <i class="fas fa-image"></i>
+                        <h3>点击或拖放图片</h3>
+                        <p>支持 JPG、PNG、GIF、BMP 格式</p>
+                        <p>最大 10.00 MB</p>
+                        <input type="file" name="userfile" id="fileInput" accept="image/*" required>
+                        <div class="file-name" id="fileName">未选择文件</div>
+                    </div>
+
+                    <!-- 预览区域 -->
+                    <div class="preview-container" id="previewContainer">
+                        <div class="preview-box">
+                            <img id="previewImg" alt="图片预览">
+                        </div>
+                        <div class="file-info">
+                            <div class="info-item">
+                                <i class="fas fa-file-alt"></i>
+                                <span id="previewFileName">-</span>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-expand-alt"></i>
+                                <span id="previewDimensions">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 进度条 -->
+                    <div class="progress-container" id="progressContainer">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <div class="progress-text">
+                            <span id="progressPercent">0%</span>
+                            <span id="progressStatus">准备中...</span>
+                        </div>
+                    </div>
+
+                    <div class="form-options">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="ispublic" value="true" checked>
+                            显示在最近转换列表中
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn-convert" id="convertBtn">
+                        <i class="fas fa-magic"></i> 开始转换
+                    </button>
+                </form>
+
+                <!-- 下载区域（转换后显示） -->
+                <div class="download-section" id="downloadSection">
+                                    </div>
+
+                <!-- 功能特点 -->
+                <div class="features">
+                    <div class="feature">
+                        <i class="fas fa-bolt"></i>
+                        <h4>快速转换</h4>
+                        <p>秒级完成转换</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-layer-group"></i>
+                        <h4>分层支持</h4>
+                        <p>支持透明背景</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-ruler-combined"></i>
+                        <h4>多尺寸</h4>
+                        <p>16×16 到 256×256</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-check-circle"></i>
+                        <h4>免费使用</h4>
+                        <p>完全免费转换</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 最近转换区域 -->
+            <div class="recent-section">
+                <div class="section-title">
+                    <i class="fas fa-history"></i>
+                    <span>最近转换的图标</span>
+                </div>
+                
+                <div class="recent-icons">
+                                                                        <a href="/47027?PHPSESSID=9dj7l9qoelg1aupv0ltvq5an02" class="recent-icon">
+                                <img src="/uploads/2026-10-09/1791549638-310207-16.png" alt="最近转换">
+                            </a>
+                                                    <a href="/47027" class="recent-icon">
+                                <img src="/uploads/2026-10-09/1791549638-310207-16.png" alt="最近转换">
+                            </a>
+                                                    <a href="/47026" class="recent-icon">
+                                <img src="/uploads/2026-10-09/1791542433-165663-16.png" alt="最近转换">
+                            </a>
+                                                    <a href="/47025" class="recent-icon">
+                                <img src="/uploads/2026-10-08/1791463072-951411-16.png" alt="最近转换">
+                            </a>
+                                                    <a href="/47024" class="recent-icon">
+                                <img src="/uploads/2026-10-08/1791462527-444944-16.png" alt="最近转换">
+                            </a>
+                                                    <a href="/47023" class="recent-icon">
+                                <img src="/uploads/2026-10-08/1791462230-961090-16.png" alt="最近转换">
+                            </a>
+                                                    <a href="/47022" class="recent-icon">
+                                <img src="/uploads/2026-10-08/1791462045-288126-16.png" alt="最近转换">
+                            </a>
+                                                    <a href="/47021" class="recent-icon">
+                                <img src="/uploads/2026-10-08/1791427675-563632-16.png" alt="最近转换">
+                            </a>
+                                                    <a href="/47020" class="recent-icon">
+                                <img src="/uploads/2026-10-07/1791341701-480740-16.png" alt="最近转换">
+                            </a>
+                                                            </div>
+
+                <div style="margin-top: 20px; font-size: 0.9em; color: #718096;">
+                    <p><i class="fas fa-info-circle"></i> 使用说明：</p>
+                    <ol style="padding-left: 20px; margin-top: 10px;">
+                        <li>选择或拖放图片到上传区域</li>
+                        <li>查看图片预览效果</li>
+                        <li>点击"开始转换"按钮</li>
+                        <li>等待转换完成</li>
+                        <li>选择需要的图标尺寸下载</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- ============ 新增：分享区域 ============ -->
+            <div class="share-section">
+                <div class="section-title">
+                    <i class="fas fa-share-alt"></i>
+                    <span>分享到社交媒体</span>
+                </div>
+                
+                <div class="share-buttons">
+                    <!-- 微博分享 -->
+                    <a href="javascript:void(0)" class="share-button share-weibo" onclick="shareToWeibo()">
+                        <i class="fab fa-weibo"></i>
+                        <span>微博</span>
+                        <div class="share-tooltip">分享到微博</div>
+                    </a>
+                    
+                    <!-- 微信分享 -->
+                    <a href="javascript:void(0)" class="share-button share-wechat" onclick="showWechatQRCode()">
+                        <i class="fab fa-weixin"></i>
+                        <span>微信</span>
+                        <div class="share-tooltip">分享到微信</div>
+                    </a>
+                    
+                    <!-- QQ分享 -->
+                    <a href="javascript:void(0)" class="share-button share-qq" onclick="shareToQQ()">
+                        <i class="fab fa-qq"></i>
+                        <span>QQ</span>
+                        <div class="share-tooltip">分享给QQ好友</div>
+                    </a>
+                    
+                    <!-- QQ空间分享 -->
+                    <a href="javascript:void(0)" class="share-button share-qzone" onclick="shareToQZone()">
+                        <i class="fas fa-rss-square"></i>
+                        <span>QQ空间</span>
+                        <div class="share-tooltip">分享到QQ空间</div>
+                    </a>
+                    
+                    <!-- 豆瓣分享 -->
+                    <a href="javascript:void(0)" class="share-button share-douban" onclick="shareToDouban()">
+                        <i class="fab fa-douban"></i>
+                        <span>豆瓣</span>
+                        <div class="share-tooltip">分享到豆瓣</div>
+                    </a>
+                    
+                    <!-- Twitter分享 -->
+                    <a href="javascript:void(0)" class="share-button share-twitter" onclick="shareToTwitter()">
+                        <i class="fab fa-twitter"></i>
+                        <span>Twitter</span>
+                        <div class="share-tooltip">分享到Twitter</div>
+                    </a>
+                    
+                    <!-- Facebook分享 -->
+                    <a href="javascript:void(0)" class="share-button share-facebook" onclick="shareToFacebook()">
+                        <i class="fab fa-facebook-f"></i>
+                        <span>Facebook</span>
+                        <div class="share-tooltip">分享到Facebook</div>
+                    </a>
+                    
+                    <!-- 复制链接 -->
+                    <a href="javascript:void(0)" class="share-button share-link" onclick="copyToClipboard()">
+                        <i class="fas fa-link"></i>
+                        <span>复制链接</span>
+                        <div class="share-tooltip">复制页面链接</div>
+                    </a>
+                </div>
+            </div>
+            <!-- ============ 分享区域结束 ============ -->
+        </div>
+
+        <!-- 微信二维码弹窗 -->
+        <div id="wechatQRCodeModal" class="wechat-qrcode-modal">
+            <div class="wechat-qrcode-content">
+                <button class="close-modal" onclick="closeWechatQRCode()">&times;</button>
+                <h3>扫描二维码分享到微信</h3>
+                <div class="qrcode-img" id="wechatQRCode">
+                    <!-- 二维码将通过JS生成 -->
+                    <div style="display: flex; align-items: center; justify-content: center; height: 100%; color: #999;">
+                        加载二维码中...
+                    </div>
+                </div>
+                <p>使用微信扫一扫，分享给朋友或朋友圈</p>
+            </div>
+        </div>
+
+        <!-- SEO关键字链接区域 -->
+        <div class="seo-links">
+            <h3><i class="fas fa-link"></i> 相关图标转换工具推荐</h3>
+            <div class="seo-keywords">
+                <a href="https://www.damotou.com" class="seo-keyword" target="_blank">在线图标转换</a>
+                <a href="https://www.damotou.com" class="seo-keyword" target="_blank">PNG转ICO工具</a>
+                <a href="https://www.damotou.com" class="seo-keyword" target="_blank">Favicon生成器</a>
+                <a href="https://www.damotou.com" class="seo-keyword" target="_blank">网站图标制作</a>
+                <a href="https://www.damotou.com" class="seo-keyword" target="_blank">ICO图标转换</a>
+                <a href="https://www.damotou.com" class="seo-keyword" target="_blank">图片转图标</a>
+                <a href="https://www.damotou.com" class="seo-keyword" target="_blank">图标设计工具</a>
+                <a href="https://www.damotou.com" class="seo-keyword" target="_blank">软件图标制作</a>
+                <a href="https://www.damotou.com" class="seo-keyword" target="_blank">在线Favicon</a>
+                <a href="https://www.damotou.com" class="seo-keyword" target="_blank">ICO文件生成</a>
+            </div>
+            
+            <div class="seo-description">
+                <p>本页面提供的<strong>在线ICO图标转换工具</strong>是专业的图片转图标解决方案，可以快速将PNG、JPG、GIF等格式的图片转换为多尺寸的ICO图标文件。如果您需要更多图标相关工具，请访问我们的合作伙伴网站：<a href="https://www.damotou.com" target="_blank" rel="noopener">www.damotou.com</a>，那里提供更多图标转换、制作和设计工具。</p>
+                <p>关键词：<strong>ICO转换</strong>, <strong>图标制作</strong>, <strong>Favicon生成</strong>, <strong>PNG转ICO</strong>, <strong>网站图标</strong>, <strong>在线图标工具</strong>, <strong>图标设计</strong>, <strong>图片转图标</strong>, <strong>网站Favicon</strong>, <strong>软件图标</strong></p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <a href="https://www.damotou.com">
+                <img src="/logo.gif" alt="大魔头logo" style="max-height: 40px; max-width: 150px;">
+            </a>
+            <p>Copyright © 2006-2026 www.damotou.com - 专业的在线图标转换平台</p>
+            <p>本工具支持将JPG、PNG、GIF、BMP格式图片转换为ICO图标文件，适用于网站Favicon、软件图标等多种场景</p>
+            <p style="margin-top: 10px; font-size: 0.85em; color: #a0aec0;">
+                相关链接：<a href="https://www.damotou.com" target="_blank" style="color: #667eea;">图标转换工具</a> | 
+                <a href="https://www.damotou.com" target="_blank" style="color: #667eea;">PNG转ICO</a> | 
+                <a href="https://www.damotou.com" target="_blank" style="color: #667eea;">Favicon制作</a> | 
+                <a href="https://www.damotou.com" target="_blank" style="color: #667eea;">网站图标生成</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const fileInput = document.getElementById('fileInput');
+            const fileName = document.getElementById('fileName');
+            const previewContainer = document.getElementById('previewContainer');
+            const previewImg = document.getElementById('previewImg');
+            const previewFileName = document.getElementById('previewFileName');
+            const previewDimensions = document.getElementById('previewDimensions');
+            const dropArea = document.getElementById('dropArea');
+            const uploadForm = document.getElementById('uploadForm');
+
+            // 文件选择事件
+            fileInput.addEventListener('change', function() {
+                if (this.files && this.files[0]) {
+                    const file = this.files[0];
+                    
+                    // 更新文件名显示
+                    fileName.textContent = file.name;
+                    fileName.style.color = '#48bb78';
+                    
+                    // 显示预览
+                    showImagePreview(file);
+                } else {
+                    hideImagePreview();
+                }
+            });
+
+            // 拖放功能
+            dropArea.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                this.style.borderColor = '#667eea';
+                this.style.background = '#f0f4ff';
+            });
+
+            dropArea.addEventListener('dragleave', function(e) {
+                e.preventDefault();
+                this.style.borderColor = '#cbd5e0';
+                this.style.background = 'transparent';
+            });
+
+            dropArea.addEventListener('drop', function(e) {
+                e.preventDefault();
+                this.style.borderColor = '#cbd5e0';
+                this.style.background = 'transparent';
+                
+                const files = e.dataTransfer.files;
+                if (files && files[0]) {
+                    fileInput.files = files;
+                    const file = files[0];
+                    
+                    fileName.textContent = file.name;
+                    fileName.style.color = '#48bb78';
+                    
+                    showImagePreview(file);
+                    fileInput.dispatchEvent(new Event('change'));
+                }
+            });
+
+            function showImagePreview(file) {
+                // 检查文件类型
+                if (!file.type.match('image.*')) {
+                    hideImagePreview();
+                    return;
+                }
+
+                // 显示预览容器
+                previewContainer.style.display = 'block';
+                previewFileName.textContent = file.name;
+                previewDimensions.textContent = '加载中...';
+
+                // 使用FileReader读取文件
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    previewImg.src = e.target.result;
+                    
+                    // 创建图片对象获取尺寸
+                    const img = new Image();
+                    img.onload = function() {
+                        previewDimensions.textContent = this.width + ' × ' + this.height + ' 像素';
+                        
+                        // 检查尺寸
+                        if (this.width < 16 || this.height < 16) {
+                            previewDimensions.innerHTML += '<br><span style="color:#f56565;">⚠️ 图片尺寸过小</span>';
+                        }
+                    };
+                    img.onerror = function() {
+                        previewDimensions.textContent = '未知尺寸';
+                    };
+                    img.src = e.target.result;
+                };
+                
+                reader.onerror = hideImagePreview;
+                reader.readAsDataURL(file);
+            }
+
+            function hideImagePreview() {
+                previewContainer.style.display = 'none';
+                previewImg.src = '';
+                previewFileName.textContent = '-';
+                previewDimensions.textContent = '-';
+                fileName.textContent = '未选择文件';
+                fileName.style.color = '#718096';
+            }
+
+            // 初始隐藏预览容器
+            hideImagePreview();
+        });
+
+        // 更新进度条
+        function updateProgress(percent, status) {
+            const progressFill = document.getElementById('progressFill');
+            const progressPercent = document.getElementById('progressPercent');
+            const progressStatus = document.getElementById('progressStatus');
+            
+            if (progressFill) {
+                progressFill.style.width = percent + '%';
+                progressPercent.textContent = percent + '%';
+                progressStatus.textContent = status;
+            }
+        }
+
+        // 表单提交函数
+        function submitForm() {
+            const fileInput = document.getElementById('fileInput');
+            const convertBtn = document.getElementById('convertBtn');
+            const progressContainer = document.getElementById('progressContainer');
+            const maxSize = 10485760;
+            
+            if (!fileInput.files || !fileInput.files[0]) {
+                alert('请先选择一个图片文件！');
+                return false;
+            }
+            
+            const file = fileInput.files[0];
+            
+            // 验证文件类型
+            const reg = /(gif|png|jpe?g|bmp|tiff?)$/i;
+            if (!reg.test(file.name)) {
+                alert('抱歉，目前只支持 JPEG, PNG, GIF 和 BMP 格式的图片');
+                return false;
+            }
+            
+            // 验证文件大小
+            if (file.size > maxSize) {
+                const maxMB = (maxSize / (1024 * 1024)).toFixed(1);
+                const actualMB = (file.size / (1024 * 1024)).toFixed(1);
+                alert('文件太大！\n\n您选择的文件：' + actualMB + ' MB\n最大允许：' + maxMB + ' MB');
+                return false;
+            }
+            
+            // 显示进度条
+            if (progressContainer) {
+                progressContainer.style.display = 'block';
+                updateProgress(10, '正在验证文件...');
+            }
+            
+            // 禁用转换按钮
+            if (convertBtn) {
+                convertBtn.disabled = true;
+                convertBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 转换中...';
+            }
+            
+            // 模拟进度更新
+            let progress = 10;
+            const progressInterval = setInterval(() => {
+                progress += 10;
+                if (progress <= 90) {
+                    const status = progress < 50 ? '正在上传文件...' : 
+                                 progress < 80 ? '正在处理图片...' : 
+                                 '正在生成图标...';
+                    updateProgress(progress, status);
+                } else {
+                    clearInterval(progressInterval);
+                    updateProgress(100, '转换完成！即将跳转...');
+                }
+            }, 500);
+            
+            // 表单会自动提交
+            return true;
+        }
+
+        // 重置表单 - 修复版
+        function resetForm() {
+            const uploadForm = document.getElementById('uploadForm');
+            const downloadSection = document.getElementById('downloadSection');
+            const convertBtn = document.getElementById('convertBtn');
+            const progressContainer = document.getElementById('progressContainer');
+            
+            // 完全重置表单
+            if (uploadForm) {
+                uploadForm.reset();
+                // 确保表单可见
+                uploadForm.style.display = 'block';
+                // 重置文件输入
+                const fileInput = document.getElementById('fileInput');
+                if (fileInput) {
+                    fileInput.value = '';
+                }
+            }
+            
+            // 隐藏下载区域
+            if (downloadSection) {
+                downloadSection.style.display = 'none';
+                downloadSection.innerHTML = '';
+            }
+            
+            // 重置转换按钮
+            if (convertBtn) {
+                convertBtn.disabled = false;
+                convertBtn.innerHTML = '<i class="fas fa-magic"></i> 开始转换';
+            }
+            
+            // 隐藏进度条
+            if (progressContainer) {
+                progressContainer.style.display = 'none';
+            }
+            
+            // 隐藏预览
+            hideImagePreview();
+            
+            // 清除所有消息
+            const messages = document.querySelectorAll('.message');
+            messages.forEach(msg => msg.remove());
+            
+            // 重新加载页面（最可靠的方式）
+            window.location.href = '/index.php';
+        }
+        
+        // 辅助函数
+        function hideImagePreview() {
+            const previewContainer = document.getElementById('previewContainer');
+            const fileName = document.getElementById('fileName');
+            
+            if (previewContainer) {
+                previewContainer.style.display = 'none';
+            }
+            if (fileName) {
+                fileName.textContent = '未选择文件';
+                fileName.style.color = '#718096';
+            }
+        }
+
+        // ============ 新增：分享功能JavaScript代码 ============
+        // 获取当前页面URL和标题
+        const currentPageUrl = encodeURIComponent(window.location.href);
+        const pageTitle = encodeURIComponent(document.title);
+        const pageDescription = encodeURIComponent("免费在线ICO图标转换工具，支持JPG、PNG、GIF、BMP转换为ICO格式，生成多尺寸网站favicon和软件图标");
+
+        // 分享到微博
+        function shareToWeibo() {
+            const url = `http://service.weibo.com/share/share.php?url=${currentPageUrl}&title=${pageTitle}&appkey=&pic=`;
+            window.open(url, '_blank', 'width=550,height=400');
+        }
+
+        // 分享到QQ
+        function shareToQQ() {
+            const url = `https://connect.qq.com/widget/shareqq/index.html?url=${currentPageUrl}&title=${pageTitle}&summary=${pageDescription}&site=大魔头ICO转换工具`;
+            window.open(url, '_blank', 'width=550,height=400');
+        }
+
+        // 分享到QQ空间
+        function shareToQZone() {
+            const url = `https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=${currentPageUrl}&title=${pageTitle}&summary=${pageDescription}&site=大魔头ICO转换工具`;
+            window.open(url, '_blank', 'width=550,height=400');
+        }
+
+        // 分享到豆瓣
+        function shareToDouban() {
+            const url = `https://www.douban.com/share/service?url=${currentPageUrl}&title=${pageTitle}&image=&content=${pageDescription}`;
+            window.open(url, '_blank', 'width=550,height=400');
+        }
+
+        // 分享到Twitter
+        function shareToTwitter() {
+            const url = `https://twitter.com/intent/tweet?url=${currentPageUrl}&text=${pageTitle}&via=damotou`;
+            window.open(url, '_blank', 'width=550,height=400');
+        }
+
+        // 分享到Facebook
+        function shareToFacebook() {
+            const url = `https://www.facebook.com/sharer/sharer.php?u=${currentPageUrl}&quote=${pageTitle}`;
+            window.open(url, '_blank', 'width=550,height=400');
+        }
+
+        // 显示微信二维码
+        function showWechatQRCode() {
+            const modal = document.getElementById('wechatQRCodeModal');
+            const qrcodeContainer = document.getElementById('wechatQRCode');
+            
+            // 清空之前的二维码
+            qrcodeContainer.innerHTML = '';
+            
+            // 创建二维码
+            const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${currentPageUrl}`;
+            const img = document.createElement('img');
+            img.src = qrCodeUrl;
+            img.alt = '微信分享二维码';
+            img.style.width = '100%';
+            img.style.height = '100%';
+            img.onload = function() {
+                qrcodeContainer.innerHTML = '';
+                qrcodeContainer.appendChild(img);
+            };
+            
+            // 显示模态框
+            modal.style.display = 'flex';
+        }
+
+        // 关闭微信二维码
+        function closeWechatQRCode() {
+            const modal = document.getElementById('wechatQRCodeModal');
+            modal.style.display = 'none';
+        }
+
+        // 复制链接到剪贴板
+        function copyToClipboard() {
+            const textToCopy = window.location.href;
+            
+            // 使用现代剪贴板API
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(textToCopy)
+                    .then(() => {
+                        showCopySuccess();
+                    })
+                    .catch(err => {
+                        fallbackCopyTextToClipboard(textToCopy);
+                    });
+            } else {
+                // 降级方案
+                fallbackCopyTextToClipboard(textToCopy);
+            }
+        }
+
+        function fallbackCopyTextToClipboard(text) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            
+            // 避免滚动到底部
+            textArea.style.top = "0";
+            textArea.style.left = "0";
+            textArea.style.position = "fixed";
+
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    showCopySuccess();
+                } else {
+                    alert('复制失败，请手动复制链接：' + text);
+                }
+            } catch (err) {
+                alert('复制失败，请手动复制链接：' + text);
+            }
+
+            document.body.removeChild(textArea);
+        }
+
+        function showCopySuccess() {
+            // 创建提示消息
+            const message = document.createElement('div');
+            message.textContent = '链接已复制到剪贴板！';
+            message.style.position = 'fixed';
+            message.style.top = '50%';
+            message.style.left = '50%';
+            message.style.transform = 'translate(-50%, -50%)';
+            message.style.backgroundColor = 'rgba(0,0,0,0.8)';
+            message.style.color = 'white';
+            message.style.padding = '15px 30px';
+            message.style.borderRadius = '8px';
+            message.style.zIndex = '9999';
+            message.style.fontSize = '16px';
+            message.style.boxShadow = '0 5px 15px rgba(0,0,0,0.3)';
+            
+            document.body.appendChild(message);
+            
+            // 2秒后移除提示
+            setTimeout(() => {
+                document.body.removeChild(message);
+            }, 2000);
+        }
+
+        // 点击模态框外部关闭
+        document.getElementById('wechatQRCodeModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeWechatQRCode();
+            }
+        });
+        // ============ 分享功能JavaScript代码结束 ============
+    </script>
+    
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?0b668c186bbe1ff635b4eae0319f22b2";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+    
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v4bc70e2c01a94c73b74392e4234840661791215815920" integrity="sha512-L0ha0OXavK/8okipN9F8BtP84dg9DUhPERbBXzwI6dgTA55d2+yweo3pn5CSFYs45/r8md2+xvUPtTdvTNRfjA==" data-cf-beacon='{"version":"2024.11.0","token":"3f39c6e626424e5082044fe49b9ae3c2","r":1,"spa":2}' crossorigin="anonymous"></script>
+</body>
+</html>
+    
