@@ -73,17 +73,17 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 			// 是否启用主页横幅文字
 			enable: true,
 			// 主页横幅主标题
-			title: "Lovely firefly!",
+			title: "灰之诗旅",
 			// 主页横幅主标题字体大小
 			titleSize: "4.5rem",
 			// 主页横幅副标题
 			subtitle: [
-				"In Reddened Chrysalis, I Once Rest",
-				"From Shattered Sky, I Free Fall",
-				"Amidst Silenced Stars, I Deep Sleep",
-				"Upon Lighted Fyrefly, I Soon Gaze",
-				"From Undreamt Night, I Thence Shine",
-				"In Finalized Morrow, I Full Bloom",
+				"在灰之诗篇，我续写不休.",
+				"自每次告别，我由此远行.",
+				"于擦肩人海，我短暂停驻.",
+				"穿无名诸国，我始终流浪.",
+				"乘漫游之帚，我自由翱翔.",
+				"于灰蒙暮色，我曾启程.",
 			],
 			// 主页横幅副标题字体大小
 			subtitleSize: "1.5rem",
@@ -105,9 +105,9 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 			// 图标支持 Iconify 格式：fa7-brands:github、fa7-solid:envelope、mdi:rss 等
 			links: [
 				{
-					name: "GitHub",
-					icon: "fa7-brands:github",
-					url: "https://github.com/3097998179",
+					name: "QQ",
+					icon: "fa7-brands:qq",
+					url: "https://qm.qq.com/q/GElQei2g4W",
 					showName: true,
 				},
 				{
@@ -116,9 +116,9 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 					url: "mailto:3097998179@qq.com",
 				},
 				{
-					name: "Sponsor",
-					icon: "material-symbols:favorite",
-					url: "/sponsor/",
+					name: "bilibili",
+					icon: "fa7-brands:bilibili",
+					url: "https://b23.tv/FPpOWl9",
 				},
 				{
 					name: "RSS",
@@ -170,7 +170,7 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 		// 导航栏配置
 		navbar: {
 			// 导航栏透明模式："semi" 半透明，"semifull" 动态透明，"none" 纯色不透明
-			transparentMode: "semi",
+			transparentMode: "semifull",
 			// 毛玻璃模糊度，0 即关闭导航栏的毛玻璃
 			// 注意：导航栏子菜单与浮动面板始终保留毛玻璃，模糊度跟随此项但有最小值
 			blur: 12,
