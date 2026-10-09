@@ -107,13 +107,7 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 				name: "异次元之旅",
 				url: "https://travel.moe/go?travel=on",
 				external: true,
-				icon: "fa7-solid:planet-moon",
-			},
-			{
-				name: "推QQ群",
-				url: "https://qm.qq.com/q/2tFFxGU2lG",
-				external: true,
-				icon: "fa7-brands:qq",
+				icon: "material-symbols:link",
 			},
 		],
 	});
@@ -195,13 +189,13 @@ export const LinkPresets: Record<string, NavBarLink> = {
 		pageKey: "gallery",
 	},
 	Booknav: {
-		name: "书签导航",
+		name: "导航",
 		url: "/booknav/",
 		icon: "material-symbols:bookmarks",
 		pageKey: "booknav",
 	},
 	Bilibili: {
-		name: "哔哩哔哩",
+		name: "bilibili",
 		url: "/bilibili/",
 		icon: "fa7-brands:bilibili",
 		pageKey: "bilibili",
