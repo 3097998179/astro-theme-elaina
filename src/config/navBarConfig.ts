@@ -104,16 +104,10 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 		// 子菜单
 		children: [
 			{
-				name: "GitHub",
-				url: "https://github.com/3097998179",
+				name: "异次元之旅",
+				url: "https://travel.moe/go?travel=on",
 				external: true,
-				icon: "fa7-brands:github",
-			},
-			{
-				name: "bilibili",
-				url: "https://b23.tv/bVyb3gB",
-				external: true,
-				icon: "fa7-brands:bilibili",
+				icon: "fa7-solid:planet-moon",
 			},
 			{
 				name: "推QQ群",
