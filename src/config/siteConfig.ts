@@ -63,6 +63,7 @@ export const siteConfig: SiteConfig = {
 		"博客",
 		"魔女之旅",
 		"伊蕾娜",
+		"Blog",
 	],
 
 	// 主题色
@@ -91,7 +92,7 @@ export const siteConfig: SiteConfig = {
 	favicon: [
 		{
 			// 图标文件路径
-			src: "/favicon/firefly-32.png",
+			src: "/favicon/elaina-32.png",
 			// 可选，指定主题 'light' | 'dark'
 			// theme: "light",
 			// 可选，图标大小
@@ -117,7 +118,7 @@ export const siteConfig: SiteConfig = {
 			alt: "灰之诗旅|伊蕾娜的魔女之旅。",
 		},
 		// 导航栏标题
-		title: "Firefly Blog",
+		title: "Elaina Blog",
 		// 全宽导航栏，导航栏是否占满屏幕宽度
 		widthFull: false,
 		// 导航菜单对齐方式，left：左对齐，center：居中
