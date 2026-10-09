@@ -23,21 +23,21 @@ export const friendsPageConfig: FriendsPageConfig = {
 // 友链配置
 export const friendsConfig: FriendLink[] = [
 	{
-		title: "夏夜流萤",
+		title: "缤果图床",
 		imgurl:
-			"https://weavatar.com/avatar/d252655d40d6874417a720bad0a6c5f77f8f6a1fd2f882f8f338402dc37e4190?s=640",
-		desc: "飞萤之火自无梦的长夜亮起，绽放在终竟的明天。",
-		siteurl: "https://blog.cuteleaf.cn",
-		tags: ["Blog"],
+			"https://job-manager-artifacts-online.cdn.bcebos.com/prod/artifacts/20015c4e-8e7f-4a32-8363-00f77e057c22/app-buyo3zgre5tt_web_1788791676950.png",
+		desc: "简单易用的图床服务，满足您的所有图片托管需求",
+		siteurl: "https://app-buyo3zgre5tt.appmiaoda.com/",
+		tags: ["tool"],
 		weight: 10, // 权重，数字越大排序越靠前
 		enabled: true, // 是否启用
 	},
 	{
-		title: "Firefly Docs",
-		imgurl: "https://docs-firefly.cuteleaf.cn/logo.png",
-		desc: "Firefly主题模板文档",
-		siteurl: "https://docs-firefly.cuteleaf.cn",
-		tags: ["Docs"],
+		title: "缤果云盘",
+		imgurl: "https://job-manager-artifacts-online.cdn.bcebos.com/prod/artifacts/1049d896-fcd8-47e5-b7f1-2d861dd33df1/app-c5hnez17ysjl_web_1789826583557.png",
+		desc: "安全存储，随时随地访问您的文件",
+		siteurl: "https://app-c5hnez17ysjl.appmiaoda.com/",
+		tags: ["tool"],
 		weight: 9,
 		enabled: true,
 	},
