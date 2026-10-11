@@ -231,11 +231,11 @@ export const LinkPresets: Record<string, NavBarLink> = {
 		name: "关于我",
 		url: "/about/",
 		icon: "material-symbols:person",
+		},
     copyright: {
 		name: "版权",
 		url: "/copyright/",
 		icon: "material-symbols:person",
-		
 	},
 };
 
