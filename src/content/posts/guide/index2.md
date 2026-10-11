@@ -2,7 +2,7 @@
 title: 伊蕾娜旅途路线图
 published: 2026-10-12
 description: 按动画顺序与小说章节，梳理灰之魔女伊蕾娜走过的国家与地点，一份尽可能完整的诸国巡礼。
-image: ../images/index2.avif
+image:"../images/index2.avif"
 tags: [魔女之旅, 伊蕾娜, 旅途手札]
 category: 旅途手札
 slug: elaina-journey-map
