@@ -93,9 +93,6 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 
 			// 关于页面
 			LinkPresets.About,
-			
-			//版权
-			LinkPresets.copyright,
 		],
 	});
 
@@ -230,11 +227,6 @@ export const LinkPresets: Record<string, NavBarLink> = {
 	About: {
 		name: "关于我",
 		url: "/about/",
-		icon: "material-symbols:person",
-		},
-    copyright: {
-		name: "版权",
-		url: "/copyright/",
 		icon: "material-symbols:person",
 	},
 };
