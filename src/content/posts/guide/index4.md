@@ -2,7 +2,7 @@
 title: 《魔女之旅》全角色事迹详解
 published: 2026-10-13
 description: 系统梳理《魔女之旅》中所有有名字、有设定描述的角色，按首次登场卷数分类，记录每位角色的生平经历与关键转折。
-image: " ../images/index4.avif"
+image: "../images/index4.avif"
 tags: [魔女之旅, 伊蕾娜, 角色分析, 旅途手札]
 category: 旅途手札
 slug: elaina-character-stories
