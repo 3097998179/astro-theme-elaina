@@ -112,9 +112,9 @@ export const siteConfig: SiteConfig = {
 		// 例如: { type: "image", value: "assets/images/logo.png", valueDark: "assets/images/logo-dark.png", alt: "Logo" }
 		// 使用 Astro 图标库时不需要设置 valueDark，图标会自动跟随主题亮暗色切换
 		logo: {
-			type: "image",
-			value: "assets/images/logo/firefly-light.png",
-			valueDark: "assets/images/logo/firefly-dark.png",
+			type: "icon",
+			value: "game-icons:witch-hat",
+			valueDark: "",
 			alt: "灰之诗旅|伊蕾娜的魔女之旅。",
 		},
 		// 导航栏标题
