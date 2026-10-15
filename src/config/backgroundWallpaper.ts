@@ -60,7 +60,8 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 		// 支持单个视频路径（字符串）或多个视频循环（数组，参考上面壁纸配置）
 		// 支持远程视频URL，本地视频请放在 public/assets/videos/ 目录下
 		// playerUrl: "/assets/videos/firefly.mp4",
-		playerUrl: "https://backend.appmiaoda.com/projects/supabase321600398370586624/storage/v1/object/public/cloud-files/c8153392-93d6-4b1a-af9b-9c76eb5728bb/1791889263284_xawagp.mp4",
+		playerUrl:
+			"https://backend.appmiaoda.com/projects/supabase321600398370586624/storage/v1/object/public/cloud-files/c8153392-93d6-4b1a-af9b-9c76eb5728bb/1791889263284_xawagp.mp4",
 	},
 	// 横幅壁纸和全屏壁纸共享配置
 	common: {

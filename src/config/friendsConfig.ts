@@ -34,7 +34,8 @@ export const friendsConfig: FriendLink[] = [
 	},
 	{
 		title: "缤果云盘",
-		imgurl: "https://job-manager-artifacts-online.cdn.bcebos.com/prod/artifacts/1049d896-fcd8-47e5-b7f1-2d861dd33df1/app-c5hnez17ysjl_web_1789826583557.png",
+		imgurl:
+			"https://job-manager-artifacts-online.cdn.bcebos.com/prod/artifacts/1049d896-fcd8-47e5-b7f1-2d861dd33df1/app-c5hnez17ysjl_web_1789826583557.png",
 		desc: "安全存储，随时随地访问您的文件",
 		siteurl: "https://app-c5hnez17ysjl.appmiaoda.com/",
 		tags: ["tool"],

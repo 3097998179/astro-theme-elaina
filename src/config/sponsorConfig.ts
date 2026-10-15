@@ -45,8 +45,7 @@ export const sponsorConfig: SponsorConfig = {
 		// 示例：已实名打赏者
 		{
 			name: "殇恋",
-			avatar:
-				"https://q.qlogo.cn/g?b=qq&nk=3097998179&s=640",
+			avatar: "https://q.qlogo.cn/g?b=qq&nk=3097998179&s=640",
 			amount: "¥50",
 			date: "2026-10-01",
 		},
