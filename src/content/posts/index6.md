@@ -10,8 +10,6 @@ series: "技术笔记与踩坑总结"
 seriesOrder: 2
 ---
 
-# Meting API + APlayer 博客音乐播放器搭建指南
-
 ## 前言
 
 为博客添加音乐播放器是常见需求。在对比多种方案后，**Meting API + APlayer** 这一组合成熟度高、社区活跃、文档完善，适合个人博客使用。
@@ -30,6 +28,8 @@ seriesOrder: 2
 | Meting API (PHP) | [https://github.com/injahow/meting-api](https://github.com/injahow/meting-api) |
 
 APlayer 是一个 HTML5 音乐播放器，MetingJS 是基于 APlayer 封装好的插件，开箱即用。
+
+![效果图](./images/index6(1).avif)
 
 ## 一、架构说明
 
