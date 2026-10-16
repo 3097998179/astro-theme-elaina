@@ -84,7 +84,7 @@ export const booknavConfig: BooknavGroup[] = [
    {
 				title: "gkd",
 				url: "https://github.com/gkd-kit/gkd",
-				desc: "一个安卓网盘解析下载app",
+				desc: "一款极为优秀的开源安卓自动化工具",
 				icon: "/favicon/gkd.svg",
 				weight: 10,
 			},
