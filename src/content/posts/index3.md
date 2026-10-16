@@ -4,9 +4,9 @@ published: 2026-10-13
 description: 用原生 JavaScript 和 SVG 实现点击页面飘出立体爱心的小动画，记录思路、关键代码与参数说明。
 image: "./images/index3.avif"
 tags: [JavaScript, SVG, 前端, 折腾记录]
-category: 魔法书
+category: 旅途手札
 slug: click-heart-effect
-series: "博客折腾记"
+series: "技术笔记与踩坑总结"
 seriesOrder: 1
 ---
 

@@ -4,7 +4,7 @@ published: 2026-10-01
 description: 灰之诗旅的第一篇手札。为什么做这个站，站名从哪来，以及它以后会写什么。
 tags: [开站, 随笔]
 image: "./cover.avif"
-category: 旅途手札
+category: 灰之诗旅
 slug: first-post
 pinned: true
 series: "灰之诗旅"
