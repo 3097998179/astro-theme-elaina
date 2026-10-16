@@ -2,7 +2,7 @@
 title: OpenAList 搭建与使用指南
 published: 2026-10-18
 description: 从 Docker 部署到初始化配置、WebDAV 挂载、离线下载、反向代理优化与常见问题排查，完整记录 OpenAList 的搭建与使用过程。
-image: ./images/index8.avif
+image: ./images/index8(3).avif
 tags: [OpenAList, AList, Docker, 网盘, 教程]
 category: 旅途手札
 slug: openalist-guide
@@ -15,6 +15,8 @@ seriesOrder: 4
 OpenAList 是一个由社区独立维护的分叉项目，基于 AList v3.45.0 构建，旨在提供一个更安全、可持续的开源网盘聚合工具。它可以聚合超过 60 种云盘、对象存储和本地存储，并通过 WebDAV、FTP、SFTP 等协议统一访问。
 
 相较于原版 AList，OpenAList 在安全性上做了多项加固，包括修复路径遍历、XSS、SSRF、TLS 配置等漏洞，并移除了不安全的 API。社区团队持续维护存储驱动的兼容性，发布多平台二进制文件和 Docker 镜像。
+
+![版本说明](./images/index8.avif)
 
 > [!NOTE] 版本说明
 > OpenAList 基于 AList v3.45.0 构建。原版 AList 被收购后，社区担忧代码透明度下降和潜在隐私风险，因此分叉出 OpenAList。如果此前使用过 AList，迁移成本较低。
