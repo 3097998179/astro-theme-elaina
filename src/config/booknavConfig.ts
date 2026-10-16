@@ -81,6 +81,13 @@ export const booknavConfig: BooknavGroup[] = [
 				icon: "/favicon/YunX.png",
 				weight: 10,
 			},
+   {
+				title: "gkd",
+				url: "https://github.com/gkd-kit/gkd",
+				desc: "一个安卓网盘解析下载app",
+				icon: "/favicon/gkd.svg",
+				weight: 10,
+			},
 		],
 	},
 	{
