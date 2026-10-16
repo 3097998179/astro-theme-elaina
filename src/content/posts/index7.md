@@ -2,7 +2,7 @@
 title: Lsky Pro 图床搭建与问题排查
 published: 2026-10-16
 description: 从 Docker 部署到初始化安装，再到存储策略配置与常见问题排查，完整记录 Lsky Pro 图床的搭建过程。
-image: ./images/index7.avif
+image: ./images/index7(4).avif
 tags: [Lsky, 图床, Docker, 博客, 教程]
 category: 旅途手札
 slug: lsky-pro-guide
@@ -153,6 +153,8 @@ http://服务器IP:8000
 ![安装完成](./images/index7(3).avif)
 
 之后使用刚才创建的账号登录后台即可。
+
+![后台页面](./images/index7.avif)
 
 ## 六、存储策略配置
 

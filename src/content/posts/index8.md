@@ -10,8 +10,6 @@ series: "技术笔记与踩坑总结"
 seriesOrder: 4
 ---
 
-# OpenAList 搭建与使用指南
-
 ## 一、OpenAList 简介
 
 OpenAList 是一个由社区独立维护的分叉项目，基于 AList v3.45.0 构建，旨在提供一个更安全、可持续的开源网盘聚合工具。它可以聚合超过 60 种云盘、对象存储和本地存储，并通过 WebDAV、FTP、SFTP 等协议统一访问。
