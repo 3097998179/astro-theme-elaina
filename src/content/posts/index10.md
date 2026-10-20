@@ -28,10 +28,10 @@ ZViewer 是一个开源的多人同步观影与共享平台，目标是让身处
 ![示例](./images/index10(1).avif)
 ![示例2](./images/index10(2).avif)
 ![示例3](./images/index10(3).avif)
-![示例3](./images/index10(4).avif)
-![示例3](./images/index10(5).avif)
-![示例3](./images/index10(6).avif)
-![示例3](./images/index10(7).avif)
+![示例4](./images/index10(4).avif)
+![示例5](./images/index10(5).avif)
+![示例6](./images/index10(6).avif)
+![示例7](./images/index10(7).avif)
 [/grid]
 
 ## 二、核心功能
