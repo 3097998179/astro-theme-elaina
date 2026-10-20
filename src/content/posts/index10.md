@@ -2,7 +2,7 @@
 title: ZViewer：自托管的多人同步观影平台
 published: 2026-10-21
 description: 支持 Bilibili、网盘、Emby 等多源接入的多人同步观影工具，具备弹幕、字幕、语音与屏幕共享功能，可 Docker 一键部署。
-image: ./images/index10.avif
+image: ./images/index10(8).avif
 tags: [ZViewer, 观影, 自托管, Docker, 工具]
 category: 旅人分享
 slug: zviewer-guide
@@ -25,9 +25,13 @@ ZViewer 是一个开源的多人同步观影与共享平台，目标是让身处
 前端预览：[https://zviewer.zero251.xyz](https://zviewer.zero251.xyz)
 
 [grid]
-![示例]("./images/index10(1).avif")
-![示例2]("./images/index10(2).avif")
-![示例3]("./images/index10(3).avif")
+![示例](./images/index10(1).avif)
+![示例2](./images/index10(2).avif)
+![示例3](./images/index10(3).avif)
+![示例3](./images/index10(4).avif)
+![示例3](./images/index10(5).avif)
+![示例3](./images/index10(6).avif)
+![示例3](./images/index10(7).avif)
 [/grid]
 
 ## 二、核心功能
