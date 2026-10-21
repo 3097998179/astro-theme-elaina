@@ -10,8 +10,6 @@ series: "实用工具推荐"
 seriesOrder: 1
 ---
 
-# 花笺：一款轻量优雅的 Windows 本地便签工具
-
 ## 一、项目简介
 
 花笺（Floral Notepaper）是一款面向 Windows 与 macOS 的本地桌面便签工具。项目基于 **Tauri 2 + React 19** 构建，安装包仅十几 MB，内存占用远低于同类 Electron 应用。
