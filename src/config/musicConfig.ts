@@ -61,6 +61,13 @@ export const musicPlayerConfig: MusicPlayerConfig = {
 				cover: "/assets/music/cover/Take Me Hand.avif",
 				lrc: "/assets/music/lrc/Take Me Hand.lrc",
 			},
+{
+				name: "リテラチュア",
+				artist: "伊蕾娜",
+				url: "/assets/music/リテラチュア.m4a",
+				cover: "/assets/music/cover/リテラチュア.avif",
+				lrc: "/assets/music/lrc/リテラチュア.lrc",
+			},
 		],
 	},
 };
