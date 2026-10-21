@@ -54,6 +54,13 @@ export const musicPlayerConfig: MusicPlayerConfig = {
 				cover: "/assets/music/cover/童话镇.avif",
 				lrc: "/assets/music/lrc/童话镇.lrc",
 			},
+{
+				name: "Take Me Hand",
+				artist: "伊蕾娜",
+				url: "/assets/music/Take Me Hand.m4a",
+				cover: "/assets/music/cover/Take Me Hand.avif",
+				lrc: "/assets/music/lrc/Take Me Hand.lrc",
+			},
 		],
 	},
 };
