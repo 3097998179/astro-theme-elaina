@@ -50,7 +50,7 @@ export const musicPlayerConfig: MusicPlayerConfig = {
 			{
 				name: "童话镇",
 				artist: "伊蕾娜",
-				url: "/assets/music/童话镇.aac",
+				url: "/assets/music/童话镇.m4a",
 				cover: "/assets/music/cover/童话镇.avif",
 				lrc: "/assets/music/lrc/童话镇.lrc",
 			},
