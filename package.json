@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "npx tsx scripts/generate-github-card-data.ts && npx tsx scripts/generate-lqips.ts && npx tsx scripts/generate-vndb-covers.ts && astro build && npx tsx scripts/prune-pio-assets.ts && npx tsx scripts/subset-fonts.ts && npx tsx scripts/minify-inline-scripts.ts && npx tsx scripts/run-pagefind.ts",
+    "build": "tsx scripts/generate-github-card-data.ts && tsx scripts/generate-lqips.ts && tsx scripts/generate-vndb-covers.ts && astro build && tsx scripts/prune-pio-assets.ts && tsx scripts/subset-fonts.ts && tsx scripts/minify-inline-scripts.ts && tsx scripts/run-pagefind.ts",
     "preview": "astro preview",
     "astro": "astro",
     "check": "astro check",
@@ -19,14 +19,9 @@
     "lint": "biome check --write ./src ./scripts",
     "new-d": "tsx scripts/new-dynamic.js",
     "new-post": "node scripts/new-post.js",
-    "lqips": "npx tsx scripts/generate-lqips.ts",
-    "github-cards": "npx tsx scripts/generate-github-card-data.ts",
+    "lqips": "tsx scripts/generate-lqips.ts",
+    "github-cards": "tsx scripts/generate-github-card-data.ts",
     "preinstall": "npx only-allow pnpm"
-  },
-  "pnpm": {
-    "overrides": {
-      "@mermanjs/web": "0.8.0-alpha.3"
-    }
   },
   "dependencies": {
     "@astrojs/cloudflare": "^14.3.1",
