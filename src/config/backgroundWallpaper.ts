@@ -61,14 +61,16 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 		// 支持远程视频URL，本地视频请放在 public/assets/videos/ 目录下
 		// playerUrl: "/assets/videos/firefly.mp4",
 		playerUrl:
-			"https://backend.appmiaoda.com/projects/supabase321600398370586624/storage/v1/object/public/cloud-files/c8153392-93d6-4b1a-af9b-9c76eb5728bb/1791889263284_xawagp.mp4",
+"public/assets/videos/v1.mp4",
+"public/assets/videos/v2.mp4",
+"public/assets/videos/v3.mp4",
 	},
 	// 横幅壁纸和全屏壁纸共享配置
 	common: {
 		// 壁纸遮罩暗度，让横幅文字显示更清晰，0-1之间，值越大越暗
 		dimOpacity: 0.2,
 		// 多视频播放模式："order" 顺序循环，"random" 随机切换（仅当 playerUrl 为数组时生效）
-		playerMode: "random",
+		playerMode: "order",
 		// 主页横幅文字
 		homeText: {
 			// 是否启用主页横幅文字
@@ -79,12 +81,14 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 			titleSize: "4.5rem",
 			// 主页横幅副标题
 			subtitle: [
-				"在灰之诗篇，我续写不休.",
-				"自每次告别，我由此远行.",
-				"于擦肩人海，我短暂停驻.",
-				"穿无名诸国，我始终流浪.",
-				"乘漫游之帚，我自由翱翔.",
-				"于灰蒙暮色，我曾启程.",
+  "于灰蒙暮色，我曾启程.",
+  "乘漫游之帚，我自由翱翔.",
+  "穿无名诸国，我始终流浪.",
+  "于擦肩人海，我短暂停驻.",
+  "自每次告别，我由此远行.",
+  "在灰之诗篇，我续写不休.",
+  "星夜为纸墨，诸国作诗行.",
+  "旅途无尽处，笔落即故乡.",
 			],
 			// 主页横幅副标题字体大小
 			subtitleSize: "1.5rem",
@@ -94,11 +98,11 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 				// 打字机关闭 → 每次刷新随机显示一条副标题
 				enable: true,
 				// 打字速度（毫秒）
-				speed: 200,
+				speed: 180,
 				// 删除速度（毫秒）
 				deleteSpeed: 100,
 				// 完全显示后的暂停时间（毫秒）
-				pauseTime: 2000,
+				pauseTime: 1500,
 			},
 			// 是否显示标题下方的链接图标
 			linksEnable: true,
