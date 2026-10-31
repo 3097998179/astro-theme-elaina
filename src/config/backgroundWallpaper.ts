@@ -65,6 +65,7 @@ playerUrl: [
 	"public/assets/videos/v2.mp4",
 	"public/assets/videos/v3.mp4",
 ],
+    },
 	// 横幅壁纸和全屏壁纸共享配置
 	common: {
 		// 壁纸遮罩暗度，让横幅文字显示更清晰，0-1之间，值越大越暗
