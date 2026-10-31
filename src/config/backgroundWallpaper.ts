@@ -59,12 +59,12 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 		// 背景视频播放地址
 		// 支持单个视频路径（字符串）或多个视频循环（数组，参考上面壁纸配置）
 		// 支持远程视频URL，本地视频请放在 public/assets/videos/ 目录下
-		// playerUrl: "/assets/videos/firefly.mp4",
-		playerUrl:
-"public/assets/videos/v1.mp4",
-"public/assets/videos/v2.mp4",
-"public/assets/videos/v3.mp4",
-	},
+	// 背景视频播放地址（数组形式表示多个视频循环播放）
+playerUrl: [
+	"/assets/videos/v1.mp4",
+	"/assets/videos/v2.mp4",
+	"/assets/videos/v3.mp4",
+],
 	// 横幅壁纸和全屏壁纸共享配置
 	common: {
 		// 壁纸遮罩暗度，让横幅文字显示更清晰，0-1之间，值越大越暗
