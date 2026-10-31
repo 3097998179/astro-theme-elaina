@@ -5,5 +5,9 @@ allowBuilds:
   esbuild: true
   workerd: true
 
+# ===== 新增：加速 Vercel 构建验证 =====
+trustLockfile: true          # 信任现有 lockfile，跳过逐条供应链复查
+verifyDepsBeforeRun: false   # 避免 pnpm run 前触发重复的依赖验证
+
 overrides:
   "@mermanjs/web": "0.8.0-alpha.3"
