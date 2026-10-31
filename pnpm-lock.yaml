@@ -4,13 +4,13 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  '@mermanjs/web': 0.8.0-alpha.3
+
 importers:
 
   .:
     dependencies:
-      '@astrojs/check':
-        specifier: ^0.9.10
-        version: 0.9.10(prettier@3.9.6)(typescript@6.0.3)
       '@astrojs/cloudflare':
         specifier: ^14.3.1
         version: 14.3.1(@types/node@26.4.1)(astro@7.3.2(@astrojs/markdown-remark@7.3.1(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@26.4.1)(jiti@2.7.0)(stylus@0.64.0(supports-color@10.2.2))(terser@5.50.0)(tsx@4.23.13)(yaml@2.9.0))(esbuild@0.28.2)(jiti@2.7.0)(stylus@0.64.0(supports-color@10.2.2))(terser@5.50.0)(tsx@4.23.13)(wrangler@4.127.1)(yaml@2.9.0)
@@ -65,9 +65,6 @@ importers:
       '@iconify/svelte':
         specifier: ^5.2.2
         version: 5.2.2(svelte@5.57.0)
-      '@iconify/types':
-        specifier: ^2.0.0
-        version: 2.0.0
       '@iconify/utils':
         specifier: ^3.1.7
         version: 3.1.7
@@ -83,12 +80,6 @@ importers:
       '@tailwindcss/typography':
         specifier: ^0.5.20
         version: 0.5.20(tailwindcss@4.3.3)
-      '@types/hast':
-        specifier: ^3.0.5
-        version: 3.0.5
-      '@types/mdast':
-        specifier: ^4.0.4
-        version: 4.0.4
       astro:
         specifier: 7.3.2
         version: 7.3.2(@astrojs/markdown-remark@7.3.1(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@26.4.1)(jiti@2.7.0)(stylus@0.64.0(supports-color@10.2.2))(terser@5.50.0)(tsx@4.23.13)(yaml@2.9.0)
@@ -203,9 +194,6 @@ importers:
       tsx:
         specifier: ^4.23.13
         version: 4.23.13
-      typescript:
-        specifier: ^6.0.3
-        version: 6.0.3
       unist-util-visit:
         specifier: ^5.1.0
         version: 5.1.0
@@ -213,6 +201,9 @@ importers:
         specifier: ^4.127.1
         version: 4.127.1
     devDependencies:
+      '@astrojs/check':
+        specifier: ^0.9.10
+        version: 0.9.10(prettier@3.9.6)(typescript@6.0.3)
       '@astrojs/ts-plugin':
         specifier: ^1.10.11
         version: 1.10.11(typescript@6.0.3)
@@ -225,9 +216,18 @@ importers:
       '@iconify-json/svg-spinners':
         specifier: ^1.2.4
         version: 1.2.4
+      '@iconify/types':
+        specifier: ^2.0.0
+        version: 2.0.0
       '@tailwindcss/vite':
         specifier: ^4.3.3
         version: 4.3.3(vite@8.2.2(@types/node@26.4.1)(esbuild@0.28.2)(jiti@2.7.0)(stylus@0.64.0(supports-color@10.2.2))(terser@5.50.0)(tsx@4.23.13)(yaml@2.9.0))
+      '@types/hast':
+        specifier: ^3.0.5
+        version: 3.0.5
+      '@types/mdast':
+        specifier: ^4.0.4
+        version: 4.0.4
       '@types/qrcode':
         specifier: ^1.5.6
         version: 1.5.6
@@ -252,6 +252,9 @@ importers:
       subset-font:
         specifier: ^2.7.0
         version: 2.7.0
+      typescript:
+        specifier: ^6.0.3
+        version: 6.0.3
 
 packages:
 
