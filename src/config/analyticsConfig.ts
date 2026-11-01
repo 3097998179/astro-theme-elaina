@@ -8,19 +8,28 @@ export const analyticsConfig: AnalyticsConfig = {
 	// Umami 统计配置
 	umamiAnalytics: {
 		// Umami Website ID
-		websiteId: "",
+		websiteId: "8247bd96-9af5-48a9-9d8a-0fddd42166a0",
+		// Umami 公开分享 ID：分享链接 /share/XXXXXXXX 的最后一段
+		shareId: "ymQHlmvlKmujek3f",
+		// Umami 实例地址
+		shareApiBase: "https://cloud.umami.is",
+		// 迁移前的历史累计（本站没有迁移过，保持 0）
+		historicalStats: {
+			visitors: 0,
+			pageviews: 0,
+		},
 		// Umami JS地址，支持使用自建
-		scriptUrl: "",
+		scriptUrl: "https://cloud.umami.is/script.js",
 		// Umami 会话回放脚本地址，支持使用自建
 		replaysScriptUrl: "https://cloud.umami.is/recorder.js",
 		// 是否追踪出站链接
 		trackOutboundLinks: true,
 		// 是否收集浏览器性能指标
-		collectWebVitals: false,
+		collectWebVitals: true,
 		// 会话回放配置
 		replays: {
 			// 是否启用会话回放
-			enabled: false,
+			enabled: true,
 			// 录制会话采样率，范围 0-1，例如 0.15 表示记录 15% 的会话
 			sampleRate: 0.15,
 			// 隐私遮罩级别："moderate" 会遮罩所有输入框；"strict" 额外遮罩页面全部文本
@@ -34,16 +43,16 @@ export const analyticsConfig: AnalyticsConfig = {
 	// 51la 统计配置
 	la51Analytics: {
 		// 51la 统计 ID
-		Id: "3RTLGm1MZUNLRZjl",
+		Id: "",
 		// 自定义 SDK JS 地址，防止 DNS 污染，留空使用默认地址
 		sdkUrl: "",
 		// 多个统计 ID 的数据分离标识，留空则使用 Id
 		ck: "",
 		// 是否开启事件分析功能
-		autoTrack: true,
+		autoTrack: false,
 		//  Hash路由模式, 项目使用History API路由, 所以不必开启默认false
 		hashMode: false,
 		// 是否开启网站录屏功能
-		screenRecord: false,
+		screenRecord: true,
 	},
 };
