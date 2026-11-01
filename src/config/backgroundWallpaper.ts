@@ -61,9 +61,9 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 		// 支持远程视频URL，本地视频请放在 public/assets/videos/ 目录下
 	// 背景视频播放地址（数组形式表示多个视频循环播放）
 playerUrl: [
-	"public/assets/videos/v1.mp4",
-	"public/assets/videos/v2.mp4",
-	"public/assets/videos/v3.mp4",
+	"assets/videos/v1.mp4",
+	"assets/videos/v2.mp4",
+	"assets/videos/v3.mp4",
 ],
     },
 	// 横幅壁纸和全屏壁纸共享配置
