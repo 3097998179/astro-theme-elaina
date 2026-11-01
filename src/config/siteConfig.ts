@@ -12,6 +12,8 @@ const pages = resolvePageToggles({
 
 	// 友链页面开关
 	friends: true,
+	// 朋友圈页面开关
+	fcircle: true,
 	// 留言板页面开关，需要配置评论系统
 	guestbook: true,
 
@@ -315,7 +317,7 @@ export const siteConfig: SiteConfig = {
 		// MyAnimeList 用户名（列表需为公开状态，私密列表无法读取）
 		username: "cuteleaf",
 		// MyAnimeList Client ID，在 https://myanimelist.net/apiconfig 注册免费应用后获取
-		clientId: "	0ef34371450f9c6c809deaadec6aa8f3",
+		clientId: "0ef34371450f9c6c809deaadec6aa8f3",
 		// MAL API 地址
 		apiUrl: "https://api.myanimelist.net/v2",
 		// 动画条目详情页地址，末尾需要带 /
