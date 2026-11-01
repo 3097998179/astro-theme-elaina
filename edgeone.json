@@ -1,4 +1,4 @@
 {
   "installCommand": "pnpm install --no-frozen-lockfile",
-  "nodeVersion": "22.11.0"
+  "nodeVersion": "24.5.0"
 }
