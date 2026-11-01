@@ -117,6 +117,12 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 				external: false,
 				icon: "fa7-solid:atom",
 			},
+          	// 站点统计
+			{
+				name: "站点统计",			                             url:"/analytics/",
+				external: false,
+				icon: "material-symbols:analytics",
+			},
 		],
 	});
 
