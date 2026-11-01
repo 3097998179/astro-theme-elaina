@@ -64,8 +64,6 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 			// 动态
 			LinkPresets.Dynamic,
 
-		
-
 			// 相册
 			LinkPresets.Gallery,
 
@@ -109,15 +107,15 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 		children: [
 			{
 				name: "RSS 订阅",
-				url: "",
+				url: "/rss/",
 				external: false,
-				icon: "material-symbols:link",
+				icon: "fa7-solid:rss",
 			},
           {
 				name: "Atom 订阅",
-				url: "",
+				url: "/atom/",
 				external: false,
-				icon: "material-symbols:link",
+				icon: "fa7-solid:atom",
 			},
 		],
 	});
