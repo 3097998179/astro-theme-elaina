@@ -27,6 +27,12 @@ export const profileConfig: ProfileConfig = {
 			url: "https://qm.qq.com/q/NBogWTsKcc",
 			showName: false,
 		},
+        {
+			name: "bilibili",
+		    icon: "fa7-brands:bilibili",
+			url: "https://b23.tv/FPpOWl9",
+            showName: false,
+		},
 		{
 			name: "Email",
 			icon: "fa7-solid:envelope",
