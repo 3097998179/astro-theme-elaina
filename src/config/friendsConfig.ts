@@ -33,12 +33,32 @@ export const friendsConfig: FriendLink[] = [
 		enabled: true, // 是否启用
 	},
 	{
+		title: "夏夜流萤",
+		imgurl:
+			"https://weavatar.com/avatar/d252655d40d6874417a720bad0a6c5f77f8f6a1fd2f882f8f338402dc37e4190?s=640",
+		desc: "飞萤之火自无梦的长夜亮起，绽放在终竟的明天。",
+		siteurl: "https://blog.cuteleaf.cn",
+		feedUrl: "https://blog.cuteleaf.cn/rss.xml",
+		tags: ["Blog"],
+		weight: 10,
+		enabled: true,
+	},
+	{
 		title: "缤果云盘",
 		imgurl:
 			"https://job-manager-artifacts-online.cdn.bcebos.com/prod/artifacts/1049d896-fcd8-47e5-b7f1-2d861dd33df1/app-c5hnez17ysjl_web_1789826583557.png",
 		desc: "安全存储，随时随地访问您的文件",
 		siteurl: "https://app-c5hnez17ysjl.appmiaoda.com/",
 		tags: ["tool"],
+		weight: 9,
+		enabled: true,
+	},
+	{
+		title: "Firefly Docs",
+		imgurl: "https://docs-firefly.cuteleaf.cn/logo.png",
+		desc: "Firefly主题模板文档",
+		siteurl: "https://docs-firefly.cuteleaf.cn",
+		tags: ["Docs"],
 		weight: 9,
 		enabled: true,
 	},
