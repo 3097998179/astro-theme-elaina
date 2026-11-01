@@ -35,7 +35,9 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 			LinkPresets.Series,
 		],
 	});
-
+	// 项目
+	links.push(LinkPresets.Projects);
+  
 	//社交及其子菜单
 	links.push({
 		name: "社交",
@@ -62,8 +64,7 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 			// 动态
 			LinkPresets.Dynamic,
 
-			// 项目
-			LinkPresets.Projects,
+		
 
 			// 相册
 			LinkPresets.Gallery,
@@ -107,9 +108,15 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 		// 子菜单
 		children: [
 			{
-				name: "异次元之旅",
-				url: "https://travel.moe/go?travel=on",
-				external: true,
+				name: "RSS 订阅",
+				url: "",
+				external: false,
+				icon: "material-symbols:link",
+			},
+          {
+				name: "Atom 订阅",
+				url: "",
+				external: false,
 				icon: "material-symbols:link",
 			},
 		],
@@ -162,7 +169,7 @@ export const LinkPresets: Record<string, NavBarLink> = {
 		icon: "material-symbols:layers",
 	},
 	Friends: {
-		name: "友链",
+		name: "友情链接",
 		url: "/friends/",
 		icon: "material-symbols:link-2-rounded",
 		pageKey: "friends",
@@ -174,7 +181,7 @@ export const LinkPresets: Record<string, NavBarLink> = {
 		pageKey: "fcircle",
 	},
 	Guestbook: {
-		name: "留言",
+		name: "留言板",
 		url: "/guestbook/",
 		icon: "material-symbols:chat",
 		pageKey: "guestbook",
@@ -198,13 +205,13 @@ export const LinkPresets: Record<string, NavBarLink> = {
 		pageKey: "gallery",
 	},
 	Booknav: {
-		name: "导航",
+		name: "书签导航",
 		url: "/booknav/",
 		icon: "material-symbols:bookmarks",
 		pageKey: "booknav",
 	},
 	Bilibili: {
-		name: "bilibili",
+		name: "哔哩哔哩",
 		url: "/bilibili/",
 		icon: "fa7-brands:bilibili",
 		pageKey: "bilibili",
