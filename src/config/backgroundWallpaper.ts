@@ -2,7 +2,7 @@ import type { BackgroundWallpaperConfig } from "@/types/backgroundWallpaper";
 
 export const backgroundWallpaper: BackgroundWallpaperConfig = {
 	// 壁纸模式："banner" 横幅壁纸，"fullscreen" 全屏壁纸，"overlay" 覆盖透明，"none" 纯色背景无壁纸
-	mode: "fullscreen",
+	mode: "banner",
 	// 是否启用背景视频播放，配置后将在导航栏显示视频播放按钮
 	playerEnable: true,
 	/**
@@ -33,6 +33,8 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 			"assets/videos/v1.mp4",
 			"assets/videos/v2.mp4",
 			"assets/videos/v3.mp4",
+            "assets/videos/v4.mp4",
+            "assets/videos/v5.mp4",
 		],
 	},
 	// 横幅壁纸和全屏壁纸共享配置
@@ -40,7 +42,7 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 		// 壁纸遮罩暗度，让横幅文字显示更清晰，0-1之间，值越大越暗
 		dimOpacity: 0.2,
 		// 多视频播放模式："order" 顺序循环，"random" 随机切换（仅当 playerUrl 为数组时生效）
-		playerMode: "order",
+		playerMode: "random",
 		// 主页横幅文字
 		homeText: {
 			// 是否启用主页横幅文字
@@ -53,12 +55,11 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 			subtitle: [
 				"请翻开这一页，成为旅途中新的见证者.",
 				"故事在这里落幕，而你的旅程将从这一刻开始.",
-				"下一站去哪呢……就留到明天再决定吧.",
+				"下一站去哪呢......就留到明天再决定吧.",
 				"所谓终点，或许只是另一段长途跋涉的间隙.",
 				"「风会停下，而旅人不会」.",
-				"在灰之诗篇，我续写不休.",
-				"星夜为纸墨，诸国作诗行.",
-				"旅途无尽处，笔落即故乡.",
+				"有些故事从来没有所谓的结局.",
+				"所谓终点，或许只是另一段长途跋涉的间隙.",
 			],
 			// 主页横幅副标题字体大小
 			subtitleSize: "1.5rem",
