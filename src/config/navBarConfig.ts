@@ -35,8 +35,8 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 			LinkPresets.Series,
 		],
 	});
-	// 项目
-	links.push(LinkPresets.Projects);
+	// 动态
+	links.push(LinkPresets.Dynamic);
   
 	//社交及其子菜单
 	links.push({
@@ -61,8 +61,8 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 		url: "#",
 		icon: "material-symbols:person",
 		children: [
-			// 动态
-			LinkPresets.Dynamic,
+			// 项目
+			LinkPresets.Projects,
 
 			// 相册
 			LinkPresets.Gallery,
