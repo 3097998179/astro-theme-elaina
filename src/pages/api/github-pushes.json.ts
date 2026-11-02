@@ -16,14 +16,14 @@ import type { APIRoute } from "astro";
  */
 export const prerender = true;
 
-const repository = "hy4962/Firefly";
-const branch = "HY";
+const repository = "3097998179/astro-theme-elaina";
+const branch = "master";
 /**
  * 只统计本人的提交。
  * 这个仓库是 fork，不加过滤会把上游 CuteLeaf/Firefly 的历史一起算进来
  * （实测：全部 1695 条，本人的只有 253 条）。
  */
-const author = "hy4962";
+const author = "殇恋";
 const weeksBack = 53;
 /** git log 拿到的条数少于这个值，就认为 clone 不完整，改走 API */
 const gitLogTrustThreshold = 100;
