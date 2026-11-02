@@ -1,4 +1,2270 @@
-<!-- 
-	你可以在这个文件中使用HTML内容自定义网站底部的footer
-	You can use html to customize the footer at the bottom of the website in this file. 
--->
+<div style="text-align: center; font-size: 12px;">
+	<a href="https://icp.gov.moe/?keyword=20269118" target="_blank" style="display: inline-flex; align-items: center; gap: 4px;">
+		<img src="/assets/images/moe-icp.png" alt="萌ICP备案标志" style="height: 16px; vertical-align: middle;" loading="lazy" />
+		萌ICP备20269118号
+	</a>
+</div>
+
+<style>
+	/* 页脚运行时间：与 siteConfig.siteStartDate 保持一致 */
+	.ff-uptime {
+		margin: 0 0 6px;
+		font-size: 13px;
+		line-height: 1.7;
+		text-align: center;
+		color: var(--primary);
+	}
+	.ff-uptime b {
+		font-weight: 700;
+		font-variant-numeric: tabular-nums;
+	}
+	/* 页脚 Umami 统计：只用公开分享接口读取，无后端依赖 */
+	.ff-us[hidden] {
+		display: none;
+	}
+	.ff-us {
+		margin: 8px 0 2px;
+		font-size: 12px;
+		line-height: 1.7;
+		text-align: center;
+	}
+	/* 整块统计可点击，跳 Umami 公开看板 */
+	.ff-us-link {
+		display: inline-block;
+		padding: 2px 8px;
+		border-radius: 999px;
+		color: inherit;
+		text-decoration: none;
+		transition:
+			color 0.2s ease,
+			background-color 0.2s ease;
+	}
+	.ff-us-link:hover,
+	.ff-us-link:focus-visible {
+		color: var(--primary);
+		background: rgba(128, 128, 128, 0.14);
+		outline: none;
+	}
+	.ff-us-link-arrow {
+		display: inline-block;
+		margin-left: 4px;
+		font-size: 11px;
+		opacity: 0.5;
+		transition:
+			opacity 0.2s ease,
+			transform 0.2s ease;
+	}
+	.ff-us-link:hover .ff-us-link-arrow,
+	.ff-us-link:focus-visible .ff-us-link-arrow {
+		opacity: 1;
+		transform: translate(1px, -1px);
+	}
+	.ff-us-i {
+		white-space: nowrap;
+	}
+	.ff-us-i + .ff-us-i::before {
+		content: "|";
+		margin: 0 8px;
+		opacity: 0.3;
+	}
+	.ff-us b {
+		position: relative;
+		display: inline-block;
+		padding-bottom: 2px;
+		font-weight: 700;
+		font-variant-numeric: tabular-nums;
+		color: var(--primary);
+	}
+	.ff-us b::after {
+		content: "";
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		height: 1px;
+		background: currentColor;
+		opacity: 0.3;
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.ff-us b,
+		.ff-us-link,
+		.ff-us-link-arrow {
+			transition: none;
+		}
+	}
+</style>
+
+<div id="ff-uptime" class="ff-uptime">本站已运行 <b data-ff-up="d">0</b> 天 <b data-ff-up="h">0</b> 小时 <b data-ff-up="m">0</b> 分 <b data-ff-up="s">0</b> 秒</div>
+
+<div id="ff-us" class="ff-us" hidden>
+	<a
+		class="ff-us-link"
+		href="https://umami.49o.pw/share/Z4DD4Y3q9CTFpBeM"
+		target="_blank"
+		rel="noopener noreferrer"
+		title="查看完整访问统计（Umami 公开看板）"
+		aria-label="查看完整访问统计"
+	>
+		<span class="ff-us-i">今日访客：<b data-ff-us="todayVisitors">0</b></span>
+		<span class="ff-us-i">今日访问：<b data-ff-us="todayPageviews">0</b></span>
+		<span class="ff-us-i">本站访客：<b data-ff-us="visitors">0</b></span>
+		<span class="ff-us-i">本站访问：<b data-ff-us="pageviews">0</b></span>
+		<span class="ff-us-link-arrow" aria-hidden="true">↗</span>
+	</a>
+</div>
+
+<script>
+	(function () {
+		// ===== 运行时间 =====
+		// 建站日期与 siteConfig.siteStartDate 保持一致，时区写死 +08:00
+		// 是为了让访客身处任何时区算出来的天数都相同。
+		var START_AT = new Date("2026-03-24T00:00:00+08:00").getTime();
+		var uptimeRoot = document.getElementById("ff-uptime");
+
+		if (uptimeRoot) {
+			var uptimeTimer = null;
+			var uptimeParts = {
+				d: uptimeRoot.querySelector('[data-ff-up="d"]'),
+				h: uptimeRoot.querySelector('[data-ff-up="h"]'),
+				m: uptimeRoot.querySelector('[data-ff-up="m"]'),
+				s: uptimeRoot.querySelector('[data-ff-up="s"]'),
+			};
+
+			var renderUptime = function () {
+				var total = Math.max(0, Math.floor((Date.now() - START_AT) / 1000));
+				var values = {
+					d: Math.floor(total / 86400),
+					h: Math.floor((total % 86400) / 3600),
+					m: Math.floor((total % 3600) / 60),
+					s: total % 60,
+				};
+				Object.keys(values).forEach(function (key) {
+					if (uptimeParts[key]) uptimeParts[key].textContent = String(values[key]);
+				});
+			};
+
+			var startUptime = function () {
+				if (uptimeTimer) return;
+				renderUptime();
+				uptimeTimer = window.setInterval(renderUptime, 1000);
+			};
+
+			var stopUptime = function () {
+				if (!uptimeTimer) return;
+				window.clearInterval(uptimeTimer);
+				uptimeTimer = null;
+			};
+
+			// 切到后台就停表，省电也省调度。
+			document.addEventListener("visibilitychange", function () {
+				if (document.hidden) stopUptime();
+				else startUptime();
+			});
+
+			startUptime();
+		}
+
+		// ===== 访问统计 =====
+		// 换 Umami 站点或分享链接时，只改下面两行即可。
+		// SHARE_ID 取分享链接 https://umami.49o.pw/share/XXXXXXXX 的最后一段。
+		var API_BASE = "https://umami.49o.pw";
+		var SHARE_ID = "Z4DD4Y3q9CTFpBeM";
+
+		// 缓存 tag 里带上 API_BASE：换 Umami 实例（域名变了）时，本地缓存的
+		// 旧分享令牌和旧数据自动作废，不会拿着 A 站签的令牌去问 B 站要数据。
+		var CACHE_SCOPE = API_BASE + "|" + SHARE_ID;
+
+		var KEY_SHARE = "ff:umami:share";
+		var KEY_STATS = "ff:umami:stats";
+		var TTL_SHARE = 86400000; // 分享令牌缓存 24 小时
+		var TTL_TODAY = 60000; // 今日数据缓存 60 秒
+		var TTL_ALL = 300000; // 全站数据缓存 5 分钟
+		var ANIM_MS = 900;
+		var POLL_MS = 90000; // 停留期间每 90 秒静默刷新一次
+		var MIN_GAP = 60000; // 两次刷新之间至少间隔 60 秒
+
+		var root = document.getElementById("ff-us");
+		if (!root) return;
+
+		function readCache(key, tag, ttl) {
+			try {
+				var raw = localStorage.getItem(key);
+				if (!raw) return null;
+				var cached = JSON.parse(raw);
+				if (
+					cached &&
+					cached.tag === tag &&
+					typeof cached.timestamp === "number" &&
+					Date.now() - cached.timestamp < ttl
+				) {
+					return cached.value;
+				}
+			} catch (error) {
+				// localStorage 不可用（无痕模式等）时直接走网络请求。
+			}
+			return null;
+		}
+
+		function writeCache(key, tag, value) {
+			try {
+				localStorage.setItem(
+					key,
+					JSON.stringify({ tag: tag, timestamp: Date.now(), value: value }),
+				);
+			} catch (error) {
+				// 写入失败不影响本次渲染。
+			}
+		}
+
+		function clearCache(key) {
+			try {
+				localStorage.removeItem(key);
+			} catch (error) {
+				// 清不掉也不影响：后面的 force 请求本来就会绕过缓存。
+			}
+		}
+
+		function formatNumber(value) {
+			return new Intl.NumberFormat("zh-CN").format(Number(value) || 0);
+		}
+
+		function animateNumber(element, target) {
+			var previous = Number(element.dataset.ffUsValue || 0);
+			element.dataset.ffUsValue = String(target);
+			var reduceMotion =
+				window.matchMedia &&
+				window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+			if (reduceMotion || previous === target) {
+				element.textContent = formatNumber(target);
+				return;
+			}
+			var startedAt = null;
+			function tick(timestamp) {
+				if (startedAt === null) startedAt = timestamp;
+				var progress = Math.min(1, (timestamp - startedAt) / ANIM_MS);
+				var eased = 1 - Math.pow(1 - progress, 3);
+				element.textContent = formatNumber(
+					Math.round(previous + (target - previous) * eased),
+				);
+				if (progress < 1) {
+					requestAnimationFrame(tick);
+				} else {
+					element.textContent = formatNumber(target);
+				}
+			}
+			requestAnimationFrame(tick);
+		}
+
+		function render(values) {
+			Object.keys(values).forEach(function (name) {
+				var target = Math.max(0, Math.round(Number(values[name]) || 0));
+				var elements = root.querySelectorAll('[data-ff-us="' + name + '"]');
+				for (var i = 0; i < elements.length; i += 1) {
+					animateNumber(elements[i], target);
+				}
+			});
+			root.hidden = false;
+		}
+
+		function fetchShare(force) {
+			var cached = force ? null : readCache(KEY_SHARE, CACHE_SCOPE, TTL_SHARE);
+			if (cached) return Promise.resolve(cached);
+			return fetch(API_BASE + "/api/share/" + encodeURIComponent(SHARE_ID), {
+				cache: "no-store",
+			})
+				.then(function (response) {
+					if (!response.ok) throw httpError("share", response.status);
+					return response.json();
+				})
+				.then(function (data) {
+					if (!data || !data.websiteId || !data.token) {
+						throw new Error("invalid share payload");
+					}
+					writeCache(KEY_SHARE, CACHE_SCOPE, data);
+					return data;
+				});
+		}
+
+		function fetchStats(share, startAt, scope, ttl, force) {
+			var key = KEY_STATS + ":" + scope;
+			var tag = CACHE_SCOPE + "|" + share.websiteId;
+			var cached = force ? null : readCache(key, tag, ttl);
+			if (cached) return Promise.resolve(cached);
+
+			var url =
+				API_BASE +
+				"/api/websites/" +
+				share.websiteId +
+				"/stats?startAt=" +
+				startAt +
+				"&endAt=" +
+				Date.now();
+
+			return fetch(url, {
+				headers: {
+					"x-umami-share-token": share.token,
+					"x-umami-share-context": "1",
+				},
+			})
+				.then(function (response) {
+					if (!response.ok) throw httpError("stats", response.status);
+					return response.json();
+				})
+				.then(function (data) {
+					writeCache(key, tag, data);
+					return data;
+				});
+		}
+
+		// 401/403 单独标出来：只有鉴权失败才值得丢掉令牌重取一次，
+		// 网络超时、5xx 重取令牌也是白搭。
+		function httpError(label, status) {
+			var error = new Error(label + " " + status);
+			error.auth = status === 401 || status === 403;
+			return error;
+		}
+
+		function loadStats(share, force) {
+			var dayStart = new Date();
+			dayStart.setHours(0, 0, 0, 0);
+			var todayStart = dayStart.getTime();
+			return Promise.all([
+				fetchStats(share, todayStart, "today:" + todayStart, TTL_TODAY, force),
+				fetchStats(share, 0, "all", TTL_ALL, force),
+			]);
+		}
+
+		var running = false;
+		var lastRefreshAt = 0;
+
+		function refresh(force) {
+			if (running) return;
+			if (force && Date.now() - lastRefreshAt < MIN_GAP) return;
+			running = true;
+			lastRefreshAt = Date.now();
+
+			// 分享令牌走 24 小时缓存，轮询只强刷 stats，不多打 share 接口。
+			fetchShare()
+				.then(function (share) {
+					return loadStats(share, force);
+				})
+				.catch(function (error) {
+					// 缓存里的令牌可能挂在旧实例上（换域名后 24 小时内仍会命中），
+					// 表现就是 401 + 页脚整行消失。这里丢掉令牌重取一次，整条链路只重试这一回。
+					if (!error || error.auth !== true) throw error;
+					clearCache(KEY_SHARE);
+					return fetchShare(true).then(function (share) {
+						return loadStats(share, true);
+					});
+				})
+				.then(function (results) {
+					var today = results[0] || {};
+					var all = results[1] || {};
+					render({
+						todayVisitors: today.visitors,
+						todayPageviews: today.pageviews,
+						visitors: all.visitors,
+						pageviews: all.pageviews,
+					});
+				})
+				.catch(function (error) {
+					// 拉取失败就保持整行隐藏，不在页脚留残骸。
+					if (window.console && console.warn) {
+						console.warn("[ff-umami] 页脚统计加载失败：", error);
+					}
+				})
+				.then(function () {
+					running = false;
+				});
+		}
+
+		function boot() {
+			if ("requestIdleCallback" in window) {
+				requestIdleCallback(function () {
+					refresh(false);
+				}, { timeout: 3000 });
+			} else {
+				setTimeout(function () {
+					refresh(false);
+				}, 600);
+			}
+
+			// 页面长时间停留时静默刷新，切后台不请求。
+			setInterval(function () {
+				if (document.hidden) return;
+				refresh(true);
+			}, POLL_MS);
+
+			document.addEventListener("visibilitychange", function () {
+				if (!document.hidden) refresh(true);
+			});
+		}
+
+		if (document.readyState === "complete") {
+			boot();
+		} else {
+			window.addEventListener("load", boot, { once: true });
+		}
+	})();
+</script>
+
+<script>
+	// ===== 页面增强脚本：按需加载 =====
+	// 只有进到对应页面才去拉那页的脚本，其他页面只背这十几行。
+	// 之所以放页脚全站引入：页脚在 #swup-container 之外，切页不会重跑，
+	// 用它挂住 swup 事件，才能保证从首页无刷新跳进去时增强照样生效。
+	// 以后哪页还要加同类增强，往 PAGE_SCRIPTS 里补一条就行。
+	(function () {
+		var PAGE_SCRIPTS = [
+			{
+				path: /^\/friends\/?$/,
+				id: "ff-friend-covers-js",
+				src: "/assets/js/friends-covers.js?v=2",
+			},
+			{
+				// 友链页分区：把「博客社区」挪到下方独立一栏
+				path: /^\/friends\/?$/,
+				id: "ff-friend-sections-js",
+				src: "/assets/js/friends-sections.js?v=2",
+			},
+			{
+				path: /^\/booknav\/?$/,
+				id: "ff-booknav-covers-js",
+				src: "/assets/js/booknav-covers.js",
+			},
+			{
+				// 「最近评论」：全站加载 —— 桌面挂右栏、移动端挂底部栏，挂载逻辑在 js 里
+				path: /.*/,
+				id: "ff-recent-comments-js",
+				src: "/assets/js/recent-comments.js?v=6",
+			},
+			{
+				// 搜索预热：全站加载 —— 空转时就起 pagefind 的 worker/wasm/索引，
+				// 顺带把「回车 = 进第一条结果」补上（上游搜索框没有 Enter 处理）
+				path: /.*/,
+				id: "ff-search-warmup-js",
+				src: "/assets/js/search-warmup.js?v=1",
+			},
+			{
+				// 评论区「回复折叠」：全站加载 —— 每条评论下的回复默认展示 2 条，
+				// 多出来的收在「展开更多」后面。没有 #waline 的页面自动空转。
+				path: /.*/,
+				id: "ff-comment-reply-collapse-js",
+				src: "/assets/js/comment-reply-collapse.js?v=2",
+			},
+			{
+				// 评论区「回复引用」：全站加载 —— 顺着 wl-reply-to 的锚点把被回复那条
+				// 摘成引用块，免得只看到 `@昵称：` 却不知道在回哪句。
+				path: /.*/,
+				id: "ff-comment-reply-quote-js",
+				src: "/assets/js/comment-reply-quote.js?v=3",
+			},
+			{
+				// 动态页内嵌评论增强：把回复折叠 / 回复引用的样式与脚本代投进那个同源
+				// iframe。之所以要代投：动态的评论跑在 /dynamic/comments/ 里，那个页面
+				// 走 Layout、没有页脚 —— 上面两条全站脚本与样式压根到不了它，动态里的
+				// 回复就成了全站唯一「不折叠、无引用」的评论区。
+				path: /^\/dynamic\/?$/,
+				id: "ff-dynamic-comment-enhance-js",
+				src: "/assets/js/dynamic-comment-enhance.js?v=9",
+			},
+			{
+				// 动态页封面区：把页脚那个 #ff-wx-hero 壳子搬进正文顶部（版式照
+				// blog.huchao.vip/moments/ 的 wx-cover）。搬运用 clone，原壳留在页脚，
+				// 不然 swup 切一次页搬过去的节点就没了。
+				path: /^\/dynamic\/?$/,
+				id: "ff-dynamic-hero-js",
+				src: "/assets/js/dynamic-hero.js?v=5",
+			},
+			{
+				// 「天气预报」卡片：全站加载 —— 数据来自 uapis.cn（免费无 key，按访客
+				// IP 定位），桌面挂右栏、移动端挂底部栏，挂载与渲染逻辑都在 js 里。
+				path: /.*/,
+				id: "ff-weather-js",
+				src: "/assets/js/weather-card.js?v=2",
+			},
+		];
+
+		// 同样是按需加载，只不过加载的是样式表。规则里已经用元素名限定作用域，
+		// 挂在这儿只是为了别让每个页面都白白多请求一个只对 /dynamic/ 有用的文件。
+		var PAGE_STYLES = [
+			{
+				// 动态页卡片改版：左侧主题色竖条、圆形头像描边、固定尺寸的图片方块网格
+				path: /^\/dynamic\/?$/,
+				id: "ff-dynamic-card-css",
+				href: "/assets/css/dynamic-card.css?v=4",
+			},
+		];
+
+		function loadPageAssets() {
+			var pathname = window.location.pathname;
+			var i;
+			for (i = 0; i < PAGE_SCRIPTS.length; i++) {
+				var entry = PAGE_SCRIPTS[i];
+				if (!entry.path.test(pathname)) continue;
+				if (document.getElementById(entry.id)) continue;
+				var script = document.createElement("script");
+				script.id = entry.id;
+				script.src = entry.src;
+				script.async = true;
+				document.head.appendChild(script);
+			}
+			for (i = 0; i < PAGE_STYLES.length; i++) {
+				var style = PAGE_STYLES[i];
+				if (!style.path.test(pathname)) continue;
+				if (document.getElementById(style.id)) continue;
+				var link = document.createElement("link");
+				link.id = style.id;
+				link.rel = "stylesheet";
+				link.href = style.href;
+				document.head.appendChild(link);
+			}
+		}
+
+		document.addEventListener("astro:page-load", loadPageAssets);
+		document.addEventListener("swup:page:view", loadPageAssets);
+		if (document.readyState === "loading") {
+			document.addEventListener("DOMContentLoaded", loadPageAssets, { once: true });
+		} else {
+			loadPageAssets();
+		}
+	})();
+</script>
+
+<!-- ===== 动态页顶部挂件（写说说 + 置顶条）=====
+     只在 /dynamic/ 显示：DOM 先挂在页脚这儿（swup 容器之外，切页不丢），
+     由 dynamic-hero.js 搬进正文顶部；没搬走之前一直 hidden，不会露在页脚位置。
+     原来那块「封面图 + 头像 / 昵称 / 签名」已经整块撤掉了 —— 顶上那半屏图除了把
+     正文推下去没干别的（2026-10-31 站长要求删）。现在只剩两件事：
+       · .ff-wx-actions 的「写说说」被脚本并进页面头部右侧那一排（跟订阅RSS、N 动态并排）
+       · .ff-wx-pinned 是置顶动态的快捷入口，没有置顶时保持 hidden，不留空框 -->
+<div id="ff-wx-hero" hidden>
+	<div class="ff-wx-actions">
+		<a class="ff-wx-action-btn ff-wx-action-primary" href="https://memos.49o.pw" target="_blank" rel="noopener noreferrer">
+			<span>写说说</span>
+		</a>
+	</div>
+	<a class="ff-wx-pinned" id="ff-wx-pinned" hidden>
+		<div class="ff-wx-pinned-tag"><span>置顶</span></div>
+		<div class="ff-wx-pinned-items"></div>
+	</a>
+</div>
+
+<div id="ff-dyn" class="ff-dyn" data-ff-dyn-owner="HY">
+	<div class="ff-dyn-inner card-base">
+		<a class="ff-dyn-badge" href="/dynamic/" aria-label="查看全部动态">
+			<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.4 6.6 6.6 2.4-6.6 2.4L12 20.5l-2.4-6.6L3 11.5l6.6-2.4z" /></svg>
+			<span>动态</span>
+		</a>
+		<div class="ff-dyn-marquee" data-ff-dyn-marquee>
+			<div class="ff-dyn-track" data-ff-dyn-track>
+				<div class="ff-dyn-group" data-ff-dyn-group></div>
+			</div>
+		</div>
+		<a class="ff-dyn-more" href="/dynamic/">
+			<span>更多</span>
+			<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.3 5.3a1 1 0 011.4 0l5.6 5.6a1 1 0 010 1.4l-5.6 5.6a1 1 0 11-1.4-1.4L14.2 12 9.3 7.1a1 1 0 010-1.4z" /></svg>
+		</a>
+	</div>
+</div>
+
+<style>
+	/* ===== 首页动态跑马灯 ===== */
+	/* 默认不显示。只有 home-dynamic-bar.js 把它插进 #main-grid 的首位、
+	   且拿到数据加上 .ff-dyn--ready 之后，才会在首页露出来 ——
+	   所以脚本没加载时，不会在页脚位置留一条裸的滚动条。 */
+	.ff-dyn {
+		/* 作为 #main-grid 的 grid item 横跨全部列（把左右侧栏一起吃进来）；
+		   与下方卡片之间的行间距由容器的 gap-4 负责，所以这里不留 margin */
+		grid-column: 1 / -1;
+		display: none;
+		margin: 0;
+	}
+	body.is-home .ff-dyn.ff-dyn--ready {
+		display: flex;
+	}
+	/* 移动端：#main-grid 会变成 display:block（见 layout-styles.css 的 .mobile-no-sidebar），
+	   没有 gap 可用，行间距得自己留；再把两侧胶囊压紧一点，宽度让给滚动区 */
+	@media (max-width: 767px) {
+		.ff-dyn {
+			margin-bottom: 1rem;
+		}
+		.ff-dyn-inner {
+			gap: 8px;
+			padding: 8px 10px;
+		}
+		.ff-dyn-badge,
+		.ff-dyn-more {
+			gap: 3px;
+			padding: 5px 8px;
+			font-size: 12px;
+		}
+		.ff-dyn-badge svg,
+		.ff-dyn-more svg {
+			width: 14px;
+			height: 14px;
+		}
+	}
+	.ff-dyn-inner {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		width: 100%;
+		padding: 10px 12px;
+	}
+	.ff-dyn-badge,
+	.ff-dyn-more {
+		display: inline-flex;
+		align-items: center;
+		gap: 4px;
+		flex-shrink: 0;
+		padding: 6px 10px;
+		border-radius: 8px;
+		background: var(--btn-regular-bg);
+		font-size: 13px;
+		font-weight: 700;
+		line-height: 1;
+		text-decoration: none;
+		transition: background-color 150ms;
+	}
+	.ff-dyn-badge {
+		color: var(--btn-content);
+	}
+	.ff-dyn-more {
+		color: var(--primary);
+	}
+	.ff-dyn-badge:hover,
+	.ff-dyn-more:hover {
+		background: var(--btn-regular-bg-hover);
+	}
+	.ff-dyn-badge svg,
+	.ff-dyn-more svg {
+		width: 15px;
+		height: 15px;
+		fill: currentColor;
+	}
+	.ff-dyn-marquee {
+		flex: 1 1 auto;
+		min-width: 0;
+		overflow: hidden;
+		padding: 4px 0;
+		border-radius: 8px;
+		background: var(--btn-regular-bg);
+		-webkit-mask-image: linear-gradient(90deg, transparent, #000 2rem, #000 calc(100% - 2rem), transparent);
+		mask-image: linear-gradient(90deg, transparent, #000 2rem, #000 calc(100% - 2rem), transparent);
+	}
+	.ff-dyn-marquee:hover .ff-dyn-track--animate,
+	.ff-dyn-marquee:focus-within .ff-dyn-track--animate {
+		animation-play-state: paused;
+	}
+	.ff-dyn-track {
+		display: flex;
+		align-items: center;
+		width: max-content;
+	}
+	.ff-dyn-track--animate {
+		animation: ff-dyn-scroll var(--ff-dyn-duration, 40s) linear infinite;
+		will-change: transform;
+	}
+	@keyframes ff-dyn-scroll {
+		from {
+			transform: translateX(0);
+		}
+		to {
+			transform: translateX(-50%);
+		}
+	}
+	.ff-dyn-group {
+		display: flex;
+		align-items: center;
+	}
+	.ff-dyn-link {
+		display: inline-flex;
+		align-items: center;
+		min-height: 24px;
+		white-space: nowrap;
+		text-decoration: none;
+	}
+	.ff-dyn-owner,
+	.ff-dyn-sep {
+		font-size: 13px;
+		font-weight: 700;
+		color: var(--primary);
+	}
+	.ff-dyn-text {
+		font-size: 13px;
+		color: var(--content-meta);
+	}
+	.ff-dyn-dot {
+		flex-shrink: 0;
+		width: 4px;
+		height: 4px;
+		margin: 0 12px;
+		border-radius: 50%;
+		background: var(--primary);
+		opacity: 0.4;
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.ff-dyn-track--animate {
+			animation: none;
+		}
+		.ff-dyn-marquee {
+			overflow-x: auto;
+		}
+	}
+</style>
+
+<script>
+	// ===== 首页动态跑马灯：按需加载 =====
+	// 只在首页才去拉 /assets/js/home-dynamic-bar.js，其他页面只背这十几行。
+	// 放页脚全站引入的原因同友链预览：页脚在 #swup-container 之外，
+	// 用它挂住 swup 事件，才能保证从别的页面无刷新跳回首页时照样初始化。
+	// ⚠️ vercel.json 给 /assets/* 配了 30 天强缓存，改完那个 js 记得把下面的 v= 往上加，
+	//    否则老访客拿到的还是旧文件。
+	(function () {
+		function loadDynamicBar() {
+			if (!/^\/$/.test(window.location.pathname)) return;
+			if (document.getElementById("ff-dynbar-js")) return;
+			var script = document.createElement("script");
+			script.id = "ff-dynbar-js";
+			script.src = "/assets/js/home-dynamic-bar.js?v=1";
+			script.async = true;
+			document.head.appendChild(script);
+		}
+		document.addEventListener("astro:page-load", loadDynamicBar);
+		document.addEventListener("swup:page:view", loadDynamicBar);
+		if (document.readyState === "loading") {
+			document.addEventListener("DOMContentLoaded", loadDynamicBar, { once: true });
+		} else {
+			loadDynamicBar();
+		}
+	})();
+</script>
+
+<style>
+	/* ===== 动态页 RSS 订阅入口（/dynamic/ 头部，位于「N 动态」左侧） ===== */
+	.ff-dynrss-btn {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.3rem;
+		align-self: center;
+		flex: 0 0 auto;
+		margin-right: 0.55rem;
+		color: var(--primary);
+		font-size: 0.8rem;
+		font-weight: 500;
+		white-space: nowrap;
+		text-decoration: none;
+		transition: opacity 180ms ease;
+	}
+	.ff-dynrss-btn svg {
+		width: 1.05rem;
+		height: 1.05rem;
+		fill: currentColor;
+		flex: 0 0 auto;
+	}
+	.ff-dynrss-btn:hover {
+		opacity: 0.72;
+	}
+	.ff-dynrss-btn:hover span {
+		text-decoration: underline dashed;
+		text-underline-offset: 0.25em;
+	}
+	.ff-dynrss-btn:focus-visible {
+		outline: 2px solid color-mix(in srgb, var(--primary) 72%, white);
+		outline-offset: 2px;
+		border-radius: 0.35rem;
+	}
+	/* 小屏只留图标：文字会把左边标题挤到换行 */
+	@media (max-width: 640px) {
+		.ff-dynrss-btn span {
+			display: none;
+		}
+		.ff-dynrss-btn {
+			margin-right: 0.45rem;
+		}
+	}
+</style>
+
+<script>
+	// ===== 动态页 RSS 订阅入口：按需注入 =====
+	// /dynamic/ 整页是上游文件不能改，这里在页脚（swup 容器之外）挂事件，
+	// 只在动态页把 RSS 入口塞进「N 动态」计数 pill 的最前面，并给 head 补自动发现声明。
+	// 注意：不能插成 .page-count 的兄弟节点——page-header 是两列 grid，
+	// 多一个直接子元素会把「N 动态」挤到下一行。
+	// 点击不用任何 JS 拦截：Swup 的 triggerWillOpenNewWindow 会跳过 [target="_blank"]，
+	// 原生新标签页打开就是对的。之前用捕获阶段 preventDefault + window.open 兜底，
+	// 结果脚本一旦被重复执行（dev HMR）就会一次点击开两个窗口，已删除。
+	(() => {
+		var RSS_PATH = "/dynamic/rss.xml";
+
+		function ensureHeadLink() {
+			if (document.getElementById("ff-dynrss-alt")) return;
+			var link = document.createElement("link");
+			link.id = "ff-dynrss-alt";
+			link.rel = "alternate";
+			link.type = "application/rss+xml";
+			link.title = "站长动态 RSS";
+			link.href = RSS_PATH;
+			document.head.appendChild(link);
+		}
+
+		function mountRssButton() {
+			if (!/^\/dynamic\/?$/.test(window.location.pathname)) return;
+			ensureHeadLink();
+			var header = document.querySelector(".page-header");
+			if (!header) return;
+			if (document.getElementById("ff-dynrss-btn")) return;
+			var count = header.querySelector(".page-count");
+			if (!count) return;
+			var button = document.createElement("a");
+			button.id = "ff-dynrss-btn";
+			button.className = "ff-dynrss-btn";
+			button.href = RSS_PATH;
+			button.target = "_blank";
+			button.rel = "noopener noreferrer";
+			button.setAttribute("aria-label", "订阅 RSS 以随时偷窥站长日常");
+			button.title = "订阅 RSS 以随时偷窥站长日常";
+			button.innerHTML =
+				'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18C8.36 19 7.38 20 6.18 20C5 20 4 19 4 17.82a2.18 2.18 0 0 1 2.18-2.18M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27zm0 5.66a9.9 9.9 0 0 1 9.9 9.9h-2.83A7.07 7.07 0 0 0 4 12.93z"/></svg><span>订阅RSS以随时偷窥站长日常</span>';
+			// 塞成 pill 的第一个子元素 → RSS 入口排在「N 动态」左边
+			count.insertBefore(button, count.firstChild);
+		}
+
+		function initDynamicRss() {
+			mountRssButton();
+		}
+		document.addEventListener("astro:page-load", initDynamicRss);
+		document.addEventListener("swup:page:view", initDynamicRss);
+		if (document.readyState === "loading") {
+			document.addEventListener("DOMContentLoaded", initDynamicRss, { once: true });
+		} else {
+			initDynamicRss();
+		}
+	})();
+</script>
+
+<style>
+	/* ===== 卡片深色描边 =====
+	   参考 azuma.mstzuomu.space 的卡片风格：给卡片加一圈明显的纯黑描边。
+	   主题本身已经有 enable-card-border 这一套（siteConfig.card.border = true，
+	   head 里的内联脚本会按它给 <html> 打类、并补上 border 1px + shadow-xs），
+	   只是颜色用的是 --line-divider —— 亮色下 rgba(0,0,0,.08) 的浅灰线，几乎看不见。
+	   所以这里只做两件事：把描边颜色换成纯黑、把宽度加到 2px，其余全部沿用主题。
+	   注入点在页脚（<Footer /> 在 swup 容器之外，整页加载才跑一次），没有改上游 src/styles/**。
+	   主题那几条规则写在 @layer components 里，未分层的本段天然压过它，不需要 !important。 */
+	:root {
+		/* 描边粗细，想更粗/更细改这一行即可 */
+		--card-border-width: 2px;
+		/* 亮色主题：纯黑描边 */
+		--card-border-color: #000;
+	}
+	html.dark {
+		/* 暗色主题下纯黑描边在深色卡片上等于看不见，跟随参考站换成纯白 */
+		--card-border-color: #fff;
+	}
+
+	/* 与主题 .enable-card-border 的三条卡片规则选择器保持一致：
+	   .card-base / .card-base-transparent / .btn-card（分页、上下篇按钮等） */
+	.enable-card-border .card-base,
+	.enable-card-border .card-base-transparent,
+	.enable-card-border .btn-card {
+		border-color: var(--card-border-color);
+		border-width: var(--card-border-width);
+	}
+
+	/* ── 自建页面的卡片 ─────────────────────────────────────────────
+	   下面两个页面是我们自己写的，卡片用的是各自的类名，跟主题的 .card-base 无关，
+	   所以上面那段盖不到它们，得单独列。样式本身都写在页面/组件自己的样式表里
+	   （guestbook-chat.css 与 steam.astro 的 <style is:global>，都是页面级分块，
+	   只在对应页面加载），这里只补描边这一件事，别的都不动。 */
+
+	/* 留言板主面板与公告/隐私弹窗：原来只有 1px 的 --guestbook-line（比 --line-divider
+	   还淡的玻璃边框），这里把颜色和宽度换成跟全站卡片一致 */
+	.enable-card-border .guestbook-chat,
+	.enable-card-border .privacy-panel {
+		border-color: var(--card-border-color);
+		border-width: var(--card-border-width);
+	}
+
+	/* Steam 页的四类卡片（个人资料 / 数据块 / 最近游玩行 / 游戏格）原本完全没有描边，
+	   border-style 默认是 none，只写 width/color 不会画出来，所以这里给完整简写 */
+	.enable-card-border .steam-profile,
+	.enable-card-border .steam-stat,
+	.enable-card-border .steam-recent__item a,
+	.enable-card-border .steam-card {
+		border: var(--card-border-width) solid var(--card-border-color);
+	}
+
+	/* 朋友圈（/moments/，同样自建页）的文章卡片：原本是 1px 的 --line-divider，
+	   而「推荐友链」「本站主理人」两种变体各自还带一圈金色 / 蓝色描边，
+	   这里连同变体一起统一成同款深色描边（身份仍由背景色和角标区分）。
+	   多写一层 .moments-grid 是为了压过暗色段那条 html.dark .moment-card--recommended，
+	   它是 (0,2,1)，而 .enable-card-border .moment-card 只有 (0,2,0)，
+	   不这样写的话暗色主题下这两个变体会漏掉、仍留着旧染色边。 */
+	.enable-card-border .moments-grid .moment-card {
+		border: var(--card-border-width) solid var(--card-border-color);
+	}
+
+	/* 同一页顶部那两个：招牌的「随机一篇文章」卡（.moments-random-article）和
+	   「未订阅的站点」提示条（.moments-unsubscribed），原本都是 1px 的 primary 染色边。
+	   随机文章卡本来就有一圈会转的 conic-gradient 光束边（它的 ::after，inset:-1px、
+	   画在卡片外缘那 1px 上），跟这条 2px 描边是叠着的 —— 光束照样会扫过，
+	   只是在透明的那 300 多度上露出来的是黑色描边。
+	   .moments-stats 是纯文字、.moments-note 只有一条 border-top 分隔线，都不是卡片，不动。 */
+	.enable-card-border .moments-random-article,
+	.enable-card-border .moments-unsubscribed {
+		border: var(--card-border-width) solid var(--card-border-color);
+	}
+
+	/* ── 上游页面 / 组件里自己画描边的卡片 ───────────────────────────
+	   下面这些类都在**上游文件**里（与 upstream/master 零差异，不能改），
+	   而且描边多数是 Tailwind 工具类画的（border + border-(--line-divider)，
+	   hover 时变主题色），同样是 1px 淡线，看着就像没边框。
+	   代价：hover:border-(--primary) 那类边框变色会被盖掉
+	   （未分层压过 @layer utilities），悬停反馈还剩背景色、阴影和位移。 */
+	.enable-card-border .booknav-card,
+	.enable-card-border .friend-card,
+	.enable-card-border .media-card {
+		border: var(--card-border-width) solid var(--card-border-color);
+	}
+
+	/* 更新日志页（自建组件 ChangelogTimeline.astro）里同样用 1px --line-divider
+	   画的卡片：条目卡、底部翻页卡，以及翻页卡里的小方块按钮
+	   （跟主题 .btn-card 分页按钮对齐）。注意同页的 .blog-changelog-hero /
+	   .blog-changelog-nav 已经挂了 card-base，上面那段就盖到了，不用重复列。 */
+	.enable-card-border .blog-changelog-card,
+	.enable-card-border .blog-changelog-pager,
+	.enable-card-border .blog-changelog-pager__num,
+	.enable-card-border .blog-changelog-pager__step {
+		border: var(--card-border-width) solid var(--card-border-color);
+	}
+</style>
+
+<style>
+	/* ===== 顶栏紧凑模式（1024–1599px）=====
+	   背景：顶栏是三列 grid [logo | 菜单(1fr) | 图标簇]，菜单居中，每项是 `.btn-plain px-4`
+	   里放 icon + 名字。这一排的余量本来就接近 0，而名字是**匿名 flex 文本项** ——
+	   只要差 1px 就逐字换行，标签被压成竖排并溢出（按钮是固定 h-10，不裁切，直接糊在外面）。
+	   两处加压正好撞在一起：
+	     · 主题在 `@media (max-width:1279px)` 隐藏 `.navbar-icon`（见 navbar.css），
+	       于是 1280px 起每项突然多出约 30px 需求（×8 项 ≈ 237px）；
+	     · 同一档宽度上右侧搜索框还从图标态展宽成输入框，中间列可用宽度反而从 828px 掉到 758px。
+	   实测线上（8 项，主题原样）就已中招：1024px 差 4px、1280–1366px 差 8–87px；本站有 9 项，
+	   区间进一步扩大。所以 1024–1599px 走「紧凑模式」：
+	     1) 继续隐藏导航项图标（沿用主题 <1280px 的做法，因为本站导航项更多）；
+	     2) 左右内边距 16px → 8px，下拉触发按钮右侧保留 28px 给绝对定位的箭头。
+	   实测余量：该区间最小 +40px（1024px 处），1280px 处 +194px；≥1600px 恢复主题原样（余量 +179px 起）。
+	   改导航项数或文案后，用 `.workbuddy/scratch/nav-natural.cjs` 重跑一遍确认余量仍为正。
+	   这段写在页脚注入里，只覆盖样式，不动上游 DropdownMenu.astro / navbar.css。 */
+	@media (min-width: 1024px) and (max-width: 1599px) {
+		/* 只打顶级菜单项自己的图标；下拉面板里的条目图标保持显示 */
+		#navbar .dropdown-container > a > div > .navbar-icon,
+		#navbar .dropdown-container > button > div > .navbar-icon {
+			display: none;
+		}
+		#navbar .dropdown-container > a,
+		#navbar .dropdown-container > button {
+			padding-left: 0.5rem;
+			padding-right: 0.5rem;
+		}
+		#navbar .dropdown-container > button {
+			padding-right: 1.75rem;
+		}
+	}
+</style>
+
+<style>
+	/* ===== 「最近评论」（只在博客首页：桌面右栏 / 移动端底部栏）=====
+	   外壳默认藏在页脚（hidden），recent-comments.js 全站加载但只在首页挂载：
+	   ≥768px 插到右栏「最新动态」之后，<768px 搬进移动端底部组件栏，再填数据
+	   （Waline 公开接口，CORS 已放开）。其余页面保持 hidden、不占布局。
+	   样式全部自带：几何复刻 WidgetLayout（标题条 ml-8/mt-4/mb-2 + 主题色竖条、
+	   内容 px-4/pt-4、卡片 pb-4），配色只用主题 CSS 变量与 card-base，
+	   不碰 Tailwind 工具类 —— 注入 HTML 里的工具类一旦没被内容探测扫到就会静默失效。 */
+	.ff-rc[hidden] {
+		display: none;
+	}
+	.ff-rc {
+		padding-bottom: 1rem; /* 对应 WidgetLayout 的 pb-4 */
+	}
+	.ff-rc-title {
+		position: relative;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin: 1rem 2rem 0.5rem; /* 对应 widget-title 的 mt-4 ml-8 mb-2 */
+		font-size: 1.125rem;
+		font-weight: 700;
+		line-height: 1.5;
+		color: rgb(23 23 23);
+	}
+	html.dark .ff-rc-title {
+		color: rgb(245 245 245);
+	}
+	.ff-rc-title::before {
+		content: "";
+		position: absolute;
+		left: -1rem;
+		top: 5.5px;
+		width: 0.25rem;
+		height: 1rem;
+		border-radius: 0.375rem;
+		background: var(--primary);
+	}
+	.ff-rc-goto {
+		flex: 0 0 auto;
+		font-size: 0.8rem;
+		font-weight: 500;
+		color: var(--primary);
+		text-decoration: none;
+		transition: opacity 180ms ease;
+	}
+	.ff-rc-goto:hover {
+		opacity: 0.72;
+	}
+	.ff-rc-goto:hover span {
+		text-decoration: underline dashed;
+		text-underline-offset: 0.25em;
+	}
+	.ff-rc-body {
+		padding: 1rem; /* 对应 WidgetLayout 内容区的 px-4 pt-4 */
+	}
+	.ff-rc-list {
+		display: flex;
+		flex-direction: column;
+		gap: 0.125rem;
+	}
+	.ff-rc-item {
+		display: flex;
+		align-items: flex-start;
+		gap: 0.5rem;
+		padding: 0.4375rem;
+		border-radius: 0.5rem;
+		text-decoration: none;
+		transition: background-color 150ms;
+	}
+	.ff-rc-item:hover {
+		background: var(--btn-plain-bg-hover);
+	}
+	.ff-rc-avatar {
+		position: relative;
+		flex: 0 0 auto;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 1.75rem;
+		height: 1.75rem;
+		border-radius: 50%;
+		overflow: hidden;
+		background: oklch(0.85 0.06 var(--ff-rc-hue, 250));
+	}
+	html.dark .ff-rc-avatar {
+		background: oklch(0.45 0.07 var(--ff-rc-hue, 250));
+	}
+	.ff-rc-initial {
+		font-size: 0.75rem;
+		font-weight: 700;
+		color: oklch(0.5 0.09 var(--ff-rc-hue, 250));
+	}
+	html.dark .ff-rc-initial {
+		color: oklch(0.88 0.05 var(--ff-rc-hue, 250));
+	}
+	.ff-rc-img {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+	.ff-rc-main {
+		flex: 1 1 auto;
+		min-width: 0;
+	}
+	.ff-rc-meta {
+		display: flex;
+		align-items: baseline;
+		gap: 0.25rem;
+	}
+	.ff-rc-nick {
+		flex: 0 0 auto; /* 昵称永不收缩：窄栏放不下时截断「评论于」，身份优先 */
+		min-width: 0;
+		max-width: 12em;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		font-size: 0.75rem;
+		font-weight: 700;
+		color: rgb(38 38 38);
+	}
+	html.dark .ff-rc-nick {
+		color: rgb(229 229 229);
+	}
+	.ff-rc-item:hover .ff-rc-nick {
+		color: var(--primary);
+	}
+	.ff-rc-time {
+		flex: 0 0 auto;
+		font-size: 0.625rem;
+		white-space: nowrap;
+		color: var(--content-meta);
+	}
+	.ff-rc-where {
+		flex: 1 2 auto; /* 有余量时靠 margin-left 靠右；放不下时优先截断它，保昵称完整 */
+		min-width: 0;
+		margin-left: auto;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		font-size: 0.625rem;
+		text-align: right;
+		color: var(--content-meta);
+	}
+	.ff-rc-text {
+		margin: 0.125rem 0 0;
+		font-size: 0.8125rem;
+		line-height: 1.35;
+		color: rgb(64 64 64 / 0.75);
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 2;
+		overflow: hidden;
+	}
+	html.dark .ff-rc-text {
+		color: rgb(212 212 212 / 0.75);
+	}
+	.ff-rc-state {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
+		min-height: 3rem;
+	}
+	.ff-rc-state-text {
+		font-size: 0.75rem;
+		color: var(--content-meta);
+	}
+	.ff-rc-empty {
+		margin: 0;
+		padding: 0.75rem 0;
+		text-align: center;
+		font-size: 0.75rem;
+		color: var(--content-meta);
+	}
+	.ff-rc-spinner {
+		width: 1.25rem;
+		height: 1.25rem;
+		color: var(--primary);
+		animation: ff-rc-spin 0.8s linear infinite;
+	}
+	@keyframes ff-rc-spin {
+		to {
+			transform: rotate(360deg);
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.ff-rc-spinner {
+			animation: none;
+		}
+	}
+	.ff-rc-foot {
+		margin-top: 0.5rem;
+		font-size: 0.6875rem;
+		color: var(--content-meta);
+	}
+</style>
+
+<!-- ===== 「最近评论」（只在博客首页）=====
+     位置由 recent-comments.js 决定：只有首页（含 /2/ /3/ 这类分页）才挂载 —— 桌面插在
+     右栏「最新动态」之后，移动端搬进底部组件栏；其余页面保持 hidden 留在页脚。
+     改显示条数改 JS 里的 API_URL。 -->
+<div id="ff-rc" class="ff-rc card-base" hidden>
+	<div class="ff-rc-title">
+		<span class="ff-rc-name">最近评论</span>
+		<a class="ff-rc-goto" href="/guestbook/"><span>去留言板</span></a>
+	</div>
+	<div class="ff-rc-body">
+		<div class="ff-rc-list" data-ff-rc-list></div>
+		<div class="ff-rc-foot" data-ff-rc-foot></div>
+	</div>
+</div>
+
+<style id="ff-comment-style-collapse">
+	/* ===== 评论区「回复折叠」=====
+	   ⚠️ 这个 id 有用途，别删：动态页的内嵌评论跑在同源 iframe 里，那个文档
+	   （/dynamic/comments/）走的是 Layout、没有页脚，注入到不了它，于是由父页面
+	   的 dynamic-comment-enhance.js 按 id 找到本块、clone 进 iframe —— 单一来源，
+	   改样式两边一起变，不需要再维护第二份。
+	   DOM 与类名都由 Waline（Vue）渲染，按钮由 comment-reply-collapse.js 插进 .wl-quote 末尾。
+	   这里只管样式，逻辑全在 js 里。写在页脚是因为页脚在 #swup-container 之外，
+	   切页不会被替换掉；而且未分层的这段天然压过主题 @layer 里的规则。
+	   配色只用主题变量，亮/暗色自动跟随，不需要另写 html.dark 分支。 */
+
+	/* 被折叠起来的回复。收在 .wl-quote 下写，优先级 (0,2,0) 稳过 Waline 自己的 .wl-card-item */
+	.wl-quote > .ff-rp-hidden {
+		display: none;
+	}
+
+	.ff-rp-toggle {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.35em;
+		margin: 0.5rem 0 0.25rem;
+		padding: 0.3rem 0.7rem;
+		border: none;
+		border-radius: 999px;
+		background: var(--btn-regular-bg);
+		color: var(--primary);
+		font-family: inherit;
+		font-size: 0.8125rem;
+		font-weight: 600;
+		line-height: 1.2;
+		cursor: pointer;
+		transition:
+			background-color 150ms ease,
+			color 150ms ease;
+	}
+	.ff-rp-toggle:hover {
+		background: var(--btn-regular-bg-hover);
+	}
+	.ff-rp-toggle:focus-visible {
+		outline: 2px solid var(--primary);
+		outline-offset: 2px;
+	}
+	.ff-rp-toggle svg {
+		width: 0.9em;
+		height: 0.9em;
+		fill: currentColor;
+		transition: transform 200ms ease;
+	}
+	/* 全摊开时箭头朝上，提示「再点就是收起」 */
+	.ff-rp-toggle.ff-rp-open svg {
+		transform: rotate(180deg);
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.ff-rp-toggle svg {
+			transition: none;
+		}
+	}
+</style>
+
+<style id="ff-comment-style-quote">
+	/* ===== 评论区「回复引用」=====
+	   ⚠️ 同 ff-comment-style-collapse：id 是给动态页 iframe 克隆用的，别删。
+	   回复块由 comment-reply-quote.js 插进 .wl-content 里、紧跟那行 `@昵称：` 之后。
+	   样式同样写页脚（swup 容器之外，切页不丢；未分层压过主题 @layer）。 */
+
+	.ff-rq {
+		/* 两行截断：引用只是提示「在回哪句」，不该跟正文抢长度 */
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 2;
+		overflow: hidden;
+		box-sizing: border-box;
+		width: 100%;
+		margin: 0.3rem 0 0.35rem;
+		padding: 0.15rem 0.5rem;
+		border: none;
+		border-left: 3px solid var(--primary);
+		border-radius: 0 0.25rem 0.25rem 0;
+		/* 默认不给底色（底色挪到正文上了，见下面），只留左边那根线 */
+		background: transparent;
+		color: var(--content-meta);
+		font-family: inherit;
+		font-size: 0.8125rem;
+		line-height: 1.55;
+		text-align: left;
+		cursor: pointer;
+		transition: background-color 150ms ease;
+	}
+	/* 悬停才浮一层浅底，提示这东西能点 */
+	.ff-rq:hover {
+		background: var(--btn-regular-bg);
+	}
+	/* 回复符号（U+21A9 ↩ + U+FE0E 文本变体，免得被当成 emoji 渲染）。
+	   ⚠️ 用真实 <span> 而不是 ::before —— 实测在 <button> 上（且 display:-webkit-box
+	   做两行截断）伪元素压根不生成，computed content 一直是 "normal"，换转义写法也一样。
+	   符号本身在 js 里用 \u21A9\uFE0E 拼，不往源码里贴不可见字符。 */
+	.ff-rq-icon {
+		margin-right: 0.35em;
+		color: var(--primary);
+		opacity: 0.85;
+	}
+
+	/* Waline 原生那行「@某某：」不再显示 —— 引用块里已经写了回的是谁，
+	   两行并排纯属重复。.wl-reply-to 只出现在二级回复里，顶层评论没有这行。 */
+	.wl-reply-to {
+		display: none;
+	}
+
+	/* 底色从引用块挪到回复正文上：引用只是一句提示，正文才是这条回复的主体。
+	   用 :has 精确框住「带引用块的回复」，顶层评论和普通回复的正文一律不受影响。 */
+	.wl-content:has(> .ff-rq) > div {
+		padding: 0.4rem 0.7rem;
+		border-radius: 0.5rem;
+		background: var(--btn-regular-bg);
+	}
+	.ff-rq:focus-visible {
+		outline: 2px solid var(--primary);
+		outline-offset: 2px;
+	}
+	.ff-rq-nick {
+		margin-right: 0.35em;
+		font-weight: 700;
+		color: var(--primary);
+	}
+	.ff-rq-text {
+		color: var(--content-meta);
+	}
+
+	/* 点引用后，目标评论闪一下，不然滚过去也不知道该看哪条 */
+	.wl-card-item.ff-rq-flash {
+		border-radius: 0.5rem;
+		animation: ff-rq-flash 1.9s ease;
+	}
+	@keyframes ff-rq-flash {
+		0%,
+		100% {
+			background-color: transparent;
+		}
+		15%,
+		55% {
+			background-color: color-mix(in srgb, var(--primary) 14%, transparent);
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.wl-card-item.ff-rq-flash {
+			animation: none;
+		}
+	}
+</style>
+
+<!-- ===== 《俺妹》鼠标指针主题（Oreimo Mouse Cursor Theme）=====
+     素材：public/images/cursors/kirino|kuroneko/*.png
+       亮色主题 = 高坂桐乃，深色主题 = 五更琉璃（黑猫）。
+       每枚 32px(1x) + 64px(2x)，用 image-set() 覆盖高分屏，两种倍率共用同一组 CSS px 热点。
+     实现上把「哪张图 + 热点」全放进自定义属性：
+       :root        -> 桐乃
+       html.dark    -> 黑猫
+     于是 28 条 cursor 规则只写一遍，切主题只换变量；热点也能跟着主题换（桐乃/黑猫的指尖位置差 1~2px）。
+     每条规则三档声明：纯 url(1x) 兜底 -> -webkit-image-set -> 标准 image-set，
+     不支持 image-set 的浏览器自动落回 1x 位图，而不是直接丢掉整条。
+     ⚠️ pre / code 必须保留 cursor: text —— 见下面那条注释里的 expressive-code 陷阱。
+     ⚠️ 换素材后要同步改文件名或加 ?v=（长缓存）。 -->
+<style id="ff-cursor-style">
+	@media (pointer: fine) {
+		/* 亮色主题：桐乃 */
+		:root {
+			--ffc-normal-1: url("/images/cursors/kirino/normal-32.png");
+			--ffc-normal-2: url("/images/cursors/kirino/normal-64.png");
+			--ffc-normal-hx: 4;
+			--ffc-normal-hy: 2;
+			--ffc-link-1: url("/images/cursors/kirino/link-32.png");
+			--ffc-link-2: url("/images/cursors/kirino/link-64.png");
+			--ffc-link-hx: 8;
+			--ffc-link-hy: 3;
+			--ffc-hand-1: url("/images/cursors/kirino/hand-32.png");
+			--ffc-hand-2: url("/images/cursors/kirino/hand-64.png");
+			--ffc-hand-hx: 6;
+			--ffc-hand-hy: 3;
+			--ffc-text-1: url("/images/cursors/kirino/text-32.png");
+			--ffc-text-2: url("/images/cursors/kirino/text-64.png");
+			--ffc-text-hx: 16;
+			--ffc-text-hy: 16;
+			--ffc-text-horizontal-1: url("/images/cursors/kirino/text-horizontal-32.png");
+			--ffc-text-horizontal-2: url("/images/cursors/kirino/text-horizontal-64.png");
+			--ffc-text-horizontal-hx: 8;
+			--ffc-text-horizontal-hy: 7;
+			--ffc-text-vertical-1: url("/images/cursors/kirino/text-vertical-32.png");
+			--ffc-text-vertical-2: url("/images/cursors/kirino/text-vertical-64.png");
+			--ffc-text-vertical-hx: 7;
+			--ffc-text-vertical-hy: 8;
+			--ffc-help-1: url("/images/cursors/kirino/help-32.png");
+			--ffc-help-2: url("/images/cursors/kirino/help-64.png");
+			--ffc-help-hx: 4;
+			--ffc-help-hy: 2;
+			--ffc-precision-1: url("/images/cursors/kirino/precision-32.png");
+			--ffc-precision-2: url("/images/cursors/kirino/precision-64.png");
+			--ffc-precision-hx: 16;
+			--ffc-precision-hy: 16;
+			--ffc-move-1: url("/images/cursors/kirino/move-32.png");
+			--ffc-move-2: url("/images/cursors/kirino/move-64.png");
+			--ffc-move-hx: 16;
+			--ffc-move-hy: 16;
+			--ffc-grab-1: url("/images/cursors/kirino/grab-32.png");
+			--ffc-grab-2: url("/images/cursors/kirino/grab-64.png");
+			--ffc-grab-hx: 16;
+			--ffc-grab-hy: 16;
+			--ffc-grabbing-1: url("/images/cursors/kirino/grabbing-32.png");
+			--ffc-grabbing-2: url("/images/cursors/kirino/grabbing-64.png");
+			--ffc-grabbing-hx: 16;
+			--ffc-grabbing-hy: 16;
+			--ffc-busy-1: url("/images/cursors/kirino/busy-32.png");
+			--ffc-busy-2: url("/images/cursors/kirino/busy-64.png");
+			--ffc-busy-hx: 16;
+			--ffc-busy-hy: 16;
+			--ffc-working-1: url("/images/cursors/kirino/working-32.png");
+			--ffc-working-2: url("/images/cursors/kirino/working-64.png");
+			--ffc-working-hx: 16;
+			--ffc-working-hy: 16;
+			--ffc-loading-1: url("/images/cursors/kirino/loading-32.png");
+			--ffc-loading-2: url("/images/cursors/kirino/loading-64.png");
+			--ffc-loading-hx: 16;
+			--ffc-loading-hy: 16;
+			--ffc-done-1: url("/images/cursors/kirino/done-32.png");
+			--ffc-done-2: url("/images/cursors/kirino/done-64.png");
+			--ffc-done-hx: 16;
+			--ffc-done-hy: 16;
+			--ffc-candidate-1: url("/images/cursors/kirino/candidate-32.png");
+			--ffc-candidate-2: url("/images/cursors/kirino/candidate-64.png");
+			--ffc-candidate-hx: 16;
+			--ffc-candidate-hy: 16;
+			--ffc-unavailable-1: url("/images/cursors/kirino/unavailable-32.png");
+			--ffc-unavailable-2: url("/images/cursors/kirino/unavailable-64.png");
+			--ffc-unavailable-hx: 16;
+			--ffc-unavailable-hy: 16;
+			--ffc-background-1: url("/images/cursors/kirino/background-32.png");
+			--ffc-background-2: url("/images/cursors/kirino/background-64.png");
+			--ffc-background-hx: 16;
+			--ffc-background-hy: 16;
+			--ffc-add-1: url("/images/cursors/kirino/add-32.png");
+			--ffc-add-2: url("/images/cursors/kirino/add-64.png");
+			--ffc-add-hx: 16;
+			--ffc-add-hy: 16;
+			--ffc-delete-1: url("/images/cursors/kirino/delete-32.png");
+			--ffc-delete-2: url("/images/cursors/kirino/delete-64.png");
+			--ffc-delete-hx: 16;
+			--ffc-delete-hy: 16;
+			--ffc-scroll-up-1: url("/images/cursors/kirino/scroll-up-32.png");
+			--ffc-scroll-up-2: url("/images/cursors/kirino/scroll-up-64.png");
+			--ffc-scroll-up-hx: 16;
+			--ffc-scroll-up-hy: 16;
+			--ffc-scroll-down-1: url("/images/cursors/kirino/scroll-down-32.png");
+			--ffc-scroll-down-2: url("/images/cursors/kirino/scroll-down-64.png");
+			--ffc-scroll-down-hx: 16;
+			--ffc-scroll-down-hy: 16;
+			--ffc-scroll-left-1: url("/images/cursors/kirino/scroll-left-32.png");
+			--ffc-scroll-left-2: url("/images/cursors/kirino/scroll-left-64.png");
+			--ffc-scroll-left-hx: 16;
+			--ffc-scroll-left-hy: 16;
+			--ffc-scroll-right-1: url("/images/cursors/kirino/scroll-right-32.png");
+			--ffc-scroll-right-2: url("/images/cursors/kirino/scroll-right-64.png");
+			--ffc-scroll-right-hx: 16;
+			--ffc-scroll-right-hy: 16;
+			--ffc-resize-nwse-1: url("/images/cursors/kirino/resize-nwse-32.png");
+			--ffc-resize-nwse-2: url("/images/cursors/kirino/resize-nwse-64.png");
+			--ffc-resize-nwse-hx: 16;
+			--ffc-resize-nwse-hy: 16;
+			--ffc-resize-nesw-1: url("/images/cursors/kirino/resize-nesw-32.png");
+			--ffc-resize-nesw-2: url("/images/cursors/kirino/resize-nesw-64.png");
+			--ffc-resize-nesw-hx: 16;
+			--ffc-resize-nesw-hy: 16;
+			--ffc-resize-vertical-1: url("/images/cursors/kirino/resize-vertical-32.png");
+			--ffc-resize-vertical-2: url("/images/cursors/kirino/resize-vertical-64.png");
+			--ffc-resize-vertical-hx: 16;
+			--ffc-resize-vertical-hy: 16;
+			--ffc-resize-horizontal-1: url("/images/cursors/kirino/resize-horizontal-32.png");
+			--ffc-resize-horizontal-2: url("/images/cursors/kirino/resize-horizontal-64.png");
+			--ffc-resize-horizontal-hx: 16;
+			--ffc-resize-horizontal-hy: 16;
+		}
+
+		/* 深色主题：黑猫 */
+		html.dark {
+			--ffc-normal-1: url("/images/cursors/kuroneko/normal-32.png");
+			--ffc-normal-2: url("/images/cursors/kuroneko/normal-64.png");
+			--ffc-normal-hx: 4;
+			--ffc-normal-hy: 2;
+			--ffc-link-1: url("/images/cursors/kuroneko/link-32.png");
+			--ffc-link-2: url("/images/cursors/kuroneko/link-64.png");
+			--ffc-link-hx: 7;
+			--ffc-link-hy: 5;
+			--ffc-hand-1: url("/images/cursors/kuroneko/hand-32.png");
+			--ffc-hand-2: url("/images/cursors/kuroneko/hand-64.png");
+			--ffc-hand-hx: 5;
+			--ffc-hand-hy: 4;
+			--ffc-text-1: url("/images/cursors/kuroneko/text-32.png");
+			--ffc-text-2: url("/images/cursors/kuroneko/text-64.png");
+			--ffc-text-hx: 16;
+			--ffc-text-hy: 16;
+			--ffc-text-horizontal-1: url("/images/cursors/kuroneko/text-horizontal-32.png");
+			--ffc-text-horizontal-2: url("/images/cursors/kuroneko/text-horizontal-64.png");
+			--ffc-text-horizontal-hx: 8;
+			--ffc-text-horizontal-hy: 7;
+			--ffc-text-vertical-1: url("/images/cursors/kuroneko/text-vertical-32.png");
+			--ffc-text-vertical-2: url("/images/cursors/kuroneko/text-vertical-64.png");
+			--ffc-text-vertical-hx: 6;
+			--ffc-text-vertical-hy: 9;
+			--ffc-help-1: url("/images/cursors/kuroneko/help-32.png");
+			--ffc-help-2: url("/images/cursors/kuroneko/help-64.png");
+			--ffc-help-hx: 2;
+			--ffc-help-hy: 2;
+			--ffc-precision-1: url("/images/cursors/kuroneko/precision-32.png");
+			--ffc-precision-2: url("/images/cursors/kuroneko/precision-64.png");
+			--ffc-precision-hx: 16;
+			--ffc-precision-hy: 16;
+			--ffc-move-1: url("/images/cursors/kuroneko/move-32.png");
+			--ffc-move-2: url("/images/cursors/kuroneko/move-64.png");
+			--ffc-move-hx: 16;
+			--ffc-move-hy: 16;
+			--ffc-grab-1: url("/images/cursors/kuroneko/grab-32.png");
+			--ffc-grab-2: url("/images/cursors/kuroneko/grab-64.png");
+			--ffc-grab-hx: 16;
+			--ffc-grab-hy: 16;
+			--ffc-grabbing-1: url("/images/cursors/kuroneko/grabbing-32.png");
+			--ffc-grabbing-2: url("/images/cursors/kuroneko/grabbing-64.png");
+			--ffc-grabbing-hx: 16;
+			--ffc-grabbing-hy: 16;
+			--ffc-busy-1: url("/images/cursors/kuroneko/busy-32.png");
+			--ffc-busy-2: url("/images/cursors/kuroneko/busy-64.png");
+			--ffc-busy-hx: 16;
+			--ffc-busy-hy: 16;
+			--ffc-working-1: url("/images/cursors/kuroneko/working-32.png");
+			--ffc-working-2: url("/images/cursors/kuroneko/working-64.png");
+			--ffc-working-hx: 16;
+			--ffc-working-hy: 16;
+			--ffc-loading-1: url("/images/cursors/kuroneko/loading-32.png");
+			--ffc-loading-2: url("/images/cursors/kuroneko/loading-64.png");
+			--ffc-loading-hx: 16;
+			--ffc-loading-hy: 16;
+			--ffc-done-1: url("/images/cursors/kuroneko/done-32.png");
+			--ffc-done-2: url("/images/cursors/kuroneko/done-64.png");
+			--ffc-done-hx: 16;
+			--ffc-done-hy: 16;
+			--ffc-candidate-1: url("/images/cursors/kuroneko/candidate-32.png");
+			--ffc-candidate-2: url("/images/cursors/kuroneko/candidate-64.png");
+			--ffc-candidate-hx: 16;
+			--ffc-candidate-hy: 16;
+			--ffc-unavailable-1: url("/images/cursors/kuroneko/unavailable-32.png");
+			--ffc-unavailable-2: url("/images/cursors/kuroneko/unavailable-64.png");
+			--ffc-unavailable-hx: 16;
+			--ffc-unavailable-hy: 16;
+			--ffc-background-1: url("/images/cursors/kuroneko/background-32.png");
+			--ffc-background-2: url("/images/cursors/kuroneko/background-64.png");
+			--ffc-background-hx: 16;
+			--ffc-background-hy: 16;
+			--ffc-add-1: url("/images/cursors/kuroneko/add-32.png");
+			--ffc-add-2: url("/images/cursors/kuroneko/add-64.png");
+			--ffc-add-hx: 16;
+			--ffc-add-hy: 16;
+			--ffc-delete-1: url("/images/cursors/kuroneko/delete-32.png");
+			--ffc-delete-2: url("/images/cursors/kuroneko/delete-64.png");
+			--ffc-delete-hx: 16;
+			--ffc-delete-hy: 16;
+			--ffc-scroll-up-1: url("/images/cursors/kuroneko/scroll-up-32.png");
+			--ffc-scroll-up-2: url("/images/cursors/kuroneko/scroll-up-64.png");
+			--ffc-scroll-up-hx: 16;
+			--ffc-scroll-up-hy: 16;
+			--ffc-scroll-down-1: url("/images/cursors/kuroneko/scroll-down-32.png");
+			--ffc-scroll-down-2: url("/images/cursors/kuroneko/scroll-down-64.png");
+			--ffc-scroll-down-hx: 16;
+			--ffc-scroll-down-hy: 16;
+			--ffc-scroll-left-1: url("/images/cursors/kuroneko/scroll-left-32.png");
+			--ffc-scroll-left-2: url("/images/cursors/kuroneko/scroll-left-64.png");
+			--ffc-scroll-left-hx: 16;
+			--ffc-scroll-left-hy: 16;
+			--ffc-scroll-right-1: url("/images/cursors/kuroneko/scroll-right-32.png");
+			--ffc-scroll-right-2: url("/images/cursors/kuroneko/scroll-right-64.png");
+			--ffc-scroll-right-hx: 16;
+			--ffc-scroll-right-hy: 16;
+			--ffc-resize-nwse-1: url("/images/cursors/kuroneko/resize-nwse-32.png");
+			--ffc-resize-nwse-2: url("/images/cursors/kuroneko/resize-nwse-64.png");
+			--ffc-resize-nwse-hx: 16;
+			--ffc-resize-nwse-hy: 16;
+			--ffc-resize-nesw-1: url("/images/cursors/kuroneko/resize-nesw-32.png");
+			--ffc-resize-nesw-2: url("/images/cursors/kuroneko/resize-nesw-64.png");
+			--ffc-resize-nesw-hx: 16;
+			--ffc-resize-nesw-hy: 16;
+			--ffc-resize-vertical-1: url("/images/cursors/kuroneko/resize-vertical-32.png");
+			--ffc-resize-vertical-2: url("/images/cursors/kuroneko/resize-vertical-64.png");
+			--ffc-resize-vertical-hx: 16;
+			--ffc-resize-vertical-hy: 16;
+			--ffc-resize-horizontal-1: url("/images/cursors/kuroneko/resize-horizontal-32.png");
+			--ffc-resize-horizontal-2: url("/images/cursors/kuroneko/resize-horizontal-64.png");
+			--ffc-resize-horizontal-hx: 16;
+			--ffc-resize-horizontal-hy: 16;
+		}
+
+		/* ---------- 有天然触发点的 ---------- */
+
+		/* 正常选择 */
+		html,
+		body {
+		cursor: var(--ffc-normal-1) var(--ffc-normal-hx) var(--ffc-normal-hy), auto;
+		cursor: -webkit-image-set(var(--ffc-normal-1) 1x, var(--ffc-normal-2) 2x) var(--ffc-normal-hx) var(--ffc-normal-hy), auto;
+		cursor: image-set(var(--ffc-normal-1) 1x, var(--ffc-normal-2) 2x) var(--ffc-normal-hx) var(--ffc-normal-hy), auto;
+		}
+
+		/* 链接选择（!important：主题里 a/button 自带的 cursor 得压住） */
+		a,
+		button,
+		[role="button"],
+		summary,
+		label[for],
+		select,
+		input[type="submit"],
+		input[type="button"],
+		input[type="reset"],
+		.clickable,
+		[data-cursor="link"] {
+		cursor: var(--ffc-link-1) var(--ffc-link-hx) var(--ffc-link-hy), pointer !important;
+		cursor: -webkit-image-set(var(--ffc-link-1) 1x, var(--ffc-link-2) 2x) var(--ffc-link-hx) var(--ffc-link-hy), pointer !important;
+		cursor: image-set(var(--ffc-link-1) 1x, var(--ffc-link-2) 2x) var(--ffc-link-hx) var(--ffc-link-hy), pointer !important;
+		}
+
+		/* 文本选择（正文 / 表格 / 表单 / 可编辑区） */
+		p,
+		li,
+		td,
+		th,
+		blockquote,
+		dd,
+		dt,
+		figcaption,
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6,
+		textarea,
+		[contenteditable],
+		input:not([type="submit"]):not([type="button"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]):not([type="file"]) {
+		cursor: var(--ffc-text-1) var(--ffc-text-hx) var(--ffc-text-hy), text;
+		cursor: -webkit-image-set(var(--ffc-text-1) 1x, var(--ffc-text-2) 2x) var(--ffc-text-hx) var(--ffc-text-hy), text;
+		cursor: image-set(var(--ffc-text-1) 1x, var(--ffc-text-2) 2x) var(--ffc-text-hx) var(--ffc-text-hy), text;
+		}
+		[data-cursor="text"], .ff-cur-text {
+		cursor: var(--ffc-text-1) var(--ffc-text-hx) var(--ffc-text-hy), text;
+		cursor: -webkit-image-set(var(--ffc-text-1) 1x, var(--ffc-text-2) 2x) var(--ffc-text-hx) var(--ffc-text-hy), text;
+		cursor: image-set(var(--ffc-text-1) 1x, var(--ffc-text-2) 2x) var(--ffc-text-hx) var(--ffc-text-hy), text;
+		}
+		[data-cursor="normal"], .ff-cur-normal {
+		cursor: var(--ffc-normal-1) var(--ffc-normal-hx) var(--ffc-normal-hy), auto;
+		cursor: -webkit-image-set(var(--ffc-normal-1) 1x, var(--ffc-normal-2) 2x) var(--ffc-normal-hx) var(--ffc-normal-hy), auto;
+		cursor: image-set(var(--ffc-normal-1) 1x, var(--ffc-normal-2) 2x) var(--ffc-normal-hx) var(--ffc-normal-hy), auto;
+		}
+		[data-cursor="text-horizontal"] {
+		cursor: var(--ffc-text-horizontal-1) var(--ffc-text-horizontal-hx) var(--ffc-text-horizontal-hy), text;
+		cursor: -webkit-image-set(var(--ffc-text-horizontal-1) 1x, var(--ffc-text-horizontal-2) 2x) var(--ffc-text-horizontal-hx) var(--ffc-text-horizontal-hy), text;
+		cursor: image-set(var(--ffc-text-horizontal-1) 1x, var(--ffc-text-horizontal-2) 2x) var(--ffc-text-horizontal-hx) var(--ffc-text-horizontal-hy), text;
+		}
+		[data-cursor="text-vertical"], [style*="vertical-rl"] {
+		cursor: var(--ffc-text-vertical-1) var(--ffc-text-vertical-hx) var(--ffc-text-vertical-hy), vertical-text;
+		cursor: -webkit-image-set(var(--ffc-text-vertical-1) 1x, var(--ffc-text-vertical-2) 2x) var(--ffc-text-vertical-hx) var(--ffc-text-vertical-hy), vertical-text;
+		cursor: image-set(var(--ffc-text-vertical-1) 1x, var(--ffc-text-vertical-2) 2x) var(--ffc-text-vertical-hx) var(--ffc-text-vertical-hy), vertical-text;
+		}
+
+		/* 代码区保留系统原生 I 型光标：这里是选中复制命令行的地方。
+		   ⚠️ !important 不能去掉 —— expressive-code 自带一条
+		      `.expressive-code :not(:is(svg, svg *)) { cursor: revert }`（特异性 0,1,1 > 0,0,1），
+		      会把 pre 的 cursor 回滚成「继承」，代码块里就继承了 body 的箭头。
+		      revert 是非 important 声明，加 !important 才压得住；
+		      pre / code 定住后，内部那些同样 revert 的后代会一路继承下来。
+		      expressive-code 的复制按钮在 <figcaption> 里、不在 pre 内，不会被误伤。 */
+		pre,
+		code,
+		kbd,
+		samp,
+		pre *,
+		code * {
+			cursor: text !important;
+		}
+
+		/* 不可用 */
+		:disabled,
+		[aria-disabled="true"],
+		.is-disabled,
+		[data-cursor="unavailable"] {
+		cursor: var(--ffc-unavailable-1) var(--ffc-unavailable-hx) var(--ffc-unavailable-hy), not-allowed !important;
+		cursor: -webkit-image-set(var(--ffc-unavailable-1) 1x, var(--ffc-unavailable-2) 2x) var(--ffc-unavailable-hx) var(--ffc-unavailable-hy), not-allowed !important;
+		cursor: image-set(var(--ffc-unavailable-1) 1x, var(--ffc-unavailable-2) 2x) var(--ffc-unavailable-hx) var(--ffc-unavailable-hy), not-allowed !important;
+		}
+
+		/* 繁忙 / 加载（挂 html.ff-busy / html.ff-loading 即全站生效） */
+		html.ff-busy, html.ff-busy *, [data-cursor="busy"] {
+		cursor: var(--ffc-busy-1) var(--ffc-busy-hx) var(--ffc-busy-hy), wait !important;
+		cursor: -webkit-image-set(var(--ffc-busy-1) 1x, var(--ffc-busy-2) 2x) var(--ffc-busy-hx) var(--ffc-busy-hy), wait !important;
+		cursor: image-set(var(--ffc-busy-1) 1x, var(--ffc-busy-2) 2x) var(--ffc-busy-hx) var(--ffc-busy-hy), wait !important;
+		}
+		html.ff-loading, html.ff-loading *, [data-cursor="working"], [data-cursor="loading"] {
+		cursor: var(--ffc-working-1) var(--ffc-working-hx) var(--ffc-working-hy), progress !important;
+		cursor: -webkit-image-set(var(--ffc-working-1) 1x, var(--ffc-working-2) 2x) var(--ffc-working-hx) var(--ffc-working-hy), progress !important;
+		cursor: image-set(var(--ffc-working-1) 1x, var(--ffc-working-2) 2x) var(--ffc-working-hx) var(--ffc-working-hy), progress !important;
+		}
+		[data-cursor="loading"] {
+		cursor: var(--ffc-loading-1) var(--ffc-loading-hx) var(--ffc-loading-hy), progress !important;
+		cursor: -webkit-image-set(var(--ffc-loading-1) 1x, var(--ffc-loading-2) 2x) var(--ffc-loading-hx) var(--ffc-loading-hy), progress !important;
+		cursor: image-set(var(--ffc-loading-1) 1x, var(--ffc-loading-2) 2x) var(--ffc-loading-hx) var(--ffc-loading-hy), progress !important;
+		}
+
+		/* 精确选择 / 移动 / 抓取 */
+		[data-cursor="precision"], .ff-cur-precision {
+		cursor: var(--ffc-precision-1) var(--ffc-precision-hx) var(--ffc-precision-hy), crosshair;
+		cursor: -webkit-image-set(var(--ffc-precision-1) 1x, var(--ffc-precision-2) 2x) var(--ffc-precision-hx) var(--ffc-precision-hy), crosshair;
+		cursor: image-set(var(--ffc-precision-1) 1x, var(--ffc-precision-2) 2x) var(--ffc-precision-hx) var(--ffc-precision-hy), crosshair;
+		}
+		[draggable="true"], [data-cursor="move"], .ff-cur-move {
+		cursor: var(--ffc-move-1) var(--ffc-move-hx) var(--ffc-move-hy), move;
+		cursor: -webkit-image-set(var(--ffc-move-1) 1x, var(--ffc-move-2) 2x) var(--ffc-move-hx) var(--ffc-move-hy), move;
+		cursor: image-set(var(--ffc-move-1) 1x, var(--ffc-move-2) 2x) var(--ffc-move-hx) var(--ffc-move-hy), move;
+		}
+		[data-cursor="grab"], .ff-grab {
+		cursor: var(--ffc-grab-1) var(--ffc-grab-hx) var(--ffc-grab-hy), grab;
+		cursor: -webkit-image-set(var(--ffc-grab-1) 1x, var(--ffc-grab-2) 2x) var(--ffc-grab-hx) var(--ffc-grab-hy), grab;
+		cursor: image-set(var(--ffc-grab-1) 1x, var(--ffc-grab-2) 2x) var(--ffc-grab-hx) var(--ffc-grab-hy), grab;
+		}
+		[data-cursor="grabbing"], .ff-grab:active {
+		cursor: var(--ffc-grabbing-1) var(--ffc-grabbing-hx) var(--ffc-grabbing-hy), grabbing;
+		cursor: -webkit-image-set(var(--ffc-grabbing-1) 1x, var(--ffc-grabbing-2) 2x) var(--ffc-grabbing-hx) var(--ffc-grabbing-hy), grabbing;
+		cursor: image-set(var(--ffc-grabbing-1) 1x, var(--ffc-grabbing-2) 2x) var(--ffc-grabbing-hx) var(--ffc-grabbing-hy), grabbing;
+		}
+
+		/* ---------- 只靠 [data-cursor] 点名的（本站没有天然触发点） ---------- */
+
+		[data-cursor="hand"] {
+		cursor: var(--ffc-hand-1) var(--ffc-hand-hx) var(--ffc-hand-hy), pointer;
+		cursor: -webkit-image-set(var(--ffc-hand-1) 1x, var(--ffc-hand-2) 2x) var(--ffc-hand-hx) var(--ffc-hand-hy), pointer;
+		cursor: image-set(var(--ffc-hand-1) 1x, var(--ffc-hand-2) 2x) var(--ffc-hand-hx) var(--ffc-hand-hy), pointer;
+		}
+		[data-cursor="help"], abbr[title] {
+		cursor: var(--ffc-help-1) var(--ffc-help-hx) var(--ffc-help-hy), help;
+		cursor: -webkit-image-set(var(--ffc-help-1) 1x, var(--ffc-help-2) 2x) var(--ffc-help-hx) var(--ffc-help-hy), help;
+		cursor: image-set(var(--ffc-help-1) 1x, var(--ffc-help-2) 2x) var(--ffc-help-hx) var(--ffc-help-hy), help;
+		}
+		[data-cursor="done"] {
+		cursor: var(--ffc-done-1) var(--ffc-done-hx) var(--ffc-done-hy), auto;
+		cursor: -webkit-image-set(var(--ffc-done-1) 1x, var(--ffc-done-2) 2x) var(--ffc-done-hx) var(--ffc-done-hy), auto;
+		cursor: image-set(var(--ffc-done-1) 1x, var(--ffc-done-2) 2x) var(--ffc-done-hx) var(--ffc-done-hy), auto;
+		}
+		[data-cursor="candidate"] {
+		cursor: var(--ffc-candidate-1) var(--ffc-candidate-hx) var(--ffc-candidate-hy), auto;
+		cursor: -webkit-image-set(var(--ffc-candidate-1) 1x, var(--ffc-candidate-2) 2x) var(--ffc-candidate-hx) var(--ffc-candidate-hy), auto;
+		cursor: image-set(var(--ffc-candidate-1) 1x, var(--ffc-candidate-2) 2x) var(--ffc-candidate-hx) var(--ffc-candidate-hy), auto;
+		}
+		[data-cursor="background"] {
+		cursor: var(--ffc-background-1) var(--ffc-background-hx) var(--ffc-background-hy), no-drop;
+		cursor: -webkit-image-set(var(--ffc-background-1) 1x, var(--ffc-background-2) 2x) var(--ffc-background-hx) var(--ffc-background-hy), no-drop;
+		cursor: image-set(var(--ffc-background-1) 1x, var(--ffc-background-2) 2x) var(--ffc-background-hx) var(--ffc-background-hy), no-drop;
+		}
+		[data-cursor="add"] {
+		cursor: var(--ffc-add-1) var(--ffc-add-hx) var(--ffc-add-hy), copy;
+		cursor: -webkit-image-set(var(--ffc-add-1) 1x, var(--ffc-add-2) 2x) var(--ffc-add-hx) var(--ffc-add-hy), copy;
+		cursor: image-set(var(--ffc-add-1) 1x, var(--ffc-add-2) 2x) var(--ffc-add-hx) var(--ffc-add-hy), copy;
+		}
+		[data-cursor="delete"] {
+		cursor: var(--ffc-delete-1) var(--ffc-delete-hx) var(--ffc-delete-hy), not-allowed;
+		cursor: -webkit-image-set(var(--ffc-delete-1) 1x, var(--ffc-delete-2) 2x) var(--ffc-delete-hx) var(--ffc-delete-hy), not-allowed;
+		cursor: image-set(var(--ffc-delete-1) 1x, var(--ffc-delete-2) 2x) var(--ffc-delete-hx) var(--ffc-delete-hy), not-allowed;
+		}
+		[data-cursor="scroll-up"] {
+		cursor: var(--ffc-scroll-up-1) var(--ffc-scroll-up-hx) var(--ffc-scroll-up-hy), n-resize;
+		cursor: -webkit-image-set(var(--ffc-scroll-up-1) 1x, var(--ffc-scroll-up-2) 2x) var(--ffc-scroll-up-hx) var(--ffc-scroll-up-hy), n-resize;
+		cursor: image-set(var(--ffc-scroll-up-1) 1x, var(--ffc-scroll-up-2) 2x) var(--ffc-scroll-up-hx) var(--ffc-scroll-up-hy), n-resize;
+		}
+		[data-cursor="scroll-down"] {
+		cursor: var(--ffc-scroll-down-1) var(--ffc-scroll-down-hx) var(--ffc-scroll-down-hy), s-resize;
+		cursor: -webkit-image-set(var(--ffc-scroll-down-1) 1x, var(--ffc-scroll-down-2) 2x) var(--ffc-scroll-down-hx) var(--ffc-scroll-down-hy), s-resize;
+		cursor: image-set(var(--ffc-scroll-down-1) 1x, var(--ffc-scroll-down-2) 2x) var(--ffc-scroll-down-hx) var(--ffc-scroll-down-hy), s-resize;
+		}
+		[data-cursor="scroll-left"] {
+		cursor: var(--ffc-scroll-left-1) var(--ffc-scroll-left-hx) var(--ffc-scroll-left-hy), w-resize;
+		cursor: -webkit-image-set(var(--ffc-scroll-left-1) 1x, var(--ffc-scroll-left-2) 2x) var(--ffc-scroll-left-hx) var(--ffc-scroll-left-hy), w-resize;
+		cursor: image-set(var(--ffc-scroll-left-1) 1x, var(--ffc-scroll-left-2) 2x) var(--ffc-scroll-left-hx) var(--ffc-scroll-left-hy), w-resize;
+		}
+		[data-cursor="scroll-right"] {
+		cursor: var(--ffc-scroll-right-1) var(--ffc-scroll-right-hx) var(--ffc-scroll-right-hy), e-resize;
+		cursor: -webkit-image-set(var(--ffc-scroll-right-1) 1x, var(--ffc-scroll-right-2) 2x) var(--ffc-scroll-right-hx) var(--ffc-scroll-right-hy), e-resize;
+		cursor: image-set(var(--ffc-scroll-right-1) 1x, var(--ffc-scroll-right-2) 2x) var(--ffc-scroll-right-hx) var(--ffc-scroll-right-hy), e-resize;
+		}
+		[data-cursor="resize-nwse"], [data-cursor="nwse-resize"] {
+		cursor: var(--ffc-resize-nwse-1) var(--ffc-resize-nwse-hx) var(--ffc-resize-nwse-hy), nwse-resize;
+		cursor: -webkit-image-set(var(--ffc-resize-nwse-1) 1x, var(--ffc-resize-nwse-2) 2x) var(--ffc-resize-nwse-hx) var(--ffc-resize-nwse-hy), nwse-resize;
+		cursor: image-set(var(--ffc-resize-nwse-1) 1x, var(--ffc-resize-nwse-2) 2x) var(--ffc-resize-nwse-hx) var(--ffc-resize-nwse-hy), nwse-resize;
+		}
+		[data-cursor="resize-nesw"], [data-cursor="nesw-resize"] {
+		cursor: var(--ffc-resize-nesw-1) var(--ffc-resize-nesw-hx) var(--ffc-resize-nesw-hy), nesw-resize;
+		cursor: -webkit-image-set(var(--ffc-resize-nesw-1) 1x, var(--ffc-resize-nesw-2) 2x) var(--ffc-resize-nesw-hx) var(--ffc-resize-nesw-hy), nesw-resize;
+		cursor: image-set(var(--ffc-resize-nesw-1) 1x, var(--ffc-resize-nesw-2) 2x) var(--ffc-resize-nesw-hx) var(--ffc-resize-nesw-hy), nesw-resize;
+		}
+		[data-cursor="resize-vertical"], [data-cursor="ns-resize"] {
+		cursor: var(--ffc-resize-vertical-1) var(--ffc-resize-vertical-hx) var(--ffc-resize-vertical-hy), ns-resize;
+		cursor: -webkit-image-set(var(--ffc-resize-vertical-1) 1x, var(--ffc-resize-vertical-2) 2x) var(--ffc-resize-vertical-hx) var(--ffc-resize-vertical-hy), ns-resize;
+		cursor: image-set(var(--ffc-resize-vertical-1) 1x, var(--ffc-resize-vertical-2) 2x) var(--ffc-resize-vertical-hx) var(--ffc-resize-vertical-hy), ns-resize;
+		}
+		[data-cursor="resize-horizontal"], [data-cursor="ew-resize"] {
+		cursor: var(--ffc-resize-horizontal-1) var(--ffc-resize-horizontal-hx) var(--ffc-resize-horizontal-hy), ew-resize;
+		cursor: -webkit-image-set(var(--ffc-resize-horizontal-1) 1x, var(--ffc-resize-horizontal-2) 2x) var(--ffc-resize-horizontal-hx) var(--ffc-resize-horizontal-hy), ew-resize;
+		cursor: image-set(var(--ffc-resize-horizontal-1) 1x, var(--ffc-resize-horizontal-2) 2x) var(--ffc-resize-horizontal-hx) var(--ffc-resize-horizontal-hy), ew-resize;
+		}
+	}
+</style>
+
+<!-- ===== 「天气预报」卡片（参考站 blog.amamo.top 同款）=====
+     全站显示：桌面进右栏 top 组件容器末尾，<768px 进移动端底部组件栏。
+     DOM 由 public/assets/js/weather-card.js 自己拼（脚本在页脚 PAGE_SCRIPTS 里全站加载），
+     这里只放样式。类名一律 ff-w- 前缀，避免和任何现有规则撞名。
+     ⚠️ 改这个 js 记得把 PAGE_SCRIPTS 里的 ?v= 往上加（/assets/* 有 30 天强缓存）。 -->
+<style id="ff-weather-style">
+	/* 卡片外壳：背景/圆角/暗色由上游 card-base 提供 */
+	#ff-weather {
+		position: relative;
+		padding-bottom: 1rem;
+		color: #171717;
+	}
+
+	:root.dark #ff-weather {
+		color: #f5f5f5;
+	}
+
+	#ff-weather[hidden] {
+		display: none !important;
+	}
+
+	/* 标题：几何复刻上游 widget-title（ml-8 mt-4 mb-2 + 左侧主题色竖条） */
+	.ff-w-title {
+		position: relative;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin: 1rem 1rem 0.5rem 2rem;
+		font-size: 1.125rem;
+		font-weight: 700;
+		line-height: 1.75rem;
+	}
+
+	.ff-w-title::before {
+		content: "";
+		position: absolute;
+		left: -1rem;
+		top: 5.5px;
+		width: 0.25rem;
+		height: 1rem;
+		border-radius: 0.375rem;
+		background: var(--primary);
+	}
+
+	/* 折叠容器：展开时放开高度，收起时截到「地点 + 温度 + 高低温」 */
+	.ff-w-body {
+		overflow: hidden;
+		padding: 0 1rem;
+		max-height: 200rem;
+		transition: max-height 0.35s ease;
+	}
+
+	#ff-weather.is-collapsed .ff-w-body {
+		max-height: 9.5rem;
+	}
+
+	/* 通用图标：尺寸 + 跟随文字色（path 里已写死 fill="currentColor"） */
+	.ff-w-ico {
+		width: 1.25rem;
+		height: 1.25rem;
+		flex-shrink: 0;
+		fill: currentColor;
+	}
+
+	/* ===== 加载 / 错误态 ===== */
+	.ff-w-state {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 0.75rem;
+		padding: 2rem 0;
+	}
+
+	.ff-w-state[hidden] {
+		display: none !important;
+	}
+
+	.ff-w-spinner {
+		width: 2rem;
+		height: 2rem;
+		border: 2px solid var(--primary);
+		border-top-color: transparent;
+		border-radius: 50%;
+		animation: ff-w-spin 0.8s linear infinite;
+	}
+
+	.ff-w-state-text {
+		font-size: 0.875rem;
+		color: var(--primary);
+		text-align: center;
+	}
+
+	.ff-w-error-ico {
+		width: 2rem;
+		height: 2rem;
+		color: #ef4444;
+	}
+
+	.ff-w-retry {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.25rem;
+		margin-top: 0.5rem;
+		padding: 0.375rem 0.75rem;
+		font-family: inherit;
+		font-size: 0.75rem;
+		color: var(--primary);
+		background: transparent;
+		border: 1px solid var(--primary);
+		border-radius: 0.375rem;
+		cursor: pointer;
+		transition: background-color 0.2s, color 0.2s;
+	}
+
+	.ff-w-retry:hover {
+		background: var(--primary);
+		color: #fff;
+	}
+
+	.ff-w-retry-ico {
+		width: 1rem;
+		height: 1rem;
+	}
+
+	/* ===== 内容 ===== */
+	.ff-w-content {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	.ff-w-content[hidden] {
+		display: none !important;
+	}
+
+	.ff-w-head {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: 0.5rem;
+	}
+
+	.ff-w-loc {
+		display: flex;
+		align-items: center;
+		gap: 0.375rem;
+		min-width: 0;
+		flex-wrap: wrap;
+	}
+
+	.ff-w-loc-ico {
+		color: var(--primary);
+	}
+
+	.ff-w-city {
+		font-size: 1.0625rem;
+		font-weight: 600;
+	}
+
+	.ff-w-district {
+		font-size: 0.875rem;
+		color: var(--content-meta);
+	}
+
+	.ff-w-sky {
+		flex-shrink: 0;
+	}
+
+	.ff-w-sky-ico {
+		width: 3rem;
+		height: 3rem;
+		color: var(--primary);
+		animation: ff-w-float 3s ease-in-out infinite;
+	}
+
+	.ff-w-temp-row {
+		display: flex;
+		align-items: baseline;
+		gap: 0.25rem;
+	}
+
+	.ff-w-temp {
+		font-size: 2.5rem;
+		font-weight: 700;
+		line-height: 1;
+	}
+
+	.ff-w-deg {
+		position: relative;
+		top: -1rem;
+		font-size: 1rem;
+		color: var(--content-meta);
+	}
+
+	.ff-w-desc {
+		margin-left: 0.5rem;
+		font-size: 1.5rem;
+	}
+
+	.ff-w-range {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
+		font-size: 0.875rem;
+	}
+
+	.ff-w-range b {
+		font-weight: 600;
+	}
+
+	.ff-w-max {
+		color: #ef4444;
+	}
+
+	.ff-w-min {
+		color: #3b82f6;
+	}
+
+	.ff-w-sep {
+		color: var(--primary);
+	}
+
+	/* ===== 指标网格：固定两列（右栏最窄的 280px 也放得下），
+	   一列会让卡片飙到 900px 以上，右栏根本吃不消 ===== */
+	.ff-w-grid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 0.25rem 0.5rem;
+		border-top: 1px dashed var(--primary);
+		padding-top: 1rem;
+	}
+
+	.ff-w-item {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		min-width: 0;
+		padding: 0.375rem 0.25rem;
+		border-radius: 0.5rem;
+		transition: transform 0.2s, box-shadow 0.2s;
+	}
+
+	.ff-w-item:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+	}
+
+	:root.dark .ff-w-item:hover {
+		box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+	}
+
+	.ff-w-item-full {
+		grid-column: 1 / -1;
+		align-items: flex-start;
+	}
+
+	.ff-w-meta {
+		display: flex;
+		flex-direction: column;
+		min-width: 0;
+	}
+
+	.ff-w-meta-wide {
+		width: 100%;
+	}
+
+	.ff-w-label {
+		font-size: 0.625rem;
+		letter-spacing: 0.05em;
+		color: var(--content-meta);
+	}
+
+	.ff-w-value {
+		font-size: 0.875rem;
+		font-weight: 500;
+	}
+
+	/* 指标图标配色 */
+	.is-wind {
+		color: var(--primary);
+	}
+
+	.is-visibility {
+		color: #3b82f6;
+	}
+
+	.is-feels {
+		color: #f97316;
+	}
+
+	.is-humidity {
+		color: var(--primary);
+	}
+
+	.is-pressure {
+		color: #8b5cf6;
+	}
+
+	.is-aqi {
+		color: #22c55e;
+	}
+
+	.is-cloud {
+		color: #64748b;
+	}
+
+	.is-uv {
+		color: #eab308;
+	}
+
+	.is-precipitation {
+		color: #06b6d4;
+	}
+
+	.is-pop {
+		color: #0ea5e9;
+	}
+
+	.is-sunrise {
+		color: #fbbf24;
+	}
+
+	.is-sunset {
+		color: #fb923c;
+	}
+
+	.is-pollutant {
+		color: #ef4444;
+		margin-top: 0.125rem;
+	}
+
+	/* 空气质量等级标签 */
+	.ff-w-aqi-tag {
+		margin-left: 0.25rem;
+		padding: 0.125rem 0.375rem;
+		border-radius: 0.25rem;
+		font-size: 0.625rem;
+	}
+
+	.ff-w-aqi-tag:empty {
+		display: none;
+	}
+
+	.ff-w-aqi-tag.is-good {
+		background: #22c55e;
+		color: #fff;
+	}
+
+	.ff-w-aqi-tag.is-moderate {
+		background: #eab308;
+		color: #1f2937;
+	}
+
+	.ff-w-aqi-tag.is-bad {
+		background: #ef4444;
+		color: #fff;
+	}
+
+	/* 污染物浓度：固定三列（跟参考站一致） */
+	.ff-w-pollutants {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 0.125rem 0.5rem;
+		margin-top: 0.25rem;
+		font-size: 0.75rem;
+		color: var(--content-meta);
+	}
+
+	.ff-w-pollutant b {
+		font-weight: 600;
+	}
+
+	.ff-w-time {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.375rem;
+		font-size: 0.75rem;
+		color: var(--content-meta);
+	}
+
+	.ff-w-time-ico {
+		width: 1rem;
+		height: 1rem;
+	}
+
+	/* ===== 折叠按钮 ===== */
+	.ff-w-toggle-box {
+		padding: 0 1rem;
+		margin-bottom: -0.5rem;
+	}
+
+	/* 加载态 / 错误态没有可折叠的内容，按钮由 js 加 hidden 关掉 */
+	#ff-weather .ff-w-toggle-box[hidden] {
+		display: none !important;
+	}
+
+	.ff-w-toggle {
+		display: block;
+		width: 100%;
+		height: 2.25rem;
+		padding: 0;
+		font-family: inherit;
+		font-size: 1rem;
+		color: inherit;
+		background: transparent;
+		border: none;
+		border-radius: 0.5rem;
+		cursor: pointer;
+		transition: background-color 0.2s;
+	}
+
+	.ff-w-toggle:hover {
+		background: var(--btn-plain-bg-hover);
+	}
+
+	.ff-w-toggle-inner {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
+		color: var(--primary);
+		transform: translateX(-0.5rem);
+	}
+
+	.ff-w-toggle-more,
+	.ff-w-toggle-less {
+		width: 1.75rem;
+		height: 1.75rem;
+	}
+
+	#ff-weather:not(.is-collapsed) .ff-w-toggle-more {
+		display: none;
+	}
+
+	#ff-weather.is-collapsed .ff-w-toggle-less {
+		display: none;
+	}
+
+	@keyframes ff-w-spin {
+		to {
+			transform: rotate(360deg);
+		}
+	}
+
+	@keyframes ff-w-float {
+		0%,
+		100% {
+			transform: translateY(0);
+		}
+		50% {
+			transform: translateY(-4px);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.ff-w-sky-ico,
+		.ff-w-spinner {
+			animation: none;
+		}
+
+		.ff-w-body {
+			transition: none;
+		}
+	}
+</style>
