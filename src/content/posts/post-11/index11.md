@@ -34,7 +34,7 @@ seriesOrder: 3
 | QQ 交流群 | [635207650](http://qm.qq.com/cgi-bin/qm/qr?group_code=635207650) |
 
 <!-- 图片 1：云析安卓端主界面截图，展示解析页 -->
-![云析安卓端主界面](./images/index11(1).avif)
+![云析安卓端主界面](./1.avif)
 
 ## 二、支持平台
 
