@@ -1,0 +1,102 @@
+/**
+ * 友链页分区样式（结构对齐书签导航页的 .booknav-group）。
+ *
+ * 由 /assets/js/friends-sections.js 在进入 /friends/ 时注入，
+ * 选择器都带 .friends-group 前缀，不影响别处。
+ */
+
+.friends-group {
+	margin-top: 1.6rem;
+}
+
+.friends-group:first-of-type {
+	margin-top: 0.25rem;
+}
+
+.friends-group[hidden] {
+	display: none;
+}
+
+.friends-group__heading {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 0.5rem 0.9rem;
+	margin-bottom: 0.85rem;
+	padding: 0 0.15rem 0.55rem;
+	border-bottom: 1px solid var(--line-divider);
+}
+
+.friends-group__main {
+	display: flex;
+	align-items: baseline;
+	flex-wrap: wrap;
+	gap: 0.15rem 0.6rem;
+	min-width: 0;
+}
+
+.friends-group__title {
+	position: relative;
+	margin: 0;
+	padding-left: 0.6rem;
+	color: var(--text-color);
+	font-size: 1.02rem;
+	font-weight: 780;
+	letter-spacing: -0.01em;
+	line-height: 1.4;
+}
+
+.friends-group__title::before {
+	position: absolute;
+	top: 50%;
+	left: 0;
+	width: 3px;
+	height: 0.95em;
+	border-radius: 3px;
+	background: var(--primary);
+	content: "";
+	transform: translateY(-50%);
+}
+
+.friends-group__desc {
+	color: var(--content-meta);
+	font-size: 0.76rem;
+	line-height: 1.6;
+}
+
+.friends-group__count {
+	flex: 0 0 auto;
+	color: var(--content-meta);
+	font-size: 0.72rem;
+	font-variant-numeric: tabular-nums;
+	opacity: 0.75;
+}
+
+/* 分区里的网格：列宽跟主网格一致，只是把 my-4 的上下外距收掉 */
+.friends-grid--group {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+@media (max-width: 640px) {
+	.friends-group {
+		margin-top: 1.15rem;
+	}
+
+	.friends-group:first-of-type {
+		margin-top: 0;
+	}
+
+	.friends-group__heading {
+		margin-bottom: 0.65rem;
+		padding-bottom: 0.45rem;
+	}
+
+	.friends-group__title {
+		font-size: 0.95rem;
+	}
+
+	.friends-group__desc {
+		font-size: 0.72rem;
+	}
+}
