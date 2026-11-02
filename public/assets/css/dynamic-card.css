@@ -1,0 +1,794 @@
+/**
+ * 动态页卡片改版 —— 只在 /dynamic/ 生效。
+ *
+ * 为什么单独一个文件：这些规则要改动卡片的骨架（缩进、图片网格尺寸），
+ * 写在 FooterConfig.html 里会让那个文件继续膨胀，抽出来更好维护。引入方式
+ * 还是页脚按需注入（<link>），所以它天然是**未分层** CSS，能压过主题的 @layer。
+ *
+ * ⚠️ 所有选择器一律以 `dynamic-entry` 打头。上游的 `.page-*` 在友链页、
+ *    书签导航那批自建页里也在用，不加这个前缀会误伤它们。
+ * ⚠️ 图片网格那几条必须写成 `dynamic-entry .page-gallery > .page-gallery-grid[data-count=…]`。
+ *    上游的同一批规则是 `.page-gallery-grid[data-count="N"]`（0-2-0），只加一个元素名前缀
+ *    只有 (0-1-1)，压不过它 —— 实测容器宽度会残留成 `min(100%, 28rem)` = 448px，
+ *    格子设成 100px 也只会被这 448px 摊开，白设。
+ * ⚠️ /assets/* 有 30 天强缓存，改完本文件记得把 FooterConfig.html 里那条
+ *    <link> 的 ?v= 往上加。
+ *
+ * 参考的是 blog.huchao.vip/moments/ 的卡片：左侧一根主题色竖条、圆形头像带
+ * 主题色描边、昵称用主题色、元信息一行小字用 · 分隔、图片按张数排成固定
+ * 尺寸的方块网格。
+ */
+
+/* 按钮行：现在只剩「写说说」，由 dynamic-hero.js 并进页面头部 */
+.ff-wx-action-btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.375rem;
+	padding: 0.4375rem 0.875rem;
+	border: 1px solid var(--border);
+	border-radius: 9999px;
+	background: var(--btn-regular-bg);
+	color: var(--text-color);
+	font-size: 0.8125rem;
+	font-weight: 500;
+	text-decoration: none;
+	transition: all 200ms ease;
+}
+
+.ff-wx-action-btn:hover {
+	border-color: var(--primary);
+	color: var(--primary);
+}
+
+.ff-wx-action-primary {
+	border-color: var(--primary);
+	background: var(--primary);
+	color: #fff;
+}
+
+.ff-wx-action-primary:hover {
+	color: #fff;
+	opacity: 0.9;
+}
+
+/* 置顶条：左侧一块「置顶」标签，右侧横排预览（内容由 JS 从列表里抽） */
+.ff-wx-pinned {
+	display: flex;
+	align-items: stretch;
+	min-height: 4.5rem;
+	margin-bottom: 1.25rem;
+	overflow: hidden;
+	border: 1.5px solid transparent;
+	border-radius: var(--radius-large);
+	background: var(--card-bg);
+	color: var(--text-color);
+	text-decoration: none;
+	cursor: pointer;
+	transition:
+		border-color 200ms ease,
+		transform 200ms ease;
+}
+
+.ff-wx-pinned[hidden] {
+	display: none;
+}
+
+.ff-wx-pinned:hover {
+	border-color: var(--primary);
+	transform: translateY(-2px);
+}
+
+.ff-wx-pinned-tag {
+	display: flex;
+	flex-shrink: 0;
+	align-items: center;
+	padding: 0 0.75rem;
+	background: #fff;
+	color: #1a1a1a;
+	font-size: 1.625rem;
+	font-weight: 400;
+	white-space: nowrap;
+}
+
+html.dark .ff-wx-pinned-tag {
+	background: transparent;
+	color: #fff;
+}
+
+.ff-wx-pinned-items {
+	display: flex;
+	flex: 1;
+	justify-content: flex-end;
+	overflow-x: auto;
+	overflow-y: hidden;
+	scrollbar-width: none;
+}
+
+.ff-wx-pinned-items::-webkit-scrollbar {
+	display: none;
+}
+
+.ff-wx-pinned-preview {
+	display: flex;
+	flex: 1;
+	align-items: center;
+	justify-content: center;
+	min-width: 4rem;
+	max-width: 7.5rem;
+	padding: 0.5rem;
+	overflow: hidden;
+	border-left: 1px solid var(--border);
+}
+
+.ff-wx-pinned-preview:first-child {
+	border-left: none;
+}
+
+.ff-wx-pinned-text {
+	display: -webkit-box;
+	overflow: hidden;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	color: var(--content-meta);
+	font-size: 0.75rem;
+	line-height: 1.4;
+}
+
+.ff-wx-pinned-img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+@media (max-width: 480px) {
+	.ff-wx-pinned-preview {
+		min-width: 3.5rem;
+		max-width: 6rem;
+		padding: 0.375rem;
+	}
+}
+
+/* ===== 页面头部 =====
+   上游的 .page-header 自己是一张 card-base（图标 + 标题 + 计数 + 搜索/年份筛选）。
+   封面区撤掉之后这块就是整页第一块内容，壳得留着 —— 之前为了跟封面并成一张卡
+   把壳拆了，现在顶上没东西衬着，裸着排一行字确实难看（2026-10-31 站长要求加回来）。 */
+
+/* 「写说说」被搬进页面头部右侧那一排之后（跟「订阅RSS」「N 动态」并排），
+   尺寸收一收才跟那两个协调 —— 它们都是 0.75rem 上下的小字 */
+.page-count .ff-wx-action-btn {
+	margin-right: 0.5rem;
+	padding: 0.25rem 0.625rem;
+	font-size: 0.75rem;
+}
+
+/* 壳交给上游的 .card-base（圆角 + 底色 + 描边 + 阴影），这里只收一档内边距：
+   上游的 1.5rem 2rem 是配着左边那个大图标算的，图标撤了之后 2rem 的留白显得空。 */
+.page-header {
+	margin: 0 0 1rem;
+	padding: 1.125rem 1.375rem 1.25rem;
+}
+
+/* 左首那个大图标一并撤掉（站长点名） */
+.page-header .page-icon {
+	display: none;
+}
+
+/* 评论按钮左对齐到卡片。
+   上游给 .page-inline-comments 留了 3.75rem 的左边距（跟头像对齐那套缩进），
+   但正文的缩进前面已经被我们取消了，这里留着就只剩按钮孤零零地缩进去。 */
+.page-inline-comments {
+	margin-left: 0;
+}
+
+/* ===== 卡片本体 ===== */
+
+/* 上游 .page-entry 是 overflow: visible，竖条要贴边得先裁住 */
+dynamic-entry.page-entry {
+	position: relative;
+	overflow: hidden;
+	padding: 1rem;
+	transition:
+		box-shadow 250ms ease,
+		transform 250ms ease,
+		border-color 250ms ease;
+}
+
+/* 左侧那根主题色竖条 */
+dynamic-entry.page-entry::before {
+	position: absolute;
+	inset: 0 auto 0 0;
+	width: 4px;
+	border-radius: 0 2px 2px 0;
+	background: var(--primary);
+	opacity: 0.35;
+	content: "";
+	pointer-events: none;
+}
+
+/* 暗色下悬停描一圈白边加柔光 —— 跟参考站一致，亮色下不动 */
+html.dark dynamic-entry.page-entry:hover {
+	border-color: #fff;
+	box-shadow: 0 4px 24px rgb(255 255 255 / 8%);
+}
+
+/* ===== 头部 ===== */
+
+dynamic-entry .page-entry-header {
+	gap: 0.625rem;
+	margin-bottom: 0.75rem;
+}
+
+/* 头像：40px 圆 + 2px 主题色描边（上游的 3rem 偏大、也没描边） */
+dynamic-entry .page-avatar {
+	width: 2.5rem;
+	height: 2.5rem;
+	flex: 0 0 2.5rem;
+	border: 2px solid var(--primary);
+	box-sizing: border-box;
+}
+
+dynamic-entry .page-identity strong {
+	color: var(--primary);
+	font-size: 0.9375rem;
+	font-weight: 600;
+	line-height: 1.35;
+}
+
+/* 昵称本身就是主题色了，悬停改走透明度，不然 hover 反而没反馈 */
+dynamic-entry .page-author:hover strong {
+	opacity: 0.8;
+}
+
+/* ===== 元信息行（时间 · 地点）===== */
+
+dynamic-entry .page-meta {
+	gap: 0;
+}
+
+dynamic-entry .page-time,
+dynamic-entry .page-location {
+	color: var(--content-meta);
+	font-size: 0.75rem;
+	line-height: 1.5;
+}
+
+/* 时间与地点之间补一个 · —— 上游只靠 gap 分隔，参考站是这种点 */
+dynamic-entry .page-meta > * + *::before {
+	margin: 0 0.375rem;
+	color: inherit;
+	opacity: 0.5;
+	content: "·";
+}
+
+dynamic-entry .page-location {
+	max-width: 12rem;
+}
+
+/* ===== 置顶徽章 ===== */
+
+dynamic-entry .page-pinned-badge {
+	border-radius: var(--radius);
+	background: var(--btn-regular-bg);
+	color: var(--btn-content);
+	padding: 0.125rem 0.5rem;
+	font-size: 0.75rem;
+	font-weight: 600;
+	line-height: 1.4;
+}
+
+/* 右上角那枚引号纯装饰，参考站没有，撤掉 */
+dynamic-entry .page-entry-decoration {
+	display: none;
+}
+
+/* ===== 正文：取消跟头像对齐的缩进 ===== */
+
+dynamic-entry .page-content {
+	margin: 0 0 0.75rem;
+	font-size: 0.95rem;
+	line-height: 1.7;
+}
+
+dynamic-entry .page-content p {
+	margin-bottom: 0.375rem;
+}
+
+dynamic-entry .page-content > :last-child {
+	margin-bottom: 0;
+}
+
+/* 正文里的图片也给个圆角，跟网格保持一致 */
+dynamic-entry .page-content img {
+	border-radius: var(--radius);
+}
+
+/* ===== 图片网格：固定尺寸方块，按张数排 ===== */
+
+dynamic-entry .page-gallery {
+	width: 100%;
+	margin: 0.25rem 0 0;
+}
+
+dynamic-entry .page-gallery > .page-gallery-grid {
+	width: fit-content;
+	max-width: 100%;
+	gap: 0.375rem;
+	grid-auto-rows: 100px;
+	grid-template-columns: repeat(3, 100px);
+}
+
+/* 上游给 3 张、5 张做的「首图跨两行」特殊布局，这里统一成等大方块 */
+dynamic-entry .page-gallery > .page-gallery-grid[data-count="3"] .page-gallery-grid-item:first-child,
+dynamic-entry .page-gallery > .page-gallery-grid[data-count="5"] .page-gallery-grid-item:first-child {
+	aspect-ratio: 1;
+	grid-row: auto;
+}
+
+dynamic-entry .page-gallery > .page-gallery-grid[data-count="1"] {
+	grid-template-columns: 100px;
+}
+
+dynamic-entry .page-gallery > .page-gallery-grid[data-count="2"],
+dynamic-entry .page-gallery > .page-gallery-grid[data-count="4"] {
+	grid-template-columns: repeat(2, 100px);
+}
+
+dynamic-entry .page-gallery > .page-gallery-grid .page-gallery-grid-item {
+	border-radius: var(--radius);
+}
+
+/* 单图保持上游的「完整显示不裁剪」—— 一张风景照被裁成 100px 方块反而难看 */
+dynamic-entry .page-gallery > .page-gallery-grid[data-layout="single"] {
+	width: fit-content;
+	max-width: 100%;
+}
+
+dynamic-entry .page-gallery > .page-gallery-grid[data-layout="single"] img {
+	max-width: min(100%, 32rem);
+	max-height: min(24rem, 60vh);
+}
+
+/* ===== 内嵌评论预览 =====
+   DOM 全部由 public/assets/js/dynamic-comment-enhance.js 生成（上游的
+   DynamicInlineComments.astro 没动），类名统一带 dyn-cmt- 前缀，避免跟 Waline
+   自带样式（wl-*）和上游 .page-comment-* 撞车。
+
+   版面照 lengxiqwq.com/dynamic/：一块细边框的盒子，标题行「N 条评论 + 写评论」，
+   最多 3 条评论，底部「展开更多 / 打开完整评论区」。上游那个折叠按钮由
+   [data-dyn-preview] 门控藏掉 —— 脚本要是挂了，按钮还在，功能不丢。 */
+
+dynamic-entry .page-inline-comments[data-dyn-preview="1"] {
+	border-top: 0;
+	margin-top: 0.875rem;
+	padding-top: 0;
+}
+
+/* 上游那个「评论 3 ∨」折叠按钮：预览出现之后它就没用了，藏掉。
+   只按 data-dyn-preview 门控 —— 脚本没跑起来时按钮还在，可降级。 */
+dynamic-entry .page-inline-comments[data-dyn-preview="1"] > .page-comment-toggle {
+	display: none;
+}
+
+.dyn-cmt-collapse-wrap {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	margin-top: 0.35rem;
+}
+
+/* 面板摊开时把预览收掉 —— 同一批评论没必要并排摆两份 */
+dynamic-entry .page-inline-comments[data-dyn-open="1"] > [data-dyn-box] {
+	display: none;
+}
+
+dynamic-entry .page-inline-comments[data-dyn-open="1"] > .page-comment-panel {
+	margin-top: 0;
+}
+
+.dyn-cmt-box {
+	overflow: hidden;
+	border: 1px solid color-mix(in srgb, var(--border) 85%, transparent);
+	border-radius: var(--radius);
+	background: color-mix(in srgb, var(--btn-regular-bg) 55%, transparent);
+}
+
+.dyn-cmt-box svg {
+	width: 1em;
+	height: 1em;
+	flex: 0 0 auto;
+}
+
+/* ---- 顶部标题行 ---- */
+
+.dyn-cmt-head {
+	display: flex;
+	min-height: 2.4rem;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.5rem;
+	padding: 0.4rem 0.75rem;
+	border-bottom: 1px dashed color-mix(in srgb, var(--content-meta) 22%, transparent);
+}
+
+.dyn-cmt-label {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35rem;
+	color: var(--content-meta);
+	font-size: 0.8125rem;
+	line-height: 1.4;
+}
+
+.dyn-cmt-label svg {
+	font-size: 1rem;
+}
+
+.dyn-cmt-count {
+	color: var(--text-color);
+	font-weight: 600;
+}
+
+.dyn-cmt-action {
+	display: inline-flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 0.3rem;
+	white-space: nowrap;
+	padding: 0.15rem 0.35rem;
+	border: 0;
+	border-radius: 6px;
+	background: transparent;
+	color: var(--primary);
+	font-family: inherit;
+	font-size: 0.8125rem;
+	line-height: 1.5;
+	cursor: pointer;
+	transition: background 160ms ease;
+}
+
+.dyn-cmt-action:hover,
+.dyn-cmt-action:focus-visible {
+	background: color-mix(in srgb, var(--primary) 12%, transparent);
+}
+
+/* ---- 评论列表 ---- */
+
+.dyn-cmt-list {
+	padding: 0.125rem 0.75rem 0.375rem;
+}
+
+.dyn-cmt-row {
+	display: flex;
+	gap: 0.55rem;
+	padding: 0.45rem 0;
+}
+
+.dyn-cmt-avatar {
+	width: 1.75rem;
+	height: 1.75rem;
+	flex: 0 0 1.75rem;
+	border-radius: 9999px;
+	background: var(--btn-regular-bg);
+	object-fit: cover;
+}
+
+.dyn-cmt-main {
+	min-width: 0;
+	flex: 1;
+}
+
+.dyn-cmt-meta {
+	display: flex;
+	align-items: center;
+	gap: 0.3rem;
+	min-width: 0;
+}
+
+.dyn-cmt-nick {
+	overflow: hidden;
+	max-width: 11rem;
+	color: var(--text-color);
+	font-size: 0.8125rem;
+	font-weight: 600;
+	line-height: 1.5;
+	text-decoration: none;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+a.dyn-cmt-nick:hover {
+	color: var(--primary);
+}
+
+.dyn-cmt-badge {
+	flex: 0 0 auto;
+	padding: 0 0.3rem;
+	border-radius: 0.25rem;
+	background: color-mix(in srgb, var(--primary) 16%, transparent);
+	color: var(--primary);
+	font-size: 0.6875rem;
+	font-weight: 600;
+	line-height: 1.5;
+}
+
+.dyn-cmt-replyto {
+	overflow: hidden;
+	color: var(--content-meta);
+	font-size: 0.6875rem;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.dyn-cmt-time {
+	margin-left: auto;
+	flex: 0 0 auto;
+	color: var(--content-meta);
+	font-size: 0.6875rem;
+	line-height: 1.5;
+}
+
+/* ---- 评论正文 ---- */
+
+.dyn-cmt-body {
+	margin-top: 0.15rem;
+	color: color-mix(in srgb, var(--text-color) 92%, transparent);
+	font-size: 0.8125rem;
+	line-height: 1.62;
+	overflow-wrap: anywhere;
+}
+
+.dyn-cmt-body p {
+	margin: 0 0 0.25rem;
+}
+
+.dyn-cmt-body > :last-child {
+	margin-bottom: 0;
+}
+
+.dyn-cmt-body a {
+	color: var(--primary);
+	text-decoration: underline;
+	text-decoration-color: color-mix(in srgb, var(--primary) 42%, transparent);
+	text-underline-offset: 3px;
+}
+
+.dyn-cmt-body a:hover {
+	text-decoration-color: currentcolor;
+}
+
+.dyn-cmt-body img {
+	max-width: 100%;
+	max-height: 14rem;
+	margin: 0.2rem 0;
+	border-radius: var(--radius);
+}
+
+/* 表情是 <img class="wl-emoji">，别被上面那条 max-height 拉成方块 */
+.dyn-cmt-body img.wl-emoji {
+	display: inline-block;
+	width: auto;
+	height: 1.3em;
+	max-height: none;
+	margin: 0 0.1em;
+	border-radius: 0;
+	vertical-align: -0.25em;
+}
+
+.dyn-cmt-body .wl-badge {
+	display: inline-block;
+	margin-right: 0.25rem;
+	padding: 0 0.3rem;
+	border-radius: 0.25rem;
+	background: color-mix(in srgb, var(--primary) 16%, transparent);
+	color: var(--primary);
+	font-size: 0.6875rem;
+	font-weight: 600;
+	line-height: 1.5;
+	vertical-align: 0.05em;
+}
+
+/* AI 回复末尾那行小字 */
+.dyn-cmt-body small {
+	display: block;
+	margin-top: 0.25rem;
+	color: var(--content-meta);
+	font-size: 0.6875rem;
+	line-height: 1.5;
+}
+
+.dyn-cmt-body blockquote {
+	margin: 0.25rem 0;
+	padding-left: 0.6rem;
+	border-left: 2px solid var(--border);
+	color: var(--content-meta);
+}
+
+.dyn-cmt-body code {
+	padding: 0.05rem 0.25rem;
+	border-radius: 0.25rem;
+	background: var(--btn-regular-bg);
+	font-size: 0.75rem;
+}
+
+.dyn-cmt-body pre {
+	margin: 0.35rem 0;
+	padding: 0.5rem 0.6rem;
+	overflow: auto;
+	border-radius: var(--radius);
+	background: var(--btn-regular-bg);
+	font-size: 0.75rem;
+}
+
+.dyn-cmt-body pre code {
+	padding: 0;
+	background: transparent;
+}
+
+/* 长评论折 4 行，下面挂一个「展开 / 收起」 */
+.dyn-cmt-body.is-clamped {
+	display: -webkit-box;
+	overflow: hidden;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 4;
+}
+
+.dyn-cmt-body.is-clamped.is-open {
+	display: block;
+	overflow: visible;
+	-webkit-line-clamp: unset;
+}
+
+.dyn-cmt-fold {
+	padding: 0;
+	border: 0;
+	background: transparent;
+	color: var(--primary);
+	font-family: inherit;
+	font-size: 0.6875rem;
+	line-height: 1.6;
+	cursor: pointer;
+}
+
+.dyn-cmt-fold:hover {
+	text-decoration: underline;
+}
+
+/* ---- 底部一行 ---- */
+
+.dyn-cmt-foot {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.5rem;
+	padding: 0.35rem 0.75rem 0.45rem;
+	border-top: 1px dashed color-mix(in srgb, var(--content-meta) 22%, transparent);
+}
+
+.dyn-cmt-foot .dyn-cmt-action {
+	font-size: 0.75rem;
+}
+
+.dyn-cmt-foot-hint {
+	flex: 1;
+}
+
+.dyn-cmt-btn-icon {
+	display: inline-flex;
+	transition: transform 160ms ease;
+}
+
+.dyn-cmt-open:hover .dyn-cmt-btn-icon {
+	transform: translateX(2px);
+}
+
+/* ---- 空态 / 加载态 ---- */
+
+.dyn-cmt-empty {
+	display: flex;
+	min-height: 2.6rem;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.5rem;
+	padding: 0.4rem 0.75rem;
+}
+
+.dyn-cmt-hint {
+	display: inline-flex;
+	min-width: 0;
+	align-items: center;
+	gap: 0.4rem;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	color: var(--content-meta);
+	font-family: inherit;
+	font-size: 0.8125rem;
+	line-height: 1.5;
+	cursor: pointer;
+	transition: color 160ms ease;
+}
+
+.dyn-cmt-hint:hover {
+	color: var(--primary);
+}
+
+.dyn-cmt-hint-text {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.dyn-cmt-loading {
+	display: flex;
+	min-height: 2.6rem;
+	align-items: center;
+	padding: 0.4rem 0.75rem;
+}
+
+.dyn-cmt-skeleton {
+	color: var(--content-meta);
+	font-size: 0.8125rem;
+	animation: dyn-cmt-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes dyn-cmt-pulse {
+	0%,
+	100% {
+		opacity: 0.35;
+	}
+
+	50% {
+		opacity: 0.85;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.dyn-cmt-skeleton {
+		animation: none;
+		opacity: 0.6;
+	}
+}
+
+/* ===== 窄屏：网格自适应，不再固定 100px ===== */
+
+@media (max-width: 480px) {
+	dynamic-entry.page-entry {
+		padding: 0.875rem;
+	}
+
+	dynamic-entry .page-avatar {
+		width: 2.25rem;
+		height: 2.25rem;
+		flex: 0 0 2.25rem;
+	}
+
+	dynamic-entry .page-identity strong {
+		font-size: 0.875rem;
+	}
+
+	dynamic-entry .page-time,
+	dynamic-entry .page-location {
+		font-size: 0.6875rem;
+	}
+
+	dynamic-entry .page-location {
+		max-width: 6rem;
+	}
+
+	dynamic-entry .page-gallery > .page-gallery-grid {
+		width: 100%;
+		gap: 0.25rem;
+		grid-auto-rows: auto;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+
+	dynamic-entry .page-gallery > .page-gallery-grid[data-count="1"] {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	dynamic-entry .page-gallery > .page-gallery-grid[data-count="2"],
+	dynamic-entry .page-gallery > .page-gallery-grid[data-count="4"] {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
