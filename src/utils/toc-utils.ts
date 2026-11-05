@@ -7,6 +7,7 @@ import I18nKey from "@/i18n/i18nKey";
 import { i18n } from "@/i18n/translation";
 import {
 	computeTocItems,
+	escapeHtmlAttr,
 	renderTocItemHTML,
 	type TocInput,
 } from "@/utils/toc-shared";
@@ -74,8 +75,8 @@ export class TOCManager {
 	 * 空状态文案
 	 */
 	private getEmptyStateHTML(): string {
-		return `<div class="text-center py-8 text-gray-500 dark:text-gray-400"><p>${i18n(I18nKey.tocEmpty)}</p></div>`;
-	}
+	return `<div class="text-center py-8 text-gray-500 dark:text-gray-400"><p>${escapeHtmlAttr(i18n(I18nKey.tocEmpty))}</p></div>`;
+}
 
 	/**
 	 * 将 DOM 标题转换为与服务端一致的 TocInput
@@ -127,8 +128,7 @@ export class TOCManager {
 			tocHTML += renderTocItemHTML(item);
 		}
 
-		tocHTML += `<div id="${this.indicatorId}" style="opacity: 0;" class="toc-active-indicator"></div>`;
-
+		tocHTML += `<div id="${escapeHtmlAttr(this.indicatorId)}" style="opacity: 0;" class="toc-active-indicator"></div>`;
 		return tocHTML;
 	}
 
