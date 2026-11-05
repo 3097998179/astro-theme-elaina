@@ -223,7 +223,21 @@
 				// 清不掉也不影响：后面的 force 请求本来就会绕过缓存。
 			}
 		}
+function fetchWithTimeout(url, options) {
+	var controller = new AbortController();
+	var timer = window.setTimeout(function () {
+		controller.abort();
+	}, 8000);
 
+	return fetch(
+		url,
+		Object.assign({}, options || {}, {
+			signal: controller.signal,
+		}),
+	).finally(function () {
+		window.clearTimeout(timer);
+	});
+}
 		function formatNumber(value) {
 			return new Intl.NumberFormat("zh-CN").format(Number(value) || 0);
 		}
@@ -267,54 +281,59 @@
 		}
 
 		function fetchShare(force) {
-			var cached = force ? null : readCache(KEY_SHARE, CACHE_SCOPE, TTL_SHARE);
-			if (cached) return Promise.resolve(cached);
-			return fetch(API_BASE + "/api/share/" + encodeURIComponent(SHARE_ID), {
-				cache: "no-store",
-			})
-				.then(function (response) {
-					if (!response.ok) throw httpError("share", response.status);
-					return response.json();
-				})
-				.then(function (data) {
-					if (!data || !data.websiteId || !data.token) {
-						throw new Error("invalid share payload");
-					}
-					writeCache(KEY_SHARE, CACHE_SCOPE, data);
-					return data;
-				});
-		}
+	var cached = force ? null : readCache(KEY_SHARE, CACHE_SCOPE, TTL_SHARE);
+	if (cached) return Promise.resolve(cached);
 
-		function fetchStats(share, startAt, scope, ttl, force) {
-			var key = KEY_STATS + ":" + scope;
-			var tag = CACHE_SCOPE + "|" + share.websiteId;
-			var cached = force ? null : readCache(key, tag, ttl);
-			if (cached) return Promise.resolve(cached);
+	return fetchWithTimeout(
+		API_BASE + "/api/share/" + encodeURIComponent(SHARE_ID),
+		{
+			cache: "no-store",
+		},
+	)
+		.then(function (response) {
+			if (!response.ok) throw httpError("share", response.status);
+			return response.json();
+		})
+		.then(function (data) {
+			if (!data || !data.websiteId || !data.token) {
+				throw new Error("invalid share payload");
+			}
+			writeCache(KEY_SHARE, CACHE_SCOPE, data);
+			return data;
+		});
+}
 
-			var url =
-				API_BASE +
-				"/api/websites/" +
-				share.websiteId +
-				"/stats?startAt=" +
-				startAt +
-				"&endAt=" +
-				Date.now();
+	function fetchStats(share, startAt, scope, ttl, force) {
+	var key = KEY_STATS + ":" + scope;
+	var tag = CACHE_SCOPE + "|" + share.websiteId;
+	var cached = force ? null : readCache(key, tag, ttl);
 
-			return fetch(url, {
-				headers: {
-					"x-umami-share-token": share.token,
-					"x-umami-share-context": "1",
-				},
-			})
-				.then(function (response) {
-					if (!response.ok) throw httpError("stats", response.status);
-					return response.json();
-				})
-				.then(function (data) {
-					writeCache(key, tag, data);
-					return data;
-				});
-		}
+	if (cached) return Promise.resolve(cached);
+
+	var url =
+		API_BASE +
+		"/api/websites/" +
+		share.websiteId +
+		"/stats?startAt=" +
+		startAt +
+		"&endAt=" +
+		Date.now();
+
+	return fetchWithTimeout(url, {
+		headers: {
+			"x-umami-share-token": share.token,
+			"x-umami-share-context": "1",
+		},
+	})
+		.then(function (response) {
+			if (!response.ok) throw httpError("stats", response.status);
+			return response.json();
+		})
+		.then(function (data) {
+			writeCache(key, tag, data);
+			return data;
+		});
+}
 
 		// 401/403 单独标出来：只有鉴权失败才值得丢掉令牌重取一次，
 		// 网络超时、5xx 重取令牌也是白搭。
@@ -368,11 +387,16 @@
 					});
 				})
 				.catch(function (error) {
-					// 拉取失败就保持整行隐藏，不在页脚留残骸。
-					if (window.console && console.warn) {
-						console.warn("[ff-umami] 页脚统计加载失败：", error);
-					}
-				})
+	root.querySelectorAll("[data-ff-us]").forEach(function (element) {
+		element.textContent = "暂不可用";
+	});
+
+	root.hidden = false;
+
+	if (window.console && console.warn) {
+		console.warn("[ff-umami] 页脚统计加载失败：", error);
+	}
+})
 				.then(function () {
 					running = false;
 				});
