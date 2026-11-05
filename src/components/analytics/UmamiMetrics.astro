@@ -42,6 +42,19 @@ const {
 			return request;
 		};
 		const apiBase = String(shareApiBase || "").replace(/\/+$/, "");
+		async function fetchWithTimeout(url, options = {}, timeoutMs = 8000) {
+	const controller = new AbortController();
+	const timer = window.setTimeout(() => controller.abort(), timeoutMs);
+
+	try {
+		return await fetch(url, {
+			...options,
+			signal: controller.signal,
+		});
+	} finally {
+		window.clearTimeout(timer);
+	}
+}
 		const historicalVisitorCount = Math.max(0, Math.floor(Number(historicalVisitors) || 0));
 		const historicalPageviewCount = Math.max(0, Math.floor(Number(historicalPageviews) || 0));
 		const localPreviewHosts = new Set(["localhost", "127.0.0.1", "::1", "0.0.0.0"]);
@@ -273,7 +286,7 @@ const {
 				const freshCached = readCache(shareCacheKey, shareId, shareCacheTtl);
 				if (freshCached) return freshCached;
 
-				const response = await fetch(`${apiBase}/api/share/${encodeURIComponent(shareId)}`);
+				const response = await fetchWithTimeout(`${apiBase}/api/share/${encodeURIComponent(shareId)}`);
 				if (!response.ok) throw new Error(`share ${response.status}`);
 				const result = await response.json();
 				if (!result?.websiteId || !result?.token) throw new Error("invalid share response");
@@ -300,7 +313,7 @@ const {
 				url.searchParams.set("type", "path");
 				url.searchParams.set("limit", "1000");
 
-				const response = await fetch(url, {
+				const response = await fetchWithTimeout(url, {
 					headers: {
 						"x-umami-share-token": share.token,
 						"x-umami-share-context": "1",
@@ -330,7 +343,7 @@ const {
 				url.searchParams.set("startAt", String(startAt));
 				url.searchParams.set("endAt", String(endAt));
 
-				const response = await fetch(url, {
+				const response = await fetchWithTimeout(url, {
 					headers: {
 						"x-umami-share-token": share.token,
 						"x-umami-share-context": "1",
@@ -353,7 +366,7 @@ const {
 			url.searchParams.set("propertyName", propertyName);
 			url.searchParams.set("limit", "1000");
 
-			const response = await fetch(url, {
+			const response = await fetchWithTimeout(url, {
 				headers: {
 					"x-umami-share-token": share.token,
 					"x-umami-share-context": "1",
@@ -484,22 +497,18 @@ const {
 		}
 
 		function markUnavailable() {
-			document.querySelectorAll("[data-umami-pageviews]").forEach((element) => {
-				element.textContent = "加载中";
-			});
-			document.querySelectorAll('[data-umami-stat="visitors"]').forEach((element) => {
-				element.textContent = "加载中";
-			});
-			document.querySelectorAll('[data-umami-stat="pageviews"]').forEach((element) => {
-				element.textContent = "加载中";
-			});
-			document.querySelectorAll('[data-umami-stat="todayVisitors"], [data-umami-stat="todayPageviews"]').forEach((element) => {
-				element.textContent = "加载中";
-			});
-			document.querySelectorAll("[data-friend-clicks-value]").forEach((element) => {
-				element.textContent = "加载中";
-			});
-		}
+	document.querySelectorAll("[data-umami-pageviews]").forEach((element) => {
+		element.textContent = "暂不可用";
+	});
+
+	document.querySelectorAll("[data-umami-stat]").forEach((element) => {
+		element.textContent = "暂不可用";
+	});
+
+	document.querySelectorAll("[data-friend-clicks-value]").forEach((element) => {
+		element.textContent = "暂不可用";
+	});
+}
 
 		async function refresh(forceRefresh = false) {
 			const blockLocalStats = shouldBlockLocalStats();
@@ -530,19 +539,36 @@ const {
 				const stats = tasks[1].status === "fulfilled" ? tasks[1].value : null;
 				const todayStats = tasks[2].status === "fulfilled" ? tasks[2].value : null;
 				const friendClickCounts = tasks[3].status === "fulfilled" ? tasks[3].value : null;
+				const setUnavailable = (selector) => {
+	document.querySelectorAll(selector).forEach((element) => {
+		element.textContent = "暂不可用";
+	});
+};
+
+if (tasks[0].status === "rejected" && needsViews) {
+	setUnavailable("[data-umami-pageviews]");
+}
+
+if (tasks[1].status === "rejected" && needsStats) {
+	setUnavailable(
+		'[data-umami-stat="visitors"], [data-umami-stat="pageviews"]',
+	);
+}
+
+if (tasks[2].status === "rejected" && needsTodayStats) {
+	setUnavailable(
+		'[data-umami-stat="todayVisitors"], [data-umami-stat="todayPageviews"]',
+	);
+}
+
+if (tasks[3].status === "rejected" && needsFriendClickCounts) {
+	setUnavailable("[data-friend-clicks-value]");
+}
 				if (metrics) renderPageViews(metrics);
 				if (needsStats) renderSiteStats(stats, todayStats);
 				if (friendClickCounts) renderFriendClickCounts(friendClickCounts);
-				if (!friendClickCounts && needsFriendClickCounts) {
-					document.querySelectorAll("[data-friend-clicks-value]").forEach((element) => {
-						element.textContent = "加载中";
-					});
-				}
-				if (!metrics && needsViews) {
-					document.querySelectorAll("[data-umami-pageviews]").forEach((element) => {
-						element.textContent = "加载中";
-					});
-				}
+			
+
 			} catch {
 				markUnavailable();
 			}
